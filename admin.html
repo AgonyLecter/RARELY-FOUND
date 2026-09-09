@@ -14,6 +14,10 @@
   name="theme-color"
   content="#fdebf2">
 
+<meta
+  name="description"
+  content="RARELY FOUND collection admin">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
 <link
@@ -563,6 +567,11 @@ input[type=file]{
 
 }
 
+
+/* =========================================================
+   MULTI IMAGE PREVIEW
+========================================================= */
+
 .preview-wrap{
 
   display:none;
@@ -571,19 +580,119 @@ input[type=file]{
 
 }
 
-#preview{
+.preview-grid{
 
-  width:115px;
+  display:grid;
 
-  height:115px;
+  grid-template-columns:
+    repeat(
+      auto-fill,
+      minmax(86px,1fr)
+    );
+
+  gap:9px;
+
+}
+
+.preview-card{
+
+  position:relative;
+
+  aspect-ratio:1/1;
+
+  overflow:hidden;
+
+  background:var(--pink-soft);
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:16px;
+
+}
+
+.preview-card img{
+
+  width:100%;
+
+  height:100%;
 
   object-fit:cover;
 
-  border-radius:18px;
+  display:block;
 
-  border:1px solid var(--border);
+}
 
-  box-shadow:var(--shadow);
+.preview-cover{
+
+  position:absolute;
+
+  left:6px;
+
+  bottom:6px;
+
+  padding:4px 7px;
+
+  border-radius:999px;
+
+  background:rgba(67,45,53,.82);
+
+  color:#fff;
+
+  font-size:8px;
+
+  font-weight:800;
+
+  text-transform:uppercase;
+
+}
+
+.preview-remove{
+
+  position:absolute;
+
+  top:5px;
+
+  right:5px;
+
+  width:27px;
+
+  height:27px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  padding:0;
+
+  border:0;
+
+  border-radius:50%;
+
+  background:rgba(255,255,255,.92);
+
+  color:var(--red);
+
+  font-size:15px;
+
+  font-weight:800;
+
+  box-shadow:
+    0 4px 10px
+    rgba(67,45,53,.16);
+
+}
+
+.preview-note{
+
+  margin-top:7px;
+
+  color:var(--muted);
+
+  font-size:9px;
 
 }
 
@@ -836,6 +945,26 @@ input[type=file]{
     rgba(217,68,120,.25);
 
   border-radius:17px;
+
+}
+
+.photo-count{
+
+  display:inline-flex;
+
+  margin-top:4px;
+
+  padding:3px 6px;
+
+  border-radius:999px;
+
+  background:var(--pink-soft);
+
+  color:var(--pink-deep);
+
+  font-size:8px;
+
+  font-weight:800;
 
 }
 
@@ -1138,7 +1267,7 @@ input[type=file]{
 
   <img
     class="logo"
-    src="file_00000000b6848230b5d12ede7ff242b6.png"
+    src="log.png"
     alt="Rarely Found">
 
   <h1>
@@ -1295,7 +1424,7 @@ input[type=file]{
 
 
   <label>
-    Photo
+    Photos
   </label>
 
   <div class="file-box">
@@ -1303,7 +1432,15 @@ input[type=file]{
     <input
       type="file"
       id="pImage"
-      accept="image/*">
+      accept="image/*"
+      multiple>
+
+    <div class="optional-note">
+
+      You can select multiple photos.
+      The first photo becomes the cover.
+
+    </div>
 
   </div>
 
@@ -1312,9 +1449,15 @@ input[type=file]{
     class="preview-wrap"
     id="previewWrap">
 
-    <img
-      id="preview"
-      alt="Preview">
+    <div
+      class="preview-grid"
+      id="previewGrid">
+    </div>
+
+    <div
+      class="preview-note"
+      id="previewNote">
+    </div>
 
   </div>
 
@@ -1524,7 +1667,7 @@ const firebaseConfig = {
 
 let db = null;
 
-let compressedImage = null;
+let compressedImages = [];
 
 let editingId = null;
 
@@ -1764,6 +1907,114 @@ function escapeHTML(
 
 
 /* =========================================================
+   SAFE IMAGE
+========================================================= */
+
+function safeImage(
+  value
+){
+
+  if(
+    typeof value !== "string"
+  ){
+    return null;
+  }
+
+  const image =
+    value.trim();
+
+  if(
+    image.startsWith(
+      "data:image/"
+    )
+  ){
+    return image;
+  }
+
+  if(
+    image.startsWith(
+      "https://"
+    )
+  ){
+    return image;
+  }
+
+  return null;
+
+}
+
+
+/* =========================================================
+   GET PRODUCT IMAGES
+========================================================= */
+
+function getProductImages(
+  product
+){
+
+  const result = [];
+
+
+  if(
+    product &&
+    Array.isArray(
+      product.images
+    )
+  ){
+
+    product.images.forEach(
+      image => {
+
+        const safe =
+          safeImage(
+            image
+          );
+
+        if(
+          safe &&
+          !result.includes(
+            safe
+          )
+        ){
+
+          result.push(
+            safe
+          );
+
+        }
+
+      }
+    );
+
+  }
+
+
+  const legacy =
+    safeImage(
+      product?.image
+    );
+
+
+  if(
+    legacy &&
+    !result.includes(
+      legacy
+    )
+  ){
+
+    result.unshift(
+      legacy
+    );
+
+  }
+
+
+  return result;
+
+}
+
+
+/* =========================================================
    CATEGORY TOGGLE
 ========================================================= */
 
@@ -1786,215 +2037,438 @@ function toggleSub(){
 
 
 /* =========================================================
-   IMAGE PREVIEW / COMPRESSION
+   COMPRESS IMAGE
 ========================================================= */
 
-function previewImage(){
+function compressImage(
+  file
+){
+
+  return new Promise(
+    (resolve,reject) => {
+
+      if(
+        !file ||
+        !file.type.startsWith(
+          "image/"
+        )
+      ){
+
+        reject(
+          new Error(
+            "Please choose an image."
+          )
+        );
+
+        return;
+
+      }
+
+
+      if(
+        file.size >
+        15 * 1024 * 1024
+      ){
+
+        reject(
+          new Error(
+            "Image is too large. Choose one under 15 MB."
+          )
+        );
+
+        return;
+
+      }
+
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        event => {
+
+          const image =
+            new Image();
+
+
+          image.onload =
+            () => {
+
+              const maxSize =
+                900;
+
+
+              const scale =
+                Math.min(
+                  1,
+                  maxSize /
+                  Math.max(
+                    image.width,
+                    image.height
+                  )
+                );
+
+
+              const width =
+                Math.max(
+                  1,
+                  Math.round(
+                    image.width *
+                    scale
+                  )
+                );
+
+
+              const height =
+                Math.max(
+                  1,
+                  Math.round(
+                    image.height *
+                    scale
+                  )
+                );
+
+
+              const canvas =
+                document.createElement(
+                  "canvas"
+                );
+
+
+              canvas.width =
+                width;
+
+              canvas.height =
+                height;
+
+
+              const ctx =
+                canvas.getContext(
+                  "2d"
+                );
+
+
+              if(!ctx){
+
+                reject(
+                  new Error(
+                    "Could not process the image."
+                  )
+                );
+
+                return;
+
+              }
+
+
+              ctx.drawImage(
+                image,
+                0,
+                0,
+                width,
+                height
+              );
+
+
+              const compressed =
+                canvas.toDataURL(
+                  "image/jpeg",
+                  .78
+                );
+
+
+              resolve(
+                compressed
+              );
+
+            };
+
+
+          image.onerror =
+            () => {
+
+              reject(
+                new Error(
+                  "Could not read this image."
+                )
+              );
+
+            };
+
+
+          image.src =
+            event.target.result;
+
+        };
+
+
+      reader.onerror =
+        () => {
+
+          reject(
+            new Error(
+              "Could not read the file."
+            )
+          );
+
+        };
+
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   RENDER PREVIEWS
+========================================================= */
+
+function renderPreviews(){
+
+  const wrap =
+    document.getElementById(
+      "previewWrap"
+    );
+
+  const grid =
+    document.getElementById(
+      "previewGrid"
+    );
+
+  const note =
+    document.getElementById(
+      "previewNote"
+    );
+
+
+  grid.innerHTML =
+    "";
+
+
+  if(
+    compressedImages.length === 0
+  ){
+
+    wrap.style.display =
+      "none";
+
+    note.textContent =
+      "";
+
+    return;
+
+  }
+
+
+  compressedImages.forEach(
+    (image,index) => {
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+
+      card.className =
+        "preview-card";
+
+
+      const img =
+        document.createElement(
+          "img"
+        );
+
+
+      img.src =
+        image;
+
+      img.alt =
+        `Photo ${index + 1}`;
+
+
+      const removeButton =
+        document.createElement(
+          "button"
+        );
+
+
+      removeButton.type =
+        "button";
+
+      removeButton.className =
+        "preview-remove";
+
+      removeButton.textContent =
+        "×";
+
+      removeButton.setAttribute(
+        "aria-label",
+        `Remove photo ${index + 1}`
+      );
+
+
+      removeButton.addEventListener(
+        "click",
+        event => {
+
+          tapSparks(
+            event
+          );
+
+          compressedImages.splice(
+            index,
+            1
+          );
+
+          renderPreviews();
+
+        }
+      );
+
+
+      card.appendChild(
+        img
+      );
+
+
+      if(index === 0){
+
+        const cover =
+          document.createElement(
+            "span"
+          );
+
+        cover.className =
+          "preview-cover";
+
+        cover.textContent =
+          "Cover";
+
+        card.appendChild(
+          cover
+        );
+
+      }
+
+
+      card.appendChild(
+        removeButton
+      );
+
+
+      grid.appendChild(
+        card
+      );
+
+    }
+  );
+
+
+  wrap.style.display =
+    "block";
+
+
+  note.textContent =
+    compressedImages.length === 1
+      ? "1 photo · this will be the cover"
+      : `${compressedImages.length} photos · first photo is the cover`;
+
+}
+
+
+/* =========================================================
+   IMAGE SELECTION
+========================================================= */
+
+async function previewImages(){
 
   const input =
     document.getElementById(
       "pImage"
     );
 
-  const file =
-    input.files?.[0];
 
-
-  if(!file){
-    return;
-  }
-
-
-  if(
-    !file.type.startsWith(
-      "image/"
-    )
-  ){
-
-    status(
-      "Please choose an image.",
-      "error"
+  const files =
+    Array.from(
+      input.files || []
     );
 
-    input.value = "";
 
+  if(files.length === 0){
     return;
-
   }
 
 
-  if(
-    file.size >
-    15 * 1024 * 1024
-  ){
-
-    status(
-      "Image is too large. Choose one under 15 MB.",
-      "error"
-    );
-
-    input.value = "";
-
-    return;
-
-  }
+  status(
+    "Processing photos…",
+    "info"
+  );
 
 
-  const reader =
-    new FileReader();
+  try{
+
+    const newImages = [];
 
 
-  reader.onload =
-    event => {
+    for(
+      const file of files
+    ){
 
       const image =
-        new Image();
+        await compressImage(
+          file
+        );
 
-
-      image.onload =
-        () => {
-
-          const maxSize =
-            900;
-
-
-          const scale =
-            Math.min(
-              1,
-              maxSize /
-              Math.max(
-                image.width,
-                image.height
-              )
-            );
-
-
-          const width =
-            Math.max(
-              1,
-              Math.round(
-                image.width *
-                scale
-              )
-            );
-
-
-          const height =
-            Math.max(
-              1,
-              Math.round(
-                image.height *
-                scale
-              )
-            );
-
-
-          const canvas =
-            document.createElement(
-              "canvas"
-            );
-
-
-          canvas.width =
-            width;
-
-          canvas.height =
-            height;
-
-
-          const ctx =
-            canvas.getContext(
-              "2d"
-            );
-
-
-          if(!ctx){
-
-            status(
-              "Could not process the image.",
-              "error"
-            );
-
-            return;
-
-          }
-
-
-          ctx.drawImage(
-            image,
-            0,
-            0,
-            width,
-            height
-          );
-
-
-          compressedImage =
-            canvas.toDataURL(
-              "image/jpeg",
-              .78
-            );
-
-
-          const preview =
-            document.getElementById(
-              "preview"
-            );
-
-
-          const wrap =
-            document.getElementById(
-              "previewWrap"
-            );
-
-
-          preview.src =
-            compressedImage;
-
-
-          wrap.style.display =
-            "block";
-
-
-          status(
-            "Photo ready 🎀",
-            "info"
-          );
-
-        };
-
-
-      image.onerror =
-        () => {
-
-          status(
-            "Could not read this image.",
-            "error"
-          );
-
-        };
-
-
-      image.src =
-        event.target.result;
-
-    };
-
-
-  reader.onerror =
-    () => {
-
-      status(
-        "Could not read the file.",
-        "error"
+      newImages.push(
+        image
       );
 
-    };
+    }
 
 
-  reader.readAsDataURL(
-    file
-  );
+    compressedImages =
+      compressedImages.concat(
+        newImages
+      );
+
+
+    renderPreviews();
+
+
+    status(
+      `${newImages.length} photo${
+        newImages.length === 1
+          ? ""
+          : "s"
+      } ready 🎀`,
+      "info"
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "IMAGE ERROR:",
+      error
+    );
+
+
+    status(
+      error.message,
+      "error"
+    );
+
+  }
+
+
+  input.value =
+    "";
 
 }
 
@@ -2201,13 +2675,6 @@ async function saveProduct(){
   }
 
 
-  /*
-    PRICE IS NOW OPTIONAL.
-
-    If empty:
-    product is still saved.
-  */
-
   if(
     price !== "" &&
     (
@@ -2279,12 +2746,24 @@ async function saveProduct(){
       };
 
 
-      if(compressedImage){
+      /*
+        compressedImages is always the current
+        gallery state while editing.
 
-        changes.image =
-          compressedImage;
+        This means:
+        - existing photos stay
+        - removed photos disappear
+        - new photos are added
+        - first photo becomes the cover
+      */
 
-      }
+      changes.images =
+        compressedImages;
+
+
+      changes.image =
+        compressedImages[0] ||
+        null;
 
 
       if(path === oldPath){
@@ -2378,11 +2857,6 @@ async function saveProduct(){
 
         name:name,
 
-        /*
-          Empty price becomes null.
-          The product still exists.
-        */
-
         price:
           price === ""
             ? null
@@ -2390,8 +2864,21 @@ async function saveProduct(){
 
         rarity:rarity,
 
+        /*
+          Keep the old "image" field for compatibility.
+          It contains the cover.
+        */
+
         image:
-          compressedImage || null,
+          compressedImages[0] ||
+          null,
+
+        /*
+          New gallery field.
+        */
+
+        images:
+          compressedImages,
 
         createdAt:
           Date.now()
@@ -2633,7 +3120,17 @@ function renderList(
         "item";
 
 
-      if(product.image){
+      const images =
+        getProductImages(
+          product
+        );
+
+
+      const cover =
+        images[0];
+
+
+      if(cover){
 
         const image =
           document.createElement(
@@ -2645,7 +3142,7 @@ function renderList(
           "item-image";
 
         image.src =
-          product.image;
+          cover;
 
         image.alt =
           "";
@@ -2733,6 +3230,29 @@ function renderList(
       meta.appendChild(
         info
       );
+
+
+      if(images.length > 1){
+
+        const photoCount =
+          document.createElement(
+            "div"
+          );
+
+
+        photoCount.className =
+          "photo-count";
+
+
+        photoCount.textContent =
+          `${images.length} photos`;
+
+
+        meta.appendChild(
+          photoCount
+        );
+
+      }
 
 
       const actions =
@@ -2938,33 +3458,21 @@ async function editProduct(
       "common";
 
 
-    compressedImage =
-      product.image ||
-      null;
+    /*
+      Load the new gallery field.
 
+      Old products only have "image",
+      so they automatically become
+      a one-photo gallery.
+    */
 
-    const previewWrap =
-      document.getElementById(
-        "previewWrap"
+    compressedImages =
+      getProductImages(
+        product
       );
 
 
-    if(compressedImage){
-
-      document.getElementById(
-        "preview"
-      ).src =
-        compressedImage;
-
-      previewWrap.style.display =
-        "block";
-
-    }else{
-
-      previewWrap.style.display =
-        "none";
-
-    }
+    renderPreviews();
 
 
     document.getElementById(
@@ -3120,8 +3628,8 @@ function resetForm(){
   editingPath =
     null;
 
-  compressedImage =
-    null;
+  compressedImages =
+    [];
 
 
   document.getElementById(
@@ -3142,16 +3650,7 @@ function resetForm(){
     "";
 
 
-  document.getElementById(
-    "preview"
-  ).src =
-    "";
-
-
-  document.getElementById(
-    "previewWrap"
-  ).style.display =
-    "none";
+  renderPreviews();
 
 
   document.getElementById(
@@ -3687,7 +4186,7 @@ document.getElementById(
   "pImage"
 ).addEventListener(
   "change",
-  previewImage
+  previewImages
 );
 
 
