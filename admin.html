@@ -126,7 +126,8 @@ body::before{
 
 button,
 input,
-select{
+select,
+textarea{
   font:inherit;
 }
 
@@ -186,9 +187,7 @@ button{
 }
 
 .floating.bow{
-
   font-size:var(--size);
-
 }
 
 .floating.star{
@@ -481,7 +480,8 @@ label{
 }
 
 input,
-select{
+select,
+textarea{
 
   width:100%;
 
@@ -505,8 +505,17 @@ select{
 
 }
 
+textarea{
+
+  min-height:110px;
+
+  resize:vertical;
+
+}
+
 input:focus,
-select:focus{
+select:focus,
+textarea:focus{
 
   border-color:var(--pink-hot);
 
@@ -539,6 +548,18 @@ input[type=file]{
   border:0;
 
   background:transparent;
+
+}
+
+.optional-note{
+
+  margin-top:5px;
+
+  color:var(--muted);
+
+  font-size:9px;
+
+  line-height:1.4;
 
 }
 
@@ -820,6 +841,157 @@ input[type=file]{
 
 
 /* =========================================================
+   REQUESTS
+========================================================= */
+
+.request-list{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:10px;
+
+}
+
+.request{
+
+  padding:13px;
+
+  background:#fff;
+
+  border:
+    1px solid
+    rgba(67,45,53,.08);
+
+  border-radius:17px;
+
+}
+
+.request.is-done{
+
+  opacity:.62;
+
+}
+
+.request-top{
+
+  display:flex;
+
+  align-items:flex-start;
+
+  justify-content:space-between;
+
+  gap:10px;
+
+}
+
+.request-email{
+
+  min-width:0;
+
+  color:var(--pink-deep);
+
+  font-size:12px;
+
+  font-weight:800;
+
+  word-break:break-word;
+
+}
+
+.request-date{
+
+  flex-shrink:0;
+
+  color:var(--muted);
+
+  font-size:8px;
+
+  text-align:right;
+
+}
+
+.request-message{
+
+  margin-top:9px;
+
+  padding:10px;
+
+  background:var(--pink-soft);
+
+  border-radius:12px;
+
+  color:var(--ink);
+
+  font-size:11px;
+
+  line-height:1.5;
+
+  white-space:pre-wrap;
+
+  word-break:break-word;
+
+}
+
+.request-actions{
+
+  display:flex;
+
+  gap:6px;
+
+  margin-top:9px;
+
+}
+
+.request-actions .action{
+
+  flex:1;
+
+}
+
+.done{
+
+  color:var(--green);
+
+  background:#e9f4ed;
+
+}
+
+.request-status{
+
+  display:inline-flex;
+
+  margin-top:7px;
+
+  padding:4px 7px;
+
+  border-radius:999px;
+
+  background:#fff0d9;
+
+  color:#876324;
+
+  font-size:8px;
+
+  font-weight:800;
+
+  text-transform:uppercase;
+
+  letter-spacing:.05em;
+
+}
+
+.request.is-done .request-status{
+
+  background:#e9f4ed;
+
+  color:var(--green);
+
+}
+
+
+/* =========================================================
    WARNING
 ========================================================= */
 
@@ -953,10 +1125,6 @@ input[type=file]{
 <body>
 
 
-<!-- =======================================================
-     DECORATIONS
-======================================================= -->
-
 <div
   class="decor-layer"
   id="decorLayer">
@@ -966,15 +1134,11 @@ input[type=file]{
 <div class="container">
 
 
-<!-- =======================================================
-     HEADER
-======================================================= -->
-
 <header>
 
   <img
     class="logo"
-    src="logo.png"
+    src="file_00000000b6848230b5d12ede7ff242b6.png"
     alt="Rarely Found">
 
   <h1>
@@ -1096,7 +1260,13 @@ input[type=file]{
     type="number"
     step="0.01"
     min="0"
-    placeholder="e.g. 24">
+    placeholder="Leave empty — price on request">
+
+  <div class="optional-note">
+
+    Optional. Leave empty if you want customers to ask you personally.
+
+  </div>
 
 
   <label>
@@ -1178,7 +1348,7 @@ input[type=file]{
 
 
 <!-- =======================================================
-     LIST
+     PRODUCTS
 ======================================================= -->
 
 <div class="card">
@@ -1229,6 +1399,51 @@ input[type=file]{
   <div
     class="list"
     id="list">
+  </div>
+
+</div>
+
+
+<!-- =======================================================
+     PURCHASE REQUESTS
+======================================================= -->
+
+<div class="card">
+
+  <div class="card-title">
+
+    <h2>
+      Purchase requests
+    </h2>
+
+    <span>
+      💌
+    </span>
+
+  </div>
+
+
+  <p
+    style="
+      color:var(--muted);
+      font-size:10px;
+      line-height:1.5;
+      margin-bottom:12px;
+    ">
+
+    Messages sent by people interested in your finds.
+
+  </p>
+
+
+  <div
+    class="request-list"
+    id="requestList">
+
+    <div class="empty">
+      Loading requests…
+    </div>
+
   </div>
 
 </div>
@@ -1309,11 +1524,6 @@ const firebaseConfig = {
 
 let db = null;
 
-
-/* =========================================================
-   STATE
-========================================================= */
-
 let compressedImage = null;
 
 let editingId = null;
@@ -1326,7 +1536,7 @@ let currentListUnsubscribe = null;
 
 
 /* =========================================================
-   CONNECTION UI
+   CONNECTION
 ========================================================= */
 
 function setConnection(
@@ -1431,7 +1641,7 @@ try{
 
 
 /* =========================================================
-   FIREBASE CONNECTION STATUS
+   CONNECTION STATUS
 ========================================================= */
 
 if(db){
@@ -1791,7 +2001,6 @@ function previewImage(){
 
 /* =========================================================
    CLICK SPARKS
-   THIS WAS MISSING IN THE PREVIOUS VERSION
 ========================================================= */
 
 function tapSparks(event){
@@ -1863,11 +2072,7 @@ function tapSparks(event){
 
 
     setTimeout(
-      () => {
-
-        spark.remove();
-
-      },
+      () => spark.remove(),
       750
     );
 
@@ -1954,11 +2159,6 @@ async function readOnce(
 
 async function saveProduct(){
 
-  console.log(
-    "🎀 SAVE BUTTON → saveProduct()"
-  );
-
-
   if(!db){
 
     status(
@@ -2001,16 +2201,25 @@ async function saveProduct(){
   }
 
 
+  /*
+    PRICE IS NOW OPTIONAL.
+
+    If empty:
+    product is still saved.
+  */
+
   if(
-    price === "" ||
-    !Number.isFinite(
-      Number(price)
-    ) ||
-    Number(price) < 0
+    price !== "" &&
+    (
+      !Number.isFinite(
+        Number(price)
+      ) ||
+      Number(price) < 0
+    )
   ){
 
     status(
-      "Add a valid price.",
+      "Add a valid price or leave it empty.",
       "error"
     );
 
@@ -2052,7 +2261,6 @@ async function saveProduct(){
       const oldPath =
         editingPath;
 
-
       const oldId =
         editingId;
 
@@ -2061,7 +2269,10 @@ async function saveProduct(){
 
         name:name,
 
-        price:price,
+        price:
+          price === ""
+            ? null
+            : price,
 
         rarity:rarity
 
@@ -2076,11 +2287,7 @@ async function saveProduct(){
       }
 
 
-      /* SAME CATEGORY */
-
-      if(
-        path === oldPath
-      ){
+      if(path === oldPath){
 
         await update(
 
@@ -2093,12 +2300,7 @@ async function saveProduct(){
 
         );
 
-      }
-
-
-      /* CATEGORY CHANGED */
-
-      else{
+      }else{
 
         const existing =
           await readOnce(
@@ -2176,7 +2378,15 @@ async function saveProduct(){
 
         name:name,
 
-        price:price,
+        /*
+          Empty price becomes null.
+          The product still exists.
+        */
+
+        price:
+          price === ""
+            ? null
+            : price,
 
         rarity:rarity,
 
@@ -2218,12 +2428,6 @@ async function saveProduct(){
 
     resetForm();
 
-
-    /*
-      The real-time listener already
-      refreshes the list automatically.
-    */
-
   }catch(error){
 
     console.error(
@@ -2233,15 +2437,12 @@ async function saveProduct(){
 
 
     status(
-
       "Firebase error: " +
       (
         error?.message ||
         "Unknown error"
       ),
-
       "error"
-
     );
 
   }
@@ -2254,20 +2455,16 @@ async function saveProduct(){
 
 
 /* =========================================================
-   LOAD LIST
+   LOAD PRODUCT LIST
 ========================================================= */
 
 function loadList(){
 
   if(!db){
 
-    const list =
-      document.getElementById(
-        "list"
-      );
-
-
-    list.innerHTML =
+    document.getElementById(
+      "list"
+    ).innerHTML =
       `<div class="empty">
         Firebase isn't connected.
       </div>`;
@@ -2352,7 +2549,7 @@ function loadList(){
 
 
 /* =========================================================
-   RENDER LIST
+   RENDER PRODUCTS
 ========================================================= */
 
 function renderList(
@@ -2407,9 +2604,7 @@ function renderList(
       );
 
 
-  if(
-    items.length === 0
-  ){
+  if(items.length === 0){
 
     list.innerHTML =
       `<div class="empty">
@@ -2438,8 +2633,6 @@ function renderList(
         "item";
 
 
-      /* IMAGE */
-
       if(product.image){
 
         const image =
@@ -2451,14 +2644,11 @@ function renderList(
         image.className =
           "item-image";
 
-
         image.src =
           product.image;
 
-
         image.alt =
           "";
-
 
         image.loading =
           "lazy";
@@ -2479,7 +2669,6 @@ function renderList(
         placeholder.className =
           "item-image";
 
-
         placeholder.textContent =
           "🎀";
 
@@ -2490,8 +2679,6 @@ function renderList(
 
       }
 
-
-      /* META */
 
       const meta =
         document.createElement(
@@ -2512,7 +2699,6 @@ function renderList(
       name.className =
         "item-name";
 
-
       name.textContent =
         product.name ||
         "Untitled";
@@ -2529,9 +2715,15 @@ function renderList(
 
 
       info.textContent =
-        `$${product.price ?? "—"} · ${
-          product.rarity || "common"
-        }`;
+        product.price === null ||
+        product.price === undefined ||
+        product.price === ""
+          ? `Price on request · ${
+              product.rarity || "common"
+            }`
+          : `$${product.price} · ${
+              product.rarity || "common"
+            }`;
 
 
       meta.appendChild(
@@ -2543,8 +2735,6 @@ function renderList(
       );
 
 
-      /* ACTIONS */
-
       const actions =
         document.createElement(
           "div"
@@ -2554,8 +2744,6 @@ function renderList(
       actions.className =
         "item-actions";
 
-
-      /* EDIT */
 
       const edit =
         document.createElement(
@@ -2581,7 +2769,6 @@ function renderList(
             event
           );
 
-
           editProduct(
             currentListPath,
             product.id
@@ -2590,8 +2777,6 @@ function renderList(
         }
       );
 
-
-      /* DELETE */
 
       const del =
         document.createElement(
@@ -2616,7 +2801,6 @@ function renderList(
           tapSparks(
             event
           );
-
 
           deleteItem(
             currentListPath,
@@ -2772,7 +2956,6 @@ async function editProduct(
       ).src =
         compressedImage;
 
-
       previewWrap.style.display =
         "block";
 
@@ -2847,7 +3030,7 @@ async function editProduct(
 
 
 /* =========================================================
-   DELETE
+   DELETE PRODUCT
 ========================================================= */
 
 async function deleteItem(
@@ -2987,6 +3170,503 @@ function resetForm(){
     "cancelBtn"
   ).style.display =
     "none";
+
+}
+
+
+/* =========================================================
+   PURCHASE REQUESTS
+========================================================= */
+
+function loadRequests(){
+
+  if(!db){
+
+    document.getElementById(
+      "requestList"
+    ).innerHTML =
+      `<div class="empty">
+        Firebase isn't connected.
+      </div>`;
+
+    return;
+
+  }
+
+
+  onValue(
+
+    ref(
+      db,
+      "purchaseRequests"
+    ),
+
+    snapshot => {
+
+      renderRequests(
+        snapshot.val()
+      );
+
+    },
+
+    error => {
+
+      console.error(
+        "REQUESTS ERROR:",
+        error
+      );
+
+
+      document.getElementById(
+        "requestList"
+      ).innerHTML =
+        `<div class="empty">
+          Firebase error:<br>
+          ${escapeHTML(
+            error.message
+          )}
+        </div>`;
+
+    }
+
+  );
+
+}
+
+
+/* =========================================================
+   RENDER REQUESTS
+========================================================= */
+
+function renderRequests(
+  data
+){
+
+  const list =
+    document.getElementById(
+      "requestList"
+    );
+
+
+  if(
+    !data ||
+    typeof data !== "object"
+  ){
+
+    list.innerHTML =
+      `<div class="empty">
+        No requests yet 🎀
+      </div>`;
+
+    return;
+
+  }
+
+
+  const requests =
+    Object.entries(data)
+
+      .filter(
+        ([,request]) =>
+          request &&
+          typeof request === "object"
+      )
+
+      .map(
+        ([id,request]) => ({
+          id,
+          ...request
+        })
+      )
+
+      .sort(
+        (a,b) =>
+          Number(
+            b.createdAt || 0
+          ) -
+          Number(
+            a.createdAt || 0
+          )
+      );
+
+
+  if(requests.length === 0){
+
+    list.innerHTML =
+      `<div class="empty">
+        No requests yet 🎀
+      </div>`;
+
+    return;
+
+  }
+
+
+  list.innerHTML =
+    "";
+
+
+  requests.forEach(
+    request => {
+
+      const wrapper =
+        document.createElement(
+          "div"
+        );
+
+
+      wrapper.className =
+        "request";
+
+
+      if(
+        request.status === "done"
+      ){
+
+        wrapper.classList.add(
+          "is-done"
+        );
+
+      }
+
+
+      const top =
+        document.createElement(
+          "div"
+        );
+
+
+      top.className =
+        "request-top";
+
+
+      const email =
+        document.createElement(
+          "div"
+        );
+
+
+      email.className =
+        "request-email";
+
+      email.textContent =
+        request.email ||
+        "No email";
+
+
+      const date =
+        document.createElement(
+          "div"
+        );
+
+
+      date.className =
+        "request-date";
+
+
+      date.textContent =
+        formatDate(
+          request.createdAt
+        );
+
+
+      top.appendChild(
+        email
+      );
+
+      top.appendChild(
+        date
+      );
+
+
+      const message =
+        document.createElement(
+          "div"
+        );
+
+
+      message.className =
+        "request-message";
+
+
+      message.textContent =
+        request.message ||
+        "No message";
+
+
+      const requestStatus =
+        document.createElement(
+          "div"
+        );
+
+
+      requestStatus.className =
+        "request-status";
+
+
+      requestStatus.textContent =
+        request.status === "done"
+          ? "Handled"
+          : "New request";
+
+
+      const actions =
+        document.createElement(
+          "div"
+        );
+
+
+      actions.className =
+        "request-actions";
+
+
+      const done =
+        document.createElement(
+          "button"
+        );
+
+
+      done.type =
+        "button";
+
+      done.className =
+        "action done";
+
+      done.textContent =
+        request.status === "done"
+          ? "Mark new"
+          : "Mark handled";
+
+
+      done.addEventListener(
+        "click",
+        event => {
+
+          tapSparks(
+            event
+          );
+
+          toggleRequestStatus(
+            request.id,
+            request.status
+          );
+
+        }
+      );
+
+
+      const del =
+        document.createElement(
+          "button"
+        );
+
+
+      del.type =
+        "button";
+
+      del.className =
+        "action delete";
+
+      del.textContent =
+        "Delete";
+
+
+      del.addEventListener(
+        "click",
+        event => {
+
+          tapSparks(
+            event
+          );
+
+          deleteRequest(
+            request.id
+          );
+
+        }
+      );
+
+
+      actions.appendChild(
+        done
+      );
+
+      actions.appendChild(
+        del
+      );
+
+
+      wrapper.appendChild(
+        top
+      );
+
+      wrapper.appendChild(
+        message
+      );
+
+      wrapper.appendChild(
+        requestStatus
+      );
+
+      wrapper.appendChild(
+        actions
+      );
+
+
+      list.appendChild(
+        wrapper
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+function formatDate(
+  timestamp
+){
+
+  if(!timestamp){
+    return "";
+  }
+
+
+  const date =
+    new Date(
+      Number(timestamp)
+    );
+
+
+  if(
+    Number.isNaN(
+      date.getTime()
+    )
+  ){
+
+    return "";
+
+  }
+
+
+  return date.toLocaleString(
+    undefined,
+    {
+      day:"2-digit",
+      month:"2-digit",
+      year:"numeric",
+      hour:"2-digit",
+      minute:"2-digit"
+    }
+  );
+
+}
+
+
+/* =========================================================
+   TOGGLE REQUEST STATUS
+========================================================= */
+
+async function toggleRequestStatus(
+  id,
+  currentStatus
+){
+
+  if(!db){
+    return;
+  }
+
+
+  try{
+
+    await update(
+
+      ref(
+        db,
+        `purchaseRequests/${id}`
+      ),
+
+      {
+        status:
+          currentStatus === "done"
+            ? "new"
+            : "done"
+      }
+
+    );
+
+  }catch(error){
+
+    console.error(
+      "REQUEST STATUS ERROR:",
+      error
+    );
+
+    status(
+      "Could not update request: " +
+      error.message,
+      "error"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   DELETE REQUEST
+========================================================= */
+
+async function deleteRequest(
+  id
+){
+
+  if(!db){
+    return;
+  }
+
+
+  const confirmed =
+    window.confirm(
+      "Delete this request forever?"
+    );
+
+
+  if(!confirmed){
+    return;
+  }
+
+
+  try{
+
+    await remove(
+
+      ref(
+        db,
+        `purchaseRequests/${id}`
+      )
+
+    );
+
+
+  }catch(error){
+
+    console.error(
+      "REQUEST DELETE ERROR:",
+      error
+    );
+
+    status(
+      "Could not delete request: " +
+      error.message,
+      "error"
+    );
+
+  }
 
 }
 
@@ -3192,6 +3872,8 @@ createDecorations();
 toggleSub();
 
 loadList();
+
+loadRequests();
 
 </script>
 
