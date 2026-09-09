@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
@@ -13,13 +12,14 @@
 
 <meta
   name="theme-color"
-  content="#f7c9d8">
+  content="#fdebf2">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
-<link rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin>
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin>
 
 <link
   href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&display=swap"
@@ -28,74 +28,270 @@
 
 <style>
 
+/* =========================================================
+   RARELY FOUND ADMIN
+========================================================= */
+
 :root{
 
-  --pink:#f7c9d8;
-  --pink-soft:#fde9f0;
-  --pink-hot:#ef6f9c;
-  --pink-deep:#d94d7d;
+  --pink:#f8c9da;
+  --pink-soft:#fff0f5;
+  --pink-hot:#ef6595;
+  --pink-deep:#d94478;
 
-  --cream:#fffaf4;
+  --cream:#fffaf6;
 
   --red:#d93650;
 
-  --ink:#432d34;
-  --muted:#876d75;
+  --green:#4e8b62;
 
-  --white:#fff;
+  --ink:#432d35;
+  --muted:#8b717a;
 
-  --border:rgba(67,45,52,.12);
+  --border:rgba(67,45,53,.11);
 
   --shadow:
-    0 10px 28px rgba(89,45,59,.10);
+    0 15px 38px rgba(99,48,68,.11);
 
 }
+
 
 *{
+
   box-sizing:border-box;
+
   margin:0;
   padding:0;
+
 }
 
+
 html{
-  background:#fdebf1;
+
+  background:
+    var(--pink-soft);
+
 }
+
 
 body{
 
   min-height:100vh;
 
-  color:var(--ink);
-
-  font-family:'DM Sans',sans-serif;
-
-  background:
-    radial-gradient(
-      circle at 10% 5%,
-      #fff,
-      transparent 25%
-    ),
-    linear-gradient(
-      180deg,
-      #fdebf1,
-      #fffaf7
-    );
-
   padding:
     20px 14px 50px;
 
+  overflow-x:hidden;
+
+  color:
+    var(--ink);
+
+  font-family:
+    'DM Sans',
+    sans-serif;
+
+  background:
+
+    radial-gradient(
+      circle at 8% 3%,
+      #fff,
+      transparent 25%
+    ),
+
+    radial-gradient(
+      circle at 95% 10%,
+      rgba(239,101,149,.15),
+      transparent 25%
+    ),
+
+    linear-gradient(
+      180deg,
+      #fdebf2,
+      #fffaf7
+    );
+
 }
+
+
+body::before{
+
+  content:"";
+
+  position:fixed;
+
+  inset:0;
+
+  z-index:0;
+
+  pointer-events:none;
+
+  opacity:.3;
+
+  background-image:
+
+    radial-gradient(
+      circle,
+      rgba(217,68,120,.13) 1px,
+      transparent 1px
+    );
+
+  background-size:19px 19px;
+
+}
+
+
+button,
+input,
+select{
+
+  font:inherit;
+
+}
+
+
+button{
+
+  cursor:pointer;
+
+}
+
 
 .container{
 
-  width:min(
-    620px,
-    100%
-  );
+  position:relative;
+
+  z-index:2;
+
+  width:
+    min(
+      640px,
+      100%
+    );
 
   margin:auto;
 
 }
+
+
+/* =========================================================
+   FLOATING DECORATIONS
+========================================================= */
+
+.decor-layer{
+
+  position:fixed;
+
+  inset:0;
+
+  z-index:1;
+
+  pointer-events:none;
+
+  overflow:hidden;
+
+}
+
+
+.floating{
+
+  position:absolute;
+
+  opacity:0;
+
+  animation:
+    floatAround
+    var(--duration)
+    ease-in-out
+    var(--delay)
+    infinite;
+
+}
+
+
+.floating.bow{
+
+  font-size:
+    var(--size);
+
+}
+
+
+.floating.star{
+
+  color:
+    var(--pink-hot);
+
+  font-size:
+    var(--size);
+
+  filter:
+    drop-shadow(
+      0 3px 6px
+      rgba(217,68,120,.14)
+    );
+
+}
+
+
+@keyframes floatAround{
+
+  0%{
+
+    opacity:0;
+
+    transform:
+      translateY(18px)
+      rotate(-12deg)
+      scale(.65);
+
+  }
+
+  25%{
+
+    opacity:.4;
+
+  }
+
+  50%{
+
+    opacity:.72;
+
+    transform:
+      translate(
+        var(--move-x),
+        calc(var(--move-y) * -1)
+      )
+      rotate(10deg)
+      scale(1);
+
+  }
+
+  80%{
+
+    opacity:.35;
+
+  }
+
+  100%{
+
+    opacity:0;
+
+    transform:
+      translate(
+        calc(var(--move-x) * -.4),
+        -50px
+      )
+      rotate(25deg)
+      scale(.7);
+
+  }
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 header{
 
@@ -105,63 +301,201 @@ header{
 
 }
 
+
 .logo{
 
-  width:90px;
-  height:90px;
+  width:100px;
+  height:100px;
 
   object-fit:contain;
 
-  margin-bottom:8px;
+  margin-bottom:7px;
 
   filter:
     drop-shadow(
-      0 7px 10px rgba(89,45,59,.12)
+      0 8px 12px
+      rgba(89,45,59,.13)
     );
+
+  animation:
+    logoFloat 4s ease-in-out infinite;
 
 }
 
+
+@keyframes logoFloat{
+
+  0%,100%{
+
+    transform:
+      translateY(0)
+      rotate(-1deg);
+
+  }
+
+  50%{
+
+    transform:
+      translateY(-5px)
+      rotate(1deg);
+
+  }
+
+}
+
+
 h1{
 
-  font-family:'Fredoka',sans-serif;
+  font-family:
+    'Fredoka',
+    sans-serif;
 
-  font-size:30px;
+  font-size:31px;
 
   line-height:1;
 
 }
 
+
 h1 span{
-  color:var(--pink-deep);
+
+  color:
+    var(--pink-deep);
+
 }
+
 
 .subtitle{
 
-  margin-top:7px;
+  margin-top:8px;
 
-  color:var(--muted);
+  color:
+    var(--muted);
 
-  font-size:12px;
+  font-size:11px;
 
 }
+
+
+/* =========================================================
+   FIREBASE STATUS
+========================================================= */
+
+.connection{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:7px;
+
+  width:max-content;
+
+  margin:
+    12px auto 0;
+
+  padding:
+    6px 11px;
+
+  background:
+    rgba(255,255,255,.75);
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:999px;
+
+  color:
+    var(--muted);
+
+  font-size:9px;
+
+  font-weight:800;
+
+  text-transform:uppercase;
+
+  letter-spacing:.05em;
+
+}
+
+
+.connection-dot{
+
+  width:7px;
+  height:7px;
+
+  border-radius:50%;
+
+  background:#bbb;
+
+}
+
+
+.connection.online{
+
+  color:
+    var(--green);
+
+}
+
+
+.connection.online
+.connection-dot{
+
+  background:
+    var(--green);
+
+  box-shadow:
+    0 0 0 4px
+    rgba(78,139,98,.10);
+
+}
+
+
+.connection.offline{
+
+  color:
+    var(--red);
+
+}
+
+
+.connection.offline
+.connection-dot{
+
+  background:
+    var(--red);
+
+}
+
+
+/* =========================================================
+   CARDS
+========================================================= */
 
 .card{
 
+  padding:18px;
+
+  margin-bottom:15px;
+
   background:
-    rgba(255,255,255,.9);
+    rgba(255,255,255,.91);
 
   border:
-    1px solid var(--border);
+    1px solid
+    var(--border);
 
   border-radius:24px;
 
-  padding:18px;
-
-  margin-bottom:16px;
-
-  box-shadow:var(--shadow);
+  box-shadow:
+    var(--shadow);
 
 }
+
 
 .card-title{
 
@@ -173,23 +507,32 @@ h1 span{
 
   gap:10px;
 
-  margin-bottom:14px;
+  margin-bottom:13px;
 
 }
 
+
 .card-title h2{
 
-  font-family:'Fredoka',sans-serif;
+  font-family:
+    'Fredoka',
+    sans-serif;
 
   font-size:20px;
 
 }
 
+
 .card-title span{
 
-  font-size:18px;
+  font-size:20px;
 
 }
+
+
+/* =========================================================
+   FORM
+========================================================= */
 
 label{
 
@@ -198,44 +541,48 @@ label{
   margin:
     14px 0 6px;
 
-  font-size:11px;
+  color:#765963;
+
+  font-size:10px;
 
   font-weight:800;
 
-  color:var(--brown,#765963);
+  letter-spacing:.06em;
 
   text-transform:uppercase;
 
-  letter-spacing:.05em;
-
 }
+
 
 input,
 select{
 
   width:100%;
 
-  min-height:46px;
+  min-height:47px;
 
   padding:
     11px 13px;
 
-  border:
-    1px solid rgba(67,45,52,.14);
+  outline:none;
 
-  border-radius:14px;
+  color:
+    var(--ink);
 
   background:#fff;
 
-  color:var(--ink);
+  border:
+    1px solid
+    rgba(67,45,53,.14);
 
-  font-family:inherit;
+  border-radius:14px;
 
   font-size:14px;
 
-  outline:none;
+  appearance:auto;
 
 }
+
 
 input:focus,
 select:focus{
@@ -245,29 +592,32 @@ select:focus{
 
   box-shadow:
     0 0 0 3px
-    rgba(239,111,156,.12);
+    rgba(239,101,149,.12);
 
 }
 
+
 .file-box{
 
-  padding:12px;
-
-  border:
-    1px dashed rgba(217,77,125,.3);
-
-  border-radius:15px;
+  padding:11px;
 
   background:
     var(--pink-soft);
 
+  border:
+    1px dashed
+    rgba(217,68,120,.30);
+
+  border-radius:15px;
+
 }
+
 
 input[type=file]{
 
   min-height:auto;
 
-  padding:7px;
+  padding:6px;
 
   border:0;
 
@@ -275,43 +625,44 @@ input[type=file]{
 
 }
 
-.preview-wrap{
 
-  margin-top:10px;
+.preview-wrap{
 
   display:none;
 
+  margin-top:11px;
+
 }
+
 
 #preview{
 
-  width:110px;
-  height:110px;
+  width:115px;
+  height:115px;
 
   object-fit:cover;
 
-  border-radius:17px;
+  border-radius:18px;
 
   border:
-    1px solid var(--border);
+    1px solid
+    var(--border);
 
-  box-shadow:var(--shadow);
-
-}
-
-button{
-
-  font-family:inherit;
-
-  cursor:pointer;
+  box-shadow:
+    var(--shadow);
 
 }
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
 
 .primary{
 
   width:100%;
 
-  min-height:50px;
+  min-height:51px;
 
   margin-top:18px;
 
@@ -326,29 +677,40 @@ button{
       var(--pink-deep)
     );
 
-  color:white;
+  color:#fff;
 
   font-size:14px;
 
   font-weight:800;
 
   box-shadow:
-    0 8px 18px
-    rgba(217,77,125,.2);
+    0 9px 20px
+    rgba(217,68,120,.22);
+
+  transition:
+    transform .15s ease,
+    opacity .15s ease;
 
 }
+
 
 .primary:active{
-  transform:scale(.98);
+
+  transform:
+    scale(.98);
+
 }
+
 
 .primary:disabled{
 
-  opacity:.5;
+  opacity:.55;
 
-  cursor:not-allowed;
+  cursor:
+    wait;
 
 }
+
 
 .cancel{
 
@@ -366,11 +728,17 @@ button{
 
   background:#f3e7eb;
 
-  color:var(--muted);
+  color:
+    var(--muted);
 
   font-weight:800;
 
 }
+
+
+/* =========================================================
+   STATUS
+========================================================= */
 
 .status{
 
@@ -380,26 +748,40 @@ button{
 
   text-align:center;
 
-  font-size:12px;
+  font-size:11px;
 
-  font-weight:700;
+  font-weight:800;
 
 }
+
 
 .status.success{
-  color:#438052;
+
+  color:
+    var(--green);
+
 }
+
 
 .status.error{
-  color:var(--red);
+
+  color:
+    var(--red);
+
 }
+
 
 .status.info{
-  color:var(--muted);
+
+  color:
+    var(--muted);
+
 }
 
 
-/* LIST */
+/* =========================================================
+   LIST
+========================================================= */
 
 .list{
 
@@ -411,39 +793,50 @@ button{
 
 }
 
+
 .item{
 
   display:flex;
 
   align-items:center;
 
-  gap:11px;
+  gap:10px;
 
-  padding:10px;
+  padding:9px;
 
   background:#fff;
 
   border:
-    1px solid rgba(67,45,52,.08);
+    1px solid
+    rgba(67,45,53,.08);
 
   border-radius:17px;
 
 }
 
+
 .item-image{
 
   flex-shrink:0;
 
-  width:58px;
-  height:58px;
-
-  border-radius:12px;
+  width:59px;
+  height:59px;
 
   object-fit:cover;
 
-  background:#fde9f0;
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  background:
+    var(--pink-soft);
+
+  border-radius:13px;
 
 }
+
 
 .item-meta{
 
@@ -453,9 +846,12 @@ button{
 
 }
 
+
 .item-name{
 
-  font-family:'Fredoka',sans-serif;
+  font-family:
+    'Fredoka',
+    sans-serif;
 
   font-size:14px;
 
@@ -467,15 +863,18 @@ button{
 
 }
 
+
 .item-info{
 
   margin-top:3px;
 
-  color:var(--muted);
+  color:
+    var(--muted);
 
   font-size:10px;
 
 }
+
 
 .item-actions{
 
@@ -487,74 +886,90 @@ button{
 
 }
 
+
 .action{
 
   border:0;
 
   border-radius:10px;
 
-  padding:7px 9px;
+  padding:
+    7px 9px;
 
-  font-size:10px;
+  font-size:9px;
 
   font-weight:800;
 
 }
 
+
 .edit{
 
-  background:var(--pink-soft);
+  color:
+    var(--pink-deep);
 
-  color:var(--pink-deep);
+  background:
+    var(--pink-soft);
 
 }
+
 
 .delete{
 
-  background:#fae4e7;
+  color:
+    var(--red);
 
-  color:var(--red);
+  background:#fae4e7;
 
 }
 
+
 .empty{
 
-  padding:24px;
+  padding:25px;
 
   text-align:center;
 
-  color:var(--muted);
+  color:
+    var(--muted);
 
-  font-size:12px;
+  font-size:11px;
 
   border:
-    1px dashed rgba(217,77,125,.25);
+    1px dashed
+    rgba(217,68,120,.25);
 
   border-radius:17px;
 
 }
 
 
-/* INFO */
+/* =========================================================
+   WARNING
+========================================================= */
 
 .warning{
 
   padding:13px;
 
+  margin-top:3px;
+
   background:#fff6dd;
 
   border:
-    1px solid #f1dfac;
+    1px solid
+    #f1dfac;
 
   border-radius:15px;
 
   color:#795e20;
 
-  font-size:11px;
+  font-size:10px;
 
-  line-height:1.5;
+  line-height:1.55;
 
 }
+
 
 .warning strong{
 
@@ -562,24 +977,87 @@ button{
 
   margin-bottom:3px;
 
-  font-family:'Fredoka',sans-serif;
+  font-family:
+    'Fredoka',
+    sans-serif;
 
   font-size:14px;
 
 }
 
 
-/* DESKTOP */
+/* =========================================================
+   TAP SPARK
+========================================================= */
+
+.tap-spark{
+
+  position:fixed;
+
+  z-index:500;
+
+  pointer-events:none;
+
+  color:
+    var(--pink-hot);
+
+  font-size:17px;
+
+  animation:
+    tapSpark .72s
+    ease-out
+    forwards;
+
+}
+
+
+@keyframes tapSpark{
+
+  0%{
+
+    opacity:1;
+
+    transform:
+      translate(0,0)
+      scale(.35);
+
+  }
+
+  100%{
+
+    opacity:0;
+
+    transform:
+      translate(
+        var(--dx),
+        var(--dy)
+      )
+      scale(1.3)
+      rotate(140deg);
+
+  }
+
+}
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
 
 @media(min-width:640px){
 
   body{
+
     padding-top:40px;
+
   }
 
+
   .logo{
-    width:105px;
-    height:105px;
+
+    width:110px;
+    height:110px;
+
   }
 
 }
@@ -591,6 +1069,13 @@ button{
 
 <body>
 
+
+<div
+  class="decor-layer"
+  id="decorLayer">
+</div>
+
+
 <div class="container">
 
 
@@ -601,20 +1086,48 @@ button{
     src="logo.png"
     alt="Rarely Found">
 
+
   <h1>
-    RARELY <span>FOUND</span>
+
+    RARELY
+    <span>FOUND</span>
+
   </h1>
 
+
   <p class="subtitle">
-    The little control room behind the collection 🎀
+
+    The little control room
+    behind the collection 🎀
+
   </p>
+
+
+  <div
+    class="connection"
+    id="connection">
+
+    <span
+      class="connection-dot">
+    </span>
+
+    <span
+      id="connectionText">
+      Connecting…
+
+    </span>
+
+  </div>
 
 </header>
 
 
-<!-- ADD / EDIT -->
+<!-- =======================================================
+     ADD / EDIT
+======================================================== -->
 
 <div class="card">
+
 
   <div class="card-title">
 
@@ -633,9 +1146,8 @@ button{
     Section
   </label>
 
-  <select
-    id="topCat"
-    onchange="toggleSub()">
+
+  <select id="topCat">
 
     <option value="pins">
       Pins
@@ -650,9 +1162,11 @@ button{
 
   <div id="subCatWrap">
 
+
     <label>
       Pin category
     </label>
+
 
     <select id="subCat">
 
@@ -674,12 +1188,14 @@ button{
 
     </select>
 
+
   </div>
 
 
   <label>
     Name
   </label>
+
 
   <input
     id="pName"
@@ -692,6 +1208,7 @@ button{
     Price ($)
   </label>
 
+
   <input
     id="pPrice"
     type="number"
@@ -703,6 +1220,7 @@ button{
   <label>
     Rarity
   </label>
+
 
   <select id="pRarity">
 
@@ -729,13 +1247,13 @@ button{
     Photo
   </label>
 
+
   <div class="file-box">
 
     <input
       type="file"
       id="pImage"
-      accept="image/*"
-      onchange="previewImage()">
+      accept="image/*">
 
   </div>
 
@@ -754,8 +1272,7 @@ button{
   <button
     class="primary"
     id="saveBtn"
-    type="button"
-    onclick="saveProduct()">
+    type="button">
 
     Add to collection
 
@@ -765,8 +1282,7 @@ button{
   <button
     class="cancel"
     id="cancelBtn"
-    type="button"
-    onclick="cancelEdit()">
+    type="button">
 
     Cancel edit
 
@@ -781,9 +1297,12 @@ button{
 </div>
 
 
-<!-- LIST -->
+<!-- =======================================================
+     LIST
+======================================================== -->
 
 <div class="card">
+
 
   <div class="card-title">
 
@@ -802,9 +1321,8 @@ button{
     View / manage
   </label>
 
-  <select
-    id="viewCat"
-    onchange="loadList()">
+
+  <select id="viewCat">
 
     <option value="pins/disney">
       Pins — Disney
@@ -831,8 +1349,7 @@ button{
 
   <div
     class="list"
-    id="list"
-    style="margin-top:14px">
+    id="list">
 
   </div>
 
@@ -845,10 +1362,10 @@ button{
     🎀 No login by design
   </strong>
 
-  This page has no authentication.
-  Keep the admin URL private.
-  Anyone who can access it may be able to modify
-  the Firebase data if your database rules allow public writes.
+  This admin page has no authentication.
+  Keep the URL private. Anyone who can access it
+  may modify Firebase data if your database rules
+  allow public writes.
 
 </div>
 
@@ -858,31 +1375,31 @@ button{
 
 <script type="module">
 
+/* =========================================================
+   FIREBASE
+========================================================= */
+
 import {
   initializeApp
 } from
 "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
 
+
 import {
   getDatabase,
   ref,
   push,
-  set,
+  update,
   remove,
-  onValue,
-  off
+  onValue
 } from
 "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
 
 
-/* =========================================================
-   FIREBASE
-========================================================= */
-
 const firebaseConfig = {
 
   apiKey:
-    "AIzaSyCPaFBGPyRS0LSdQvNYDucdLbIU2GSfqdE",
+    "AIzaSyCPaFBGPyRS0LSDqvNYDucdLbIU2GSfqdE",
 
   authDomain:
     "greenrobot-ede43.firebaseapp.com",
@@ -908,22 +1425,37 @@ const firebaseConfig = {
 };
 
 
-let db;
+let db = null;
 
+
+/* =========================================================
+   INIT
+========================================================= */
 
 try{
 
   const app =
-    initializeApp(firebaseConfig);
+    initializeApp(
+      firebaseConfig
+    );
 
   db =
     getDatabase(app);
 
+  console.log(
+    "🎀 RARELY FOUND ADMIN Firebase connected"
+  );
+
 }catch(error){
 
   console.error(
-    "Firebase error:",
+    "Firebase initialization error:",
     error
+  );
+
+  setConnection(
+    false,
+    "Firebase error"
   );
 
 }
@@ -933,32 +1465,117 @@ try{
    STATE
 ========================================================= */
 
-let compressedImage = null;
+let compressedImage =
+  null;
 
-let editingId = null;
+let editingId =
+  null;
 
-let editingPath = null;
+let editingPath =
+  null;
 
-let currentListPath = null;
+let currentListPath =
+  null;
 
-let currentListListener = null;
+let currentListUnsubscribe =
+  null;
+
+
+/* =========================================================
+   CONNECTION
+========================================================= */
+
+function setConnection(
+  online,
+  text
+){
+
+  const box =
+    document.getElementById(
+      "connection"
+    );
+
+  const label =
+    document.getElementById(
+      "connectionText"
+    );
+
+
+  if(!box || !label){
+    return;
+  }
+
+
+  box.classList.toggle(
+    "online",
+    online
+  );
+
+
+  box.classList.toggle(
+    "offline",
+    !online
+  );
+
+
+  label.textContent =
+    text;
+
+}
+
+
+if(db){
+
+  onValue(
+    ref(
+      db,
+      ".info/connected"
+    ),
+
+    snapshot => {
+
+      if(
+        snapshot.val() === true
+      ){
+
+        setConnection(
+          true,
+          "Firebase connected"
+        );
+
+      }else{
+
+        setConnection(
+          false,
+          "Offline"
+        );
+
+      }
+
+    },
+
+    error => {
+
+      console.error(
+        "Connection status error:",
+        error
+      );
+
+      setConnection(
+        false,
+        "Connection error"
+      );
+
+    }
+
+  );
+
+}
 
 
 /* =========================================================
    HELPERS
 ========================================================= */
-
-function escapeHTML(value){
-
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
 
 function getPathFromForm(){
 
@@ -975,21 +1592,58 @@ function getPathFromForm(){
         "subCat"
       ).value;
 
-    return:
-      `products/pins/${sub}`;
+
+    /*
+      IMPORTANT:
+      Same exact path used by index.html.
+    */
+
+    return `products/pins/${sub}`;
 
   }
+
 
   return "products/stash";
 
 }
 
 
+function escapeHTML(
+  value
+){
+
+  return String(
+    value ?? ""
+  )
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+  .replace(
+    /</g,
+    "&lt;"
+  )
+  .replace(
+    />/g,
+    "&gt;"
+  )
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+  .replace(
+    /'/g,
+    "&#039;"
+  );
+
+}
+
+
 /* =========================================================
-   TOGGLE
+   CATEGORY TOGGLE
 ========================================================= */
 
-window.toggleSub = function(){
+function toggleSub(){
 
   const pins =
     document.getElementById(
@@ -1004,19 +1658,20 @@ window.toggleSub = function(){
       ? "block"
       : "none";
 
-};
+}
 
 
 /* =========================================================
-   IMAGE COMPRESSION
+   IMAGE PREVIEW
 ========================================================= */
 
-window.previewImage = function(){
+function previewImage(){
 
   const input =
     document.getElementById(
       "pImage"
     );
+
 
   const file =
     input.files?.[0];
@@ -1033,6 +1688,32 @@ window.previewImage = function(){
     )
   ){
 
+    status(
+      "Please choose an image.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  /*
+    Avoid absurdly large files.
+  */
+
+  if(
+    file.size >
+    15 * 1024 * 1024
+  ){
+
+    status(
+      "Image is too large. Choose one under 15 MB.",
+      "error"
+    );
+
+    input.value = "";
+
     return;
 
   }
@@ -1042,104 +1723,147 @@ window.previewImage = function(){
     new FileReader();
 
 
-  reader.onload = event => {
+  reader.onload =
+    event => {
 
-    const image =
-      new Image();
-
-
-    image.onload = () => {
-
-      const maxSize = 900;
-
-      const scale =
-        Math.min(
-          1,
-          maxSize /
-          Math.max(
-            image.width,
-            image.height
-          )
-        );
+      const image =
+        new Image();
 
 
-      const width =
-        Math.round(
-          image.width * scale
-        );
+      image.onload =
+        () => {
+
+          const maxSize =
+            900;
 
 
-      const height =
-        Math.round(
-          image.height * scale
-        );
+          const scale =
+            Math.min(
+              1,
+              maxSize /
+              Math.max(
+                image.width,
+                image.height
+              )
+            );
 
 
-      const canvas =
-        document.createElement(
-          "canvas"
-        );
+          const width =
+            Math.max(
+              1,
+              Math.round(
+                image.width *
+                scale
+              )
+            );
 
 
-      canvas.width =
-        width;
-
-      canvas.height =
-        height;
-
-
-      const ctx =
-        canvas.getContext(
-          "2d"
-        );
+          const height =
+            Math.max(
+              1,
+              Math.round(
+                image.height *
+                scale
+              )
+            );
 
 
-      ctx.drawImage(
-        image,
-        0,
-        0,
-        width,
-        height
-      );
+          const canvas =
+            document.createElement(
+              "canvas"
+            );
 
 
-      compressedImage =
-        canvas.toDataURL(
-          "image/jpeg",
-          .78
-        );
+          canvas.width =
+            width;
+
+          canvas.height =
+            height;
 
 
-      const preview =
-        document.getElementById(
-          "preview"
-        );
-
-      const wrap =
-        document.getElementById(
-          "previewWrap"
-        );
+          const ctx =
+            canvas.getContext(
+              "2d"
+            );
 
 
-      preview.src =
-        compressedImage;
+          ctx.drawImage(
+            image,
+            0,
+            0,
+            width,
+            height
+          );
 
 
-      wrap.style.display =
-        "block";
+          compressedImage =
+            canvas.toDataURL(
+              "image/jpeg",
+              .78
+            );
+
+
+          const preview =
+            document.getElementById(
+              "preview"
+            );
+
+
+          const wrap =
+            document.getElementById(
+              "previewWrap"
+            );
+
+
+          preview.src =
+            compressedImage;
+
+
+          wrap.style.display =
+            "block";
+
+
+          status(
+            "Photo ready 🎀",
+            "info"
+          );
+
+        };
+
+
+      image.onerror =
+        () => {
+
+          status(
+            "Could not read this image.",
+            "error"
+          );
+
+        };
+
+
+      image.src =
+        event.target.result;
 
     };
 
 
-    image.src =
-      event.target.result;
+  reader.onerror =
+    () => {
 
-  };
+      status(
+        "Could not read the file.",
+        "error"
+      );
+
+    };
 
 
-  reader.readAsDataURL(file);
+  reader.readAsDataURL(
+    file
+  );
 
-};
+}
 
 
 /* =========================================================
@@ -1171,7 +1895,7 @@ function status(
    SAVE PRODUCT
 ========================================================= */
 
-window.saveProduct = async function(){
+async function saveProduct(){
 
   if(!db){
 
@@ -1217,6 +1941,9 @@ window.saveProduct = async function(){
 
   if(
     price === "" ||
+    !Number.isFinite(
+      Number(price)
+    ) ||
     Number(price) < 0
   ){
 
@@ -1252,58 +1979,131 @@ window.saveProduct = async function(){
   );
 
 
-  const product = {
-
-    name,
-
-    price,
-
-    rarity,
-
-    image:
-      compressedImage || null,
-
-    createdAt:
-      editingId
-        ? undefined
-        : Date.now()
-
-  };
-
-
   try{
 
-    /*
-      EDIT
-    */
+    /* =====================================================
+       EDIT
+    ===================================================== */
 
     if(editingId){
 
-      const existingRef =
-        ref(
-          db,
-          `${editingPath}/${editingId}`
-        );
+      const oldPath =
+        editingPath;
+
+
+      const oldId =
+        editingId;
+
+
+      const changes = {
+
+        name,
+
+        price,
+
+        rarity
+
+      };
 
 
       /*
-        Don't overwrite original
-        createdAt if editing.
+        If a new image was selected,
+        replace the old one.
+
+        If not, leave existing image untouched.
       */
 
-      if(
-        product.createdAt === undefined
-      ){
+      if(compressedImage){
 
-        delete product.createdAt;
+        changes.image =
+          compressedImage;
 
       }
 
 
-      await set(
-        existingRef,
-        product
-      );
+      /*
+        Same category:
+        update existing record.
+      */
+
+      if(
+        path === oldPath
+      ){
+
+        await update(
+          ref(
+            db,
+            `${oldPath}/${oldId}`
+          ),
+          changes
+        );
+
+      }
+
+
+      /*
+        Category changed:
+        copy record to new location,
+        then delete old record.
+      */
+
+      else{
+
+        const existing =
+          await readOnce(
+            `${oldPath}/${oldId}`
+          );
+
+
+        if(!existing){
+
+          throw new Error(
+            "The original item no longer exists."
+          );
+
+        }
+
+
+        const movedProduct = {
+
+          ...existing,
+
+          ...changes
+
+        };
+
+
+        /*
+          Preserve original creation date.
+        */
+
+        if(
+          !movedProduct.createdAt
+        ){
+
+          movedProduct.createdAt =
+            Date.now();
+
+        }
+
+
+        await push(
+          ref(
+            db,
+            path
+          ),
+          movedProduct
+        );
+
+
+        await remove(
+          ref(
+            db,
+            `${oldPath}/${oldId}`
+          )
+        );
+
+      }
 
 
       status(
@@ -1313,23 +2113,41 @@ window.saveProduct = async function(){
 
     }
 
-    /*
-      NEW
-    */
+
+    /* =====================================================
+       NEW
+    ===================================================== */
 
     else{
 
+      const product = {
+
+        name,
+
+        price,
+
+        rarity,
+
+        image:
+          compressedImage || null,
+
+        createdAt:
+          Date.now()
+
+      };
+
+
       await push(
-        ref(db,path),
-        {
-          ...product,
-          createdAt:Date.now()
-        }
+        ref(
+          db,
+          path
+        ),
+        product
       );
 
 
       status(
-        "Added ✓",
+        "Added to RARELY FOUND ✓",
         "success"
       );
 
@@ -1339,27 +2157,27 @@ window.saveProduct = async function(){
     resetForm();
 
 
-    if(
-      document.getElementById(
-        "viewCat"
-      ).value ===
-      path.replace(
-        "products/",
-        ""
-      )
-    ){
+    /*
+      Refresh visible admin list.
+    */
 
-      loadList();
+    loadList();
 
-    }
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "SAVE ERROR:",
+      error
+    );
+
 
     status(
-      "Error: " +
-      error.message,
+      "Firebase error: " +
+      (
+        error?.message ||
+        "Unknown error"
+      ),
       "error"
     );
 
@@ -1369,17 +2187,110 @@ window.saveProduct = async function(){
   saveButton.disabled =
     false;
 
-};
+}
+
+
+/* =========================================================
+   READ ONCE
+========================================================= */
+
+async function readOnce(
+  path
+){
+
+  return new Promise(
+    (resolve,reject) => {
+
+      if(!db){
+
+        reject(
+          new Error(
+            "Firebase is not connected."
+          )
+        );
+
+        return;
+
+      }
+
+
+      let finished =
+        false;
+
+
+      onValue(
+        ref(
+          db,
+          path
+        ),
+
+        snapshot => {
+
+          if(finished){
+            return;
+          }
+
+
+          finished =
+            true;
+
+
+          resolve(
+            snapshot.val()
+          );
+
+        },
+
+        error => {
+
+          if(finished){
+            return;
+          }
+
+
+          finished =
+            true;
+
+
+          reject(
+            error
+          );
+
+        },
+
+        {
+          onlyOnce:true
+        }
+
+      );
+
+    }
+  );
+
+}
 
 
 /* =========================================================
    LOAD LIST
 ========================================================= */
 
-window.loadList = function(){
+function loadList(){
 
   if(!db){
+
+    const list =
+      document.getElementById(
+        "list"
+      );
+
+
+    list.innerHTML =
+      `<div class="empty">
+        Firebase isn't connected.
+      </div>`;
+
     return;
+
   }
 
 
@@ -1402,16 +2313,18 @@ window.loadList = function(){
     </div>`;
 
 
+  /*
+    Stop previous subscription.
+  */
+
   if(
-    currentListListener &&
-    currentListPath
+    currentListUnsubscribe
   ){
 
-    off(
-      ref(db,currentListPath),
-      "value",
-      currentListListener
-    );
+    currentListUnsubscribe();
+
+    currentListUnsubscribe =
+      null;
 
   }
 
@@ -1420,190 +2333,543 @@ window.loadList = function(){
     path;
 
 
-  currentListListener =
-    snapshot => {
+  currentListUnsubscribe =
+    onValue(
+      ref(
+        db,
+        path
+      ),
 
-      const data =
-        snapshot.val();
+      snapshot => {
 
+        renderList(
+          snapshot.val()
+        );
 
-      if(
-        !data ||
-        typeof data !== "object"
-      ){
+      },
+
+      error => {
+
+        console.error(
+          "LIST ERROR:",
+          error
+        );
+
 
         list.innerHTML =
           `<div class="empty">
-            Nothing here yet 🎀
+            Firebase error:<br>
+            ${escapeHTML(
+              error.message
+            )}
           </div>`;
 
-        return;
+      }
+
+    );
+
+}
+
+
+/* =========================================================
+   RENDER ADMIN LIST
+========================================================= */
+
+function renderList(
+  data
+){
+
+  const list =
+    document.getElementById(
+      "list"
+    );
+
+
+  if(
+    !data ||
+    typeof data !== "object"
+  ){
+
+    list.innerHTML =
+      `<div class="empty">
+        Nothing here yet 🎀
+      </div>`;
+
+    return;
+
+  }
+
+
+  const items =
+    Object.entries(data)
+      .filter(
+        ([,product]) =>
+          product &&
+          typeof product === "object"
+      )
+      .map(
+        ([id,product]) => ({
+          id,
+          ...product
+        })
+      )
+      .sort(
+        (a,b) =>
+          Number(
+            b.createdAt || 0
+          ) -
+          Number(
+            a.createdAt || 0
+          )
+      );
+
+
+  if(
+    items.length === 0
+  ){
+
+    list.innerHTML =
+      `<div class="empty">
+        Nothing here yet 🎀
+      </div>`;
+
+    return;
+
+  }
+
+
+  list.innerHTML =
+    "";
+
+
+  items.forEach(
+    product => {
+
+      const item =
+        document.createElement(
+          "div"
+        );
+
+
+      item.className =
+        "item";
+
+
+      /* IMAGE */
+
+      if(product.image){
+
+        const image =
+          document.createElement(
+            "img"
+          );
+
+
+        image.className =
+          "item-image";
+
+
+        image.src =
+          product.image;
+
+
+        image.alt =
+          "";
+
+
+        item.appendChild(
+          image
+        );
+
+      }else{
+
+        const placeholder =
+          document.createElement(
+            "div"
+          );
+
+
+        placeholder.className =
+          "item-image";
+
+
+        placeholder.textContent =
+          "🎀";
+
+
+        item.appendChild(
+          placeholder
+        );
 
       }
 
 
-      const items =
-        Object.entries(data)
-          .map(
-            ([id,product]) => ({
-              id,
-              ...(product || {})
-            })
-          )
-          .sort(
-            (a,b) =>
-              Number(b.createdAt || 0) -
-              Number(a.createdAt || 0)
+      /* META */
+
+      const meta =
+        document.createElement(
+          "div"
+        );
+
+
+      meta.className =
+        "item-meta";
+
+
+      const name =
+        document.createElement(
+          "div"
+        );
+
+
+      name.className =
+        "item-name";
+
+
+      name.textContent =
+        product.name ||
+        "Untitled";
+
+
+      const info =
+        document.createElement(
+          "div"
+        );
+
+
+      info.className =
+        "item-info";
+
+
+      info.textContent =
+        `$${product.price ?? "—"} · ${
+          product.rarity || "common"
+        }`;
+
+
+      meta.appendChild(
+        name
+      );
+
+      meta.appendChild(
+        info
+      );
+
+
+      /* ACTIONS */
+
+      const actions =
+        document.createElement(
+          "div"
+        );
+
+
+      actions.className =
+        "item-actions";
+
+
+      const edit =
+        document.createElement(
+          "button"
+        );
+
+
+      edit.type =
+        "button";
+
+      edit.className =
+        "action edit";
+
+      edit.textContent =
+        "Edit";
+
+
+      edit.addEventListener(
+        "click",
+        event => {
+
+          tapSparks(
+            event
           );
 
 
-      list.innerHTML =
-        items
-          .map(product => {
+          editProduct(
+            currentListPath,
+            product.id
+          );
 
-            const image =
-              product.image
-                ? `
-                  <img
-                    class="item-image"
-                    src="${escapeHTML(
-                      product.image
-                    )}"
-                    alt="">
-                `
-                : `
-                  <div class="item-image">
-                  </div>
-                `;
+        }
+      );
 
 
-            return `
-
-              <div class="item">
-
-                ${image}
-
-                <div class="item-meta">
-
-                  <div class="item-name">
-                    ${escapeHTML(
-                      product.name ||
-                      "Untitled"
-                    )}
-                  </div>
-
-                  <div class="item-info">
-
-                    $${escapeHTML(
-                      product.price ?? "—"
-                    )}
-
-                    ·
-
-                    ${escapeHTML(
-                      product.rarity ||
-                      "common"
-                    )}
-
-                  </div>
-
-                </div>
+      const del =
+        document.createElement(
+          "button"
+        );
 
 
-                <div class="item-actions">
+      del.type =
+        "button";
 
-                  <button
-                    class="action edit"
-                    onclick="
-                      editProduct(
-                        '${path}',
-                        '${product.id}'
-                      )
-                    ">
+      del.className =
+        "action delete";
 
-                    Edit
-
-                  </button>
+      del.textContent =
+        "Delete";
 
 
-                  <button
-                    class="action delete"
-                    onclick="
-                      deleteItem(
-                        '${path}',
-                        '${product.id}'
-                      )
-                    ">
+      del.addEventListener(
+        "click",
+        event => {
 
-                    Delete
-
-                  </button>
-
-                </div>
-
-              </div>
-
-            `;
-
-          })
-          .join("");
-
-    };
+          tapSparks(
+            event
+          );
 
 
-  onValue(
-    ref(db,path),
-    currentListListener
+          deleteItem(
+            currentListPath,
+            product.id
+          );
+
+        }
+      );
+
+
+      actions.appendChild(
+        edit
+      );
+
+      actions.appendChild(
+        del
+      );
+
+
+      item.appendChild(
+        meta
+      );
+
+      item.appendChild(
+        actions
+      );
+
+
+      list.appendChild(
+        item
+      );
+
+    }
   );
 
-};
+}
 
 
 /* =========================================================
-   EDIT
+   EDIT PRODUCT
 ========================================================= */
 
-window.editProduct = async function(
+async function editProduct(
+  path,
+  id
+){
+
+  try{
+
+    const product =
+      await readOnce(
+        `${path}/${id}`
+      );
+
+
+    if(!product){
+
+      status(
+        "This item no longer exists.",
+        "error"
+      );
+
+      loadList();
+
+      return;
+
+    }
+
+
+    editingId =
+      id;
+
+    editingPath =
+      path;
+
+
+    const relative =
+      path.replace(
+        "products/",
+        ""
+      );
+
+
+    if(
+      relative.startsWith(
+        "pins/"
+      )
+    ){
+
+      document.getElementById(
+        "topCat"
+      ).value =
+        "pins";
+
+
+      document.getElementById(
+        "subCat"
+      ).value =
+        relative.split(
+          "/"
+        )[1];
+
+
+      toggleSub();
+
+    }else{
+
+      document.getElementById(
+        "topCat"
+      ).value =
+        "stash";
+
+
+      toggleSub();
+
+    }
+
+
+    document.getElementById(
+      "pName"
+    ).value =
+      product.name || "";
+
+
+    document.getElementById(
+      "pPrice"
+    ).value =
+      product.price ?? "";
+
+
+    document.getElementById(
+      "pRarity"
+    ).value =
+      product.rarity ||
+      "common";
+
+
+    compressedImage =
+      product.image ||
+      null;
+
+
+    const previewWrap =
+      document.getElementById(
+        "previewWrap"
+      );
+
+
+    if(compressedImage){
+
+      document.getElementById(
+        "preview"
+      ).src =
+        compressedImage;
+
+
+      previewWrap.style.display =
+        "block";
+
+    }else{
+
+      previewWrap.style.display =
+        "none";
+
+    }
+
+
+    /*
+      Clear file picker.
+      Existing image is kept in compressedImage.
+    */
+
+    document.getElementById(
+      "pImage"
+    ).value =
+      "";
+
+
+    document.getElementById(
+      "formTitle"
+    ).textContent =
+      "Edit your find";
+
+
+    document.getElementById(
+      "saveBtn"
+    ).textContent =
+      "Save changes";
+
+
+    document.getElementById(
+      "cancelBtn"
+    ).style.display =
+      "block";
+
+
+    status(
+      "Editing " +
+      (
+        product.name ||
+        "item"
+      ),
+      "info"
+    );
+
+
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+
+
+  }catch(error){
+
+    console.error(
+      "EDIT ERROR:",
+      error
+    );
+
+
+    status(
+      "Could not load item: " +
+      error.message,
+      "error"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   DELETE
+========================================================= */
+
+async function deleteItem(
   path,
   id
 ){
 
   if(!db){
-    return;
-  }
-
-
-  const snapshot =
-    await new Promise(
-      resolve => {
-
-        onValue(
-          ref(
-            db,
-            `${path}/${id}`
-          ),
-          snap => {
-
-            resolve(snap);
-
-          },
-          {
-            onlyOnce:true
-          }
-        );
-
-      }
-    );
-
-
-  const product =
-    snapshot.val();
-
-
-  if(!product){
 
     status(
-      "This item no longer exists.",
+      "Firebase isn't connected.",
       "error"
     );
 
@@ -1612,146 +2878,8 @@ window.editProduct = async function(
   }
 
 
-  editingId =
-    id;
-
-  editingPath =
-    path;
-
-
-  const relative =
-    path.replace(
-      "products/",
-      ""
-    );
-
-
-  if(
-    relative.startsWith(
-      "pins/"
-    )
-  ){
-
-    document.getElementById(
-      "topCat"
-    ).value =
-      "pins";
-
-
-    document.getElementById(
-      "subCat"
-    ).value =
-      relative.split("/")[1];
-
-
-    toggleSub();
-
-  }else{
-
-    document.getElementById(
-      "topCat"
-    ).value =
-      "stash";
-
-
-    toggleSub();
-
-  }
-
-
-  document.getElementById(
-    "pName"
-  ).value =
-    product.name || "";
-
-
-  document.getElementById(
-    "pPrice"
-  ).value =
-    product.price ?? "";
-
-
-  document.getElementById(
-    "pRarity"
-  ).value =
-    product.rarity || "common";
-
-
-  compressedImage =
-    product.image || null;
-
-
-  if(compressedImage){
-
-    document.getElementById(
-      "preview"
-    ).src =
-      compressedImage;
-
-    document.getElementById(
-      "previewWrap"
-    ).style.display =
-      "block";
-
-  }else{
-
-    document.getElementById(
-      "previewWrap"
-    ).style.display =
-      "none";
-
-  }
-
-
-  document.getElementById(
-    "formTitle"
-  ).textContent =
-    "Edit your find";
-
-
-  document.getElementById(
-    "saveBtn"
-  ).textContent =
-    "Save changes";
-
-
-  document.getElementById(
-    "cancelBtn"
-  ).style.display =
-    "block";
-
-
-  status(
-    "Editing " +
-    (product.name || "item"),
-    "info"
-  );
-
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-};
-
-
-/* =========================================================
-   DELETE
-========================================================= */
-
-window.deleteItem = async function(
-  path,
-  id
-){
-
-  if(!db){
-    return;
-  }
-
-
   const confirmed =
-    confirm(
+    window.confirm(
       "Delete this find forever?"
     );
 
@@ -1771,6 +2899,21 @@ window.deleteItem = async function(
     );
 
 
+    /*
+      If currently editing the deleted item,
+      cancel editing.
+    */
+
+    if(
+      editingId === id &&
+      editingPath === path
+    ){
+
+      resetForm();
+
+    }
+
+
     status(
       "Deleted ✓",
       "success"
@@ -1779,7 +2922,11 @@ window.deleteItem = async function(
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "DELETE ERROR:",
+      error
+    );
+
 
     status(
       "Could not delete: " +
@@ -1789,7 +2936,7 @@ window.deleteItem = async function(
 
   }
 
-};
+}
 
 
 /* =========================================================
@@ -1798,26 +2945,32 @@ window.deleteItem = async function(
 
 function resetForm(){
 
-  editingId = null;
+  editingId =
+    null;
 
-  editingPath = null;
+  editingPath =
+    null;
 
-  compressedImage = null;
+  compressedImage =
+    null;
 
 
   document.getElementById(
     "pName"
-  ).value = "";
+  ).value =
+    "";
 
 
   document.getElementById(
     "pPrice"
-  ).value = "";
+  ).value =
+    "";
 
 
   document.getElementById(
     "pImage"
-  ).value = "";
+  ).value =
+    "";
 
 
   document.getElementById(
@@ -1846,20 +2999,201 @@ function resetForm(){
 }
 
 
-window.cancelEdit = function(){
+/* =========================================================
+   EVENTS
+========================================================= */
 
-  resetForm();
+document.getElementById(
+  "topCat"
+).addEventListener(
+  "change",
+  toggleSub
+);
 
-  status(
-    "",
-    "info"
-  );
 
-};
+document.getElementById(
+  "pImage"
+).addEventListener(
+  "change",
+  previewImage
+);
+
+
+document.getElementById(
+  "saveBtn"
+).addEventListener(
+  "click",
+  event => {
+
+    tapSparks(
+      event
+    );
+
+    saveProduct();
+
+  }
+);
+
+
+document.getElementById(
+  "cancelBtn"
+).addEventListener(
+  "click",
+  event => {
+
+    tapSparks(
+      event
+    );
+
+    resetForm();
+
+    status(
+      "",
+      "info"
+    );
+
+  }
+);
+
+
+document.getElementById(
+  "viewCat"
+).addEventListener(
+  "change",
+  loadList
+);
 
 
 /* =========================================================
-   INITIAL STATE
+   DECORATIONS
+========================================================= */
+
+function createDecorations(){
+
+  const layer =
+    document.getElementById(
+      "decorLayer"
+    );
+
+
+  const symbols = [
+    "✦",
+    "✧",
+    "⋆",
+    "♡"
+  ];
+
+
+  for(
+    let i=0;
+    i<15;
+    i++
+  ){
+
+    const item =
+      document.createElement(
+        "span"
+      );
+
+
+    const bow =
+      i % 6 === 0;
+
+
+    item.className =
+      "floating " +
+      (
+        bow
+          ? "bow"
+          : "star"
+      );
+
+
+    item.textContent =
+      bow
+        ? "🎀"
+        : symbols[
+            Math.floor(
+              Math.random() *
+              symbols.length
+            )
+          ];
+
+
+    item.style.left =
+      Math.random()*100 +
+      "%";
+
+
+    item.style.top =
+      5 +
+      Math.random()*90 +
+      "%";
+
+
+    item.style.setProperty(
+      "--size",
+      (
+        bow
+          ? 18 +
+            Math.random()*10
+          : 10 +
+            Math.random()*12
+      ) +
+      "px"
+    );
+
+
+    item.style.setProperty(
+      "--move-x",
+      (
+        (Math.random()-.5)*60
+      ) +
+      "px"
+    );
+
+
+    item.style.setProperty(
+      "--move-y",
+      (
+        20 +
+        Math.random()*45
+      ) +
+      "px"
+    );
+
+
+    item.style.setProperty(
+      "--duration",
+      (
+        4 +
+        Math.random()*4
+      ) +
+      "s"
+    );
+
+
+    item.style.setProperty(
+      "--delay",
+      Math.random()*5 +
+      "s"
+    );
+
+
+    layer.appendChild(
+      item
+    );
+
+  }
+
+}
+
+
+createDecorations();
+
+
+/* =========================================================
+   INITIAL
 ========================================================= */
 
 toggleSub();
