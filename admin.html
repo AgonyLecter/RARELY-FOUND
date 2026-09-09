@@ -1,0 +1,1872 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+
+<title>RARELY FOUND — Admin</title>
+
+<meta
+  name="theme-color"
+  content="#f7c9d8">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link
+  href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&display=swap"
+  rel="stylesheet">
+
+
+<style>
+
+:root{
+
+  --pink:#f7c9d8;
+  --pink-soft:#fde9f0;
+  --pink-hot:#ef6f9c;
+  --pink-deep:#d94d7d;
+
+  --cream:#fffaf4;
+
+  --red:#d93650;
+
+  --ink:#432d34;
+  --muted:#876d75;
+
+  --white:#fff;
+
+  --border:rgba(67,45,52,.12);
+
+  --shadow:
+    0 10px 28px rgba(89,45,59,.10);
+
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  background:#fdebf1;
+}
+
+body{
+
+  min-height:100vh;
+
+  color:var(--ink);
+
+  font-family:'DM Sans',sans-serif;
+
+  background:
+    radial-gradient(
+      circle at 10% 5%,
+      #fff,
+      transparent 25%
+    ),
+    linear-gradient(
+      180deg,
+      #fdebf1,
+      #fffaf7
+    );
+
+  padding:
+    20px 14px 50px;
+
+}
+
+.container{
+
+  width:min(
+    620px,
+    100%
+  );
+
+  margin:auto;
+
+}
+
+header{
+
+  text-align:center;
+
+  margin-bottom:22px;
+
+}
+
+.logo{
+
+  width:90px;
+  height:90px;
+
+  object-fit:contain;
+
+  margin-bottom:8px;
+
+  filter:
+    drop-shadow(
+      0 7px 10px rgba(89,45,59,.12)
+    );
+
+}
+
+h1{
+
+  font-family:'Fredoka',sans-serif;
+
+  font-size:30px;
+
+  line-height:1;
+
+}
+
+h1 span{
+  color:var(--pink-deep);
+}
+
+.subtitle{
+
+  margin-top:7px;
+
+  color:var(--muted);
+
+  font-size:12px;
+
+}
+
+.card{
+
+  background:
+    rgba(255,255,255,.9);
+
+  border:
+    1px solid var(--border);
+
+  border-radius:24px;
+
+  padding:18px;
+
+  margin-bottom:16px;
+
+  box-shadow:var(--shadow);
+
+}
+
+.card-title{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  gap:10px;
+
+  margin-bottom:14px;
+
+}
+
+.card-title h2{
+
+  font-family:'Fredoka',sans-serif;
+
+  font-size:20px;
+
+}
+
+.card-title span{
+
+  font-size:18px;
+
+}
+
+label{
+
+  display:block;
+
+  margin:
+    14px 0 6px;
+
+  font-size:11px;
+
+  font-weight:800;
+
+  color:var(--brown,#765963);
+
+  text-transform:uppercase;
+
+  letter-spacing:.05em;
+
+}
+
+input,
+select{
+
+  width:100%;
+
+  min-height:46px;
+
+  padding:
+    11px 13px;
+
+  border:
+    1px solid rgba(67,45,52,.14);
+
+  border-radius:14px;
+
+  background:#fff;
+
+  color:var(--ink);
+
+  font-family:inherit;
+
+  font-size:14px;
+
+  outline:none;
+
+}
+
+input:focus,
+select:focus{
+
+  border-color:
+    var(--pink-hot);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(239,111,156,.12);
+
+}
+
+.file-box{
+
+  padding:12px;
+
+  border:
+    1px dashed rgba(217,77,125,.3);
+
+  border-radius:15px;
+
+  background:
+    var(--pink-soft);
+
+}
+
+input[type=file]{
+
+  min-height:auto;
+
+  padding:7px;
+
+  border:0;
+
+  background:transparent;
+
+}
+
+.preview-wrap{
+
+  margin-top:10px;
+
+  display:none;
+
+}
+
+#preview{
+
+  width:110px;
+  height:110px;
+
+  object-fit:cover;
+
+  border-radius:17px;
+
+  border:
+    1px solid var(--border);
+
+  box-shadow:var(--shadow);
+
+}
+
+button{
+
+  font-family:inherit;
+
+  cursor:pointer;
+
+}
+
+.primary{
+
+  width:100%;
+
+  min-height:50px;
+
+  margin-top:18px;
+
+  border:0;
+
+  border-radius:16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--pink-hot),
+      var(--pink-deep)
+    );
+
+  color:white;
+
+  font-size:14px;
+
+  font-weight:800;
+
+  box-shadow:
+    0 8px 18px
+    rgba(217,77,125,.2);
+
+}
+
+.primary:active{
+  transform:scale(.98);
+}
+
+.primary:disabled{
+
+  opacity:.5;
+
+  cursor:not-allowed;
+
+}
+
+.cancel{
+
+  display:none;
+
+  width:100%;
+
+  margin-top:8px;
+
+  padding:11px;
+
+  border:0;
+
+  border-radius:14px;
+
+  background:#f3e7eb;
+
+  color:var(--muted);
+
+  font-weight:800;
+
+}
+
+.status{
+
+  min-height:20px;
+
+  margin-top:10px;
+
+  text-align:center;
+
+  font-size:12px;
+
+  font-weight:700;
+
+}
+
+.status.success{
+  color:#438052;
+}
+
+.status.error{
+  color:var(--red);
+}
+
+.status.info{
+  color:var(--muted);
+}
+
+
+/* LIST */
+
+.list{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:9px;
+
+}
+
+.item{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:11px;
+
+  padding:10px;
+
+  background:#fff;
+
+  border:
+    1px solid rgba(67,45,52,.08);
+
+  border-radius:17px;
+
+}
+
+.item-image{
+
+  flex-shrink:0;
+
+  width:58px;
+  height:58px;
+
+  border-radius:12px;
+
+  object-fit:cover;
+
+  background:#fde9f0;
+
+}
+
+.item-meta{
+
+  flex:1;
+
+  min-width:0;
+
+}
+
+.item-name{
+
+  font-family:'Fredoka',sans-serif;
+
+  font-size:14px;
+
+  white-space:nowrap;
+
+  overflow:hidden;
+
+  text-overflow:ellipsis;
+
+}
+
+.item-info{
+
+  margin-top:3px;
+
+  color:var(--muted);
+
+  font-size:10px;
+
+}
+
+.item-actions{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:5px;
+
+}
+
+.action{
+
+  border:0;
+
+  border-radius:10px;
+
+  padding:7px 9px;
+
+  font-size:10px;
+
+  font-weight:800;
+
+}
+
+.edit{
+
+  background:var(--pink-soft);
+
+  color:var(--pink-deep);
+
+}
+
+.delete{
+
+  background:#fae4e7;
+
+  color:var(--red);
+
+}
+
+.empty{
+
+  padding:24px;
+
+  text-align:center;
+
+  color:var(--muted);
+
+  font-size:12px;
+
+  border:
+    1px dashed rgba(217,77,125,.25);
+
+  border-radius:17px;
+
+}
+
+
+/* INFO */
+
+.warning{
+
+  padding:13px;
+
+  background:#fff6dd;
+
+  border:
+    1px solid #f1dfac;
+
+  border-radius:15px;
+
+  color:#795e20;
+
+  font-size:11px;
+
+  line-height:1.5;
+
+}
+
+.warning strong{
+
+  display:block;
+
+  margin-bottom:3px;
+
+  font-family:'Fredoka',sans-serif;
+
+  font-size:14px;
+
+}
+
+
+/* DESKTOP */
+
+@media(min-width:640px){
+
+  body{
+    padding-top:40px;
+  }
+
+  .logo{
+    width:105px;
+    height:105px;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+<header>
+
+  <img
+    class="logo"
+    src="logo.png"
+    alt="Rarely Found">
+
+  <h1>
+    RARELY <span>FOUND</span>
+  </h1>
+
+  <p class="subtitle">
+    The little control room behind the collection 🎀
+  </p>
+
+</header>
+
+
+<!-- ADD / EDIT -->
+
+<div class="card">
+
+  <div class="card-title">
+
+    <h2 id="formTitle">
+      Add something cute
+    </h2>
+
+    <span>
+      🎀
+    </span>
+
+  </div>
+
+
+  <label>
+    Section
+  </label>
+
+  <select
+    id="topCat"
+    onchange="toggleSub()">
+
+    <option value="pins">
+      Pins
+    </option>
+
+    <option value="stash">
+      Stash
+    </option>
+
+  </select>
+
+
+  <div id="subCatWrap">
+
+    <label>
+      Pin category
+    </label>
+
+    <select id="subCat">
+
+      <option value="disney">
+        Disney
+      </option>
+
+      <option value="universal">
+        Universal
+      </option>
+
+      <option value="sanrio">
+        Sanrio
+      </option>
+
+      <option value="wildcard">
+        Wildcard
+      </option>
+
+    </select>
+
+  </div>
+
+
+  <label>
+    Name
+  </label>
+
+  <input
+    id="pName"
+    type="text"
+    placeholder="e.g. Goofy Sketch Enamel"
+    autocomplete="off">
+
+
+  <label>
+    Price ($)
+  </label>
+
+  <input
+    id="pPrice"
+    type="number"
+    step="0.01"
+    min="0"
+    placeholder="e.g. 24">
+
+
+  <label>
+    Rarity
+  </label>
+
+  <select id="pRarity">
+
+    <option value="common">
+      Common
+    </option>
+
+    <option value="uncommon">
+      Uncommon
+    </option>
+
+    <option value="rare">
+      Rare
+    </option>
+
+    <option value="grail">
+      Grail
+    </option>
+
+  </select>
+
+
+  <label>
+    Photo
+  </label>
+
+  <div class="file-box">
+
+    <input
+      type="file"
+      id="pImage"
+      accept="image/*"
+      onchange="previewImage()">
+
+  </div>
+
+
+  <div
+    class="preview-wrap"
+    id="previewWrap">
+
+    <img
+      id="preview"
+      alt="Preview">
+
+  </div>
+
+
+  <button
+    class="primary"
+    id="saveBtn"
+    type="button"
+    onclick="saveProduct()">
+
+    Add to collection
+
+  </button>
+
+
+  <button
+    class="cancel"
+    id="cancelBtn"
+    type="button"
+    onclick="cancelEdit()">
+
+    Cancel edit
+
+  </button>
+
+
+  <div
+    class="status"
+    id="status">
+  </div>
+
+</div>
+
+
+<!-- LIST -->
+
+<div class="card">
+
+  <div class="card-title">
+
+    <h2>
+      Your finds
+    </h2>
+
+    <span>
+      ✦
+    </span>
+
+  </div>
+
+
+  <label>
+    View / manage
+  </label>
+
+  <select
+    id="viewCat"
+    onchange="loadList()">
+
+    <option value="pins/disney">
+      Pins — Disney
+    </option>
+
+    <option value="pins/universal">
+      Pins — Universal
+    </option>
+
+    <option value="pins/sanrio">
+      Pins — Sanrio
+    </option>
+
+    <option value="pins/wildcard">
+      Pins — Wildcard
+    </option>
+
+    <option value="stash">
+      Stash
+    </option>
+
+  </select>
+
+
+  <div
+    class="list"
+    id="list"
+    style="margin-top:14px">
+
+  </div>
+
+</div>
+
+
+<div class="warning">
+
+  <strong>
+    🎀 No login by design
+  </strong>
+
+  This page has no authentication.
+  Keep the admin URL private.
+  Anyone who can access it may be able to modify
+  the Firebase data if your database rules allow public writes.
+
+</div>
+
+
+</div>
+
+
+<script type="module">
+
+import {
+  initializeApp
+} from
+"https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  push,
+  set,
+  remove,
+  onValue,
+  off
+} from
+"https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+
+
+/* =========================================================
+   FIREBASE
+========================================================= */
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyCPaFBGPyRS0LSdQvNYDucdLbIU2GSfqdE",
+
+  authDomain:
+    "greenrobot-ede43.firebaseapp.com",
+
+  databaseURL:
+    "https://greenrobot-ede43-default-rtdb.europe-west1.firebasedatabase.app",
+
+  projectId:
+    "greenrobot-ede43",
+
+  storageBucket:
+    "greenrobot-ede43.appspot.com",
+
+  messagingSenderId:
+    "41296246884",
+
+  appId:
+    "1:41296246884:web:0a13e2890e4a824cf60771",
+
+  measurementId:
+    "G-F3FK6JXBSR"
+
+};
+
+
+let db;
+
+
+try{
+
+  const app =
+    initializeApp(firebaseConfig);
+
+  db =
+    getDatabase(app);
+
+}catch(error){
+
+  console.error(
+    "Firebase error:",
+    error
+  );
+
+}
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let compressedImage = null;
+
+let editingId = null;
+
+let editingPath = null;
+
+let currentListPath = null;
+
+let currentListListener = null;
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function escapeHTML(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function getPathFromForm(){
+
+  const top =
+    document.getElementById(
+      "topCat"
+    ).value;
+
+
+  if(top === "pins"){
+
+    const sub =
+      document.getElementById(
+        "subCat"
+      ).value;
+
+    return:
+      `products/pins/${sub}`;
+
+  }
+
+  return "products/stash";
+
+}
+
+
+/* =========================================================
+   TOGGLE
+========================================================= */
+
+window.toggleSub = function(){
+
+  const pins =
+    document.getElementById(
+      "topCat"
+    ).value === "pins";
+
+
+  document.getElementById(
+    "subCatWrap"
+  ).style.display =
+    pins
+      ? "block"
+      : "none";
+
+};
+
+
+/* =========================================================
+   IMAGE COMPRESSION
+========================================================= */
+
+window.previewImage = function(){
+
+  const input =
+    document.getElementById(
+      "pImage"
+    );
+
+  const file =
+    input.files?.[0];
+
+
+  if(!file){
+    return;
+  }
+
+
+  if(
+    !file.type.startsWith(
+      "image/"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  const reader =
+    new FileReader();
+
+
+  reader.onload = event => {
+
+    const image =
+      new Image();
+
+
+    image.onload = () => {
+
+      const maxSize = 900;
+
+      const scale =
+        Math.min(
+          1,
+          maxSize /
+          Math.max(
+            image.width,
+            image.height
+          )
+        );
+
+
+      const width =
+        Math.round(
+          image.width * scale
+        );
+
+
+      const height =
+        Math.round(
+          image.height * scale
+        );
+
+
+      const canvas =
+        document.createElement(
+          "canvas"
+        );
+
+
+      canvas.width =
+        width;
+
+      canvas.height =
+        height;
+
+
+      const ctx =
+        canvas.getContext(
+          "2d"
+        );
+
+
+      ctx.drawImage(
+        image,
+        0,
+        0,
+        width,
+        height
+      );
+
+
+      compressedImage =
+        canvas.toDataURL(
+          "image/jpeg",
+          .78
+        );
+
+
+      const preview =
+        document.getElementById(
+          "preview"
+        );
+
+      const wrap =
+        document.getElementById(
+          "previewWrap"
+        );
+
+
+      preview.src =
+        compressedImage;
+
+
+      wrap.style.display =
+        "block";
+
+    };
+
+
+    image.src =
+      event.target.result;
+
+  };
+
+
+  reader.readAsDataURL(file);
+
+};
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function status(
+  message,
+  type = "info"
+){
+
+  const element =
+    document.getElementById(
+      "status"
+    );
+
+
+  element.textContent =
+    message;
+
+
+  element.className =
+    "status " + type;
+
+}
+
+
+/* =========================================================
+   SAVE PRODUCT
+========================================================= */
+
+window.saveProduct = async function(){
+
+  if(!db){
+
+    status(
+      "Firebase isn't connected.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  const name =
+    document.getElementById(
+      "pName"
+    ).value.trim();
+
+
+  const price =
+    document.getElementById(
+      "pPrice"
+    ).value.trim();
+
+
+  const rarity =
+    document.getElementById(
+      "pRarity"
+    ).value;
+
+
+  if(!name){
+
+    status(
+      "Give your find a name first.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if(
+    price === "" ||
+    Number(price) < 0
+  ){
+
+    status(
+      "Add a valid price.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  const path =
+    getPathFromForm();
+
+
+  const saveButton =
+    document.getElementById(
+      "saveBtn"
+    );
+
+
+  saveButton.disabled =
+    true;
+
+
+  status(
+    editingId
+      ? "Updating your find…"
+      : "Adding your find…",
+    "info"
+  );
+
+
+  const product = {
+
+    name,
+
+    price,
+
+    rarity,
+
+    image:
+      compressedImage || null,
+
+    createdAt:
+      editingId
+        ? undefined
+        : Date.now()
+
+  };
+
+
+  try{
+
+    /*
+      EDIT
+    */
+
+    if(editingId){
+
+      const existingRef =
+        ref(
+          db,
+          `${editingPath}/${editingId}`
+        );
+
+
+      /*
+        Don't overwrite original
+        createdAt if editing.
+      */
+
+      if(
+        product.createdAt === undefined
+      ){
+
+        delete product.createdAt;
+
+      }
+
+
+      await set(
+        existingRef,
+        product
+      );
+
+
+      status(
+        "Updated ✓",
+        "success"
+      );
+
+    }
+
+    /*
+      NEW
+    */
+
+    else{
+
+      await push(
+        ref(db,path),
+        {
+          ...product,
+          createdAt:Date.now()
+        }
+      );
+
+
+      status(
+        "Added ✓",
+        "success"
+      );
+
+    }
+
+
+    resetForm();
+
+
+    if(
+      document.getElementById(
+        "viewCat"
+      ).value ===
+      path.replace(
+        "products/",
+        ""
+      )
+    ){
+
+      loadList();
+
+    }
+
+  }catch(error){
+
+    console.error(error);
+
+    status(
+      "Error: " +
+      error.message,
+      "error"
+    );
+
+  }
+
+
+  saveButton.disabled =
+    false;
+
+};
+
+
+/* =========================================================
+   LOAD LIST
+========================================================= */
+
+window.loadList = function(){
+
+  if(!db){
+    return;
+  }
+
+
+  const list =
+    document.getElementById(
+      "list"
+    );
+
+
+  const path =
+    "products/" +
+    document.getElementById(
+      "viewCat"
+    ).value;
+
+
+  list.innerHTML =
+    `<div class="empty">
+      Loading your finds…
+    </div>`;
+
+
+  if(
+    currentListListener &&
+    currentListPath
+  ){
+
+    off(
+      ref(db,currentListPath),
+      "value",
+      currentListListener
+    );
+
+  }
+
+
+  currentListPath =
+    path;
+
+
+  currentListListener =
+    snapshot => {
+
+      const data =
+        snapshot.val();
+
+
+      if(
+        !data ||
+        typeof data !== "object"
+      ){
+
+        list.innerHTML =
+          `<div class="empty">
+            Nothing here yet 🎀
+          </div>`;
+
+        return;
+
+      }
+
+
+      const items =
+        Object.entries(data)
+          .map(
+            ([id,product]) => ({
+              id,
+              ...(product || {})
+            })
+          )
+          .sort(
+            (a,b) =>
+              Number(b.createdAt || 0) -
+              Number(a.createdAt || 0)
+          );
+
+
+      list.innerHTML =
+        items
+          .map(product => {
+
+            const image =
+              product.image
+                ? `
+                  <img
+                    class="item-image"
+                    src="${escapeHTML(
+                      product.image
+                    )}"
+                    alt="">
+                `
+                : `
+                  <div class="item-image">
+                  </div>
+                `;
+
+
+            return `
+
+              <div class="item">
+
+                ${image}
+
+                <div class="item-meta">
+
+                  <div class="item-name">
+                    ${escapeHTML(
+                      product.name ||
+                      "Untitled"
+                    )}
+                  </div>
+
+                  <div class="item-info">
+
+                    $${escapeHTML(
+                      product.price ?? "—"
+                    )}
+
+                    ·
+
+                    ${escapeHTML(
+                      product.rarity ||
+                      "common"
+                    )}
+
+                  </div>
+
+                </div>
+
+
+                <div class="item-actions">
+
+                  <button
+                    class="action edit"
+                    onclick="
+                      editProduct(
+                        '${path}',
+                        '${product.id}'
+                      )
+                    ">
+
+                    Edit
+
+                  </button>
+
+
+                  <button
+                    class="action delete"
+                    onclick="
+                      deleteItem(
+                        '${path}',
+                        '${product.id}'
+                      )
+                    ">
+
+                    Delete
+
+                  </button>
+
+                </div>
+
+              </div>
+
+            `;
+
+          })
+          .join("");
+
+    };
+
+
+  onValue(
+    ref(db,path),
+    currentListListener
+  );
+
+};
+
+
+/* =========================================================
+   EDIT
+========================================================= */
+
+window.editProduct = async function(
+  path,
+  id
+){
+
+  if(!db){
+    return;
+  }
+
+
+  const snapshot =
+    await new Promise(
+      resolve => {
+
+        onValue(
+          ref(
+            db,
+            `${path}/${id}`
+          ),
+          snap => {
+
+            resolve(snap);
+
+          },
+          {
+            onlyOnce:true
+          }
+        );
+
+      }
+    );
+
+
+  const product =
+    snapshot.val();
+
+
+  if(!product){
+
+    status(
+      "This item no longer exists.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  editingId =
+    id;
+
+  editingPath =
+    path;
+
+
+  const relative =
+    path.replace(
+      "products/",
+      ""
+    );
+
+
+  if(
+    relative.startsWith(
+      "pins/"
+    )
+  ){
+
+    document.getElementById(
+      "topCat"
+    ).value =
+      "pins";
+
+
+    document.getElementById(
+      "subCat"
+    ).value =
+      relative.split("/")[1];
+
+
+    toggleSub();
+
+  }else{
+
+    document.getElementById(
+      "topCat"
+    ).value =
+      "stash";
+
+
+    toggleSub();
+
+  }
+
+
+  document.getElementById(
+    "pName"
+  ).value =
+    product.name || "";
+
+
+  document.getElementById(
+    "pPrice"
+  ).value =
+    product.price ?? "";
+
+
+  document.getElementById(
+    "pRarity"
+  ).value =
+    product.rarity || "common";
+
+
+  compressedImage =
+    product.image || null;
+
+
+  if(compressedImage){
+
+    document.getElementById(
+      "preview"
+    ).src =
+      compressedImage;
+
+    document.getElementById(
+      "previewWrap"
+    ).style.display =
+      "block";
+
+  }else{
+
+    document.getElementById(
+      "previewWrap"
+    ).style.display =
+      "none";
+
+  }
+
+
+  document.getElementById(
+    "formTitle"
+  ).textContent =
+    "Edit your find";
+
+
+  document.getElementById(
+    "saveBtn"
+  ).textContent =
+    "Save changes";
+
+
+  document.getElementById(
+    "cancelBtn"
+  ).style.display =
+    "block";
+
+
+  status(
+    "Editing " +
+    (product.name || "item"),
+    "info"
+  );
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+};
+
+
+/* =========================================================
+   DELETE
+========================================================= */
+
+window.deleteItem = async function(
+  path,
+  id
+){
+
+  if(!db){
+    return;
+  }
+
+
+  const confirmed =
+    confirm(
+      "Delete this find forever?"
+    );
+
+
+  if(!confirmed){
+    return;
+  }
+
+
+  try{
+
+    await remove(
+      ref(
+        db,
+        `${path}/${id}`
+      )
+    );
+
+
+    status(
+      "Deleted ✓",
+      "success"
+    );
+
+
+  }catch(error){
+
+    console.error(error);
+
+    status(
+      "Could not delete: " +
+      error.message,
+      "error"
+    );
+
+  }
+
+};
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetForm(){
+
+  editingId = null;
+
+  editingPath = null;
+
+  compressedImage = null;
+
+
+  document.getElementById(
+    "pName"
+  ).value = "";
+
+
+  document.getElementById(
+    "pPrice"
+  ).value = "";
+
+
+  document.getElementById(
+    "pImage"
+  ).value = "";
+
+
+  document.getElementById(
+    "previewWrap"
+  ).style.display =
+    "none";
+
+
+  document.getElementById(
+    "formTitle"
+  ).textContent =
+    "Add something cute";
+
+
+  document.getElementById(
+    "saveBtn"
+  ).textContent =
+    "Add to collection";
+
+
+  document.getElementById(
+    "cancelBtn"
+  ).style.display =
+    "none";
+
+}
+
+
+window.cancelEdit = function(){
+
+  resetForm();
+
+  status(
+    "",
+    "info"
+  );
+
+};
+
+
+/* =========================================================
+   INITIAL STATE
+========================================================= */
+
+toggleSub();
+
+loadList();
+
+</script>
+
+</body>
+</html>
