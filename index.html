@@ -1543,4 +1543,1146 @@ footer a{
         type="button"
         onclick="
           tapFeedback(event);
-          showProduc
+          showProducts('wildcard','Wildcard');
+        ">
+
+        <span
+          class="category-count"
+          id="countWildcard">
+          …
+        </span>
+
+        <span class="category-symbol">
+          💋
+        </span>
+
+        <h3>Wildcard</h3>
+
+        <span class="desc">
+          Rules? Never heard of them.
+        </span>
+
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- PRODUCTS -->
+
+<section
+  class="view"
+  data-view="products">
+
+  <div class="wrap section-pad">
+
+    <div
+      class="eyebrow"
+      id="prodCrumb">
+      Pins
+    </div>
+
+    <h1
+      class="view-title"
+      id="prodTitle">
+      Collection
+    </h1>
+
+    <p class="view-sub">
+      Look closely.
+      You never know which one is the troublemaker.
+    </p>
+
+  </div>
+
+
+  <div class="wrap">
+
+    <div
+      class="product-grid"
+      id="prodGrid">
+
+      <div class="loading">
+        Finding the good stuff…
+      </div>
+
+    </div>
+
+    <div
+      class="dots"
+      id="prodDots">
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<nav class="bottom-nav">
+
+  <button
+    class="nav-btn active"
+    data-nav="home"
+    type="button"
+    onclick="
+      tapFeedback(event);
+      hudGo('home');
+    ">
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2">
+
+      <path d="M3 11l9-8 9 8"/>
+      <path d="M5 10v10h14V10"/>
+
+    </svg>
+
+    Home
+
+  </button>
+
+
+  <button
+    class="nav-btn"
+    data-nav="pins"
+    type="button"
+    onclick="
+      tapFeedback(event);
+      hudGo('pins');
+    ">
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2">
+
+      <circle cx="12" cy="12" r="8"/>
+      <circle cx="12" cy="12" r="3"/>
+
+    </svg>
+
+    Pins
+
+  </button>
+
+
+  <button
+    class="nav-btn"
+    data-nav="stash"
+    type="button"
+    onclick="
+      tapFeedback(event);
+      hudGo('stash');
+    ">
+
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2">
+
+      <path d="M4 7h16l-1.5 13h-13z"/>
+      <path d="M8 7V5a4 4 0 0 1 8 0v2"/>
+
+    </svg>
+
+    Stash
+
+  </button>
+
+</nav>
+
+
+<footer>
+
+  <a
+    href="https://www.youtube.com/@rarelyfoundcollector"
+    target="_blank"
+    rel="noopener noreferrer">
+
+    @rarelyfoundcollector
+
+  </a>
+
+  <br>
+
+  © 2026 RARELY FOUND ·
+  Not affiliated with Disney, Universal or Sanrio.
+
+</footer>
+
+
+<script type="module">
+
+import {
+  initializeApp
+} from
+"https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  onValue,
+  off
+} from
+"https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+
+
+/* =========================================================
+   FIREBASE
+========================================================= */
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyCPaFBGPyRS0LSdQvNYDucdLbIU2GSfqdE",
+
+  authDomain:
+    "greenrobot-ede43.firebaseapp.com",
+
+  databaseURL:
+    "https://greenrobot-ede43-default-rtdb.europe-west1.firebasedatabase.app",
+
+  projectId:
+    "greenrobot-ede43",
+
+  storageBucket:
+    "greenrobot-ede43.appspot.com",
+
+  messagingSenderId:
+    "41296246884",
+
+  appId:
+    "1:41296246884:web:0a13e2890e4a824cf60771",
+
+  measurementId:
+    "G-F3FK6JXBSR"
+
+};
+
+
+let db = null;
+
+try{
+
+  const app =
+    initializeApp(firebaseConfig);
+
+  db =
+    getDatabase(app);
+
+}catch(error){
+
+  console.error(
+    "Firebase initialization failed:",
+    error
+  );
+
+}
+
+
+/* =========================================================
+   DATABASE PATHS
+========================================================= */
+
+const PATHS = {
+
+  disney:
+    "products/pins/disney",
+
+  universal:
+    "products/pins/universal",
+
+  sanrio:
+    "products/pins/sanrio",
+
+  wildcard:
+    "products/pins/wildcard",
+
+  stash:
+    "products/stash"
+
+};
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let currentView = "home";
+
+let currentCategory = null;
+
+let activeProductPath = null;
+
+let activeProductListener = null;
+
+let historyStack = ["home"];
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function escapeHTML(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function safeImage(value){
+
+  if(!value){
+    return null;
+  }
+
+  const str = String(value);
+
+  /*
+    Only allow image data URLs and normal HTTPS images.
+  */
+
+  if(
+    str.startsWith("data:image/") ||
+    str.startsWith("https://") ||
+    str.startsWith("http://")
+  ){
+
+    return str;
+
+  }
+
+  return null;
+
+}
+
+
+function formatPrice(value){
+
+  if(
+    value === null ||
+    value === undefined ||
+    value === ""
+  ){
+
+    return "—";
+
+  }
+
+  const number =
+    Number(value);
+
+  if(Number.isFinite(number)){
+
+    return "$" +
+      number.toLocaleString(
+        "en-US",
+        {
+          minimumFractionDigits:
+            Number.isInteger(number)
+              ? 0
+              : 2,
+          maximumFractionDigits:2
+        }
+      );
+
+  }
+
+  return escapeHTML(value);
+
+}
+
+
+/* =========================================================
+   SPARKS
+========================================================= */
+
+window.tapFeedback = function(event){
+
+  const x =
+    event?.clientX ??
+    window.innerWidth / 2;
+
+  const y =
+    event?.clientY ??
+    window.innerHeight / 2;
+
+
+  for(let i=0;i<5;i++){
+
+    const spark =
+      document.createElement("span");
+
+    spark.className = "spark";
+
+    spark.textContent =
+      ["✦","♡","⋆","✧"][
+        Math.floor(
+          Math.random()*4
+        )
+      ];
+
+
+    spark.style.left =
+      x + "px";
+
+    spark.style.top =
+      y + "px";
+
+
+    spark.style.setProperty(
+      "--dx",
+      ((Math.random()-.5)*80) +
+      "px"
+    );
+
+
+    spark.style.setProperty(
+      "--dy",
+      ((Math.random()-.7)*80) +
+      "px"
+    );
+
+
+    document.body.appendChild(
+      spark
+    );
+
+
+    setTimeout(
+      () => spark.remove(),
+      700
+    );
+
+  }
+
+};
+
+
+/* =========================================================
+   COUNTERS
+========================================================= */
+
+function bindCount(
+  path,
+  elementId
+){
+
+  const element =
+    document.getElementById(
+      elementId
+    );
+
+  if(!element || !db){
+    return;
+  }
+
+
+  onValue(
+    ref(db,path),
+    snapshot => {
+
+      const data =
+        snapshot.val();
+
+      let count = 0;
+
+      if(
+        data &&
+        typeof data === "object"
+      ){
+
+        count =
+          Object.keys(data).length;
+
+      }
+
+      element.textContent =
+        count;
+
+    },
+    error => {
+
+      console.error(
+        "Counter error:",
+        error
+      );
+
+      element.textContent = "–";
+
+    }
+  );
+
+}
+
+
+bindCount(
+  PATHS.disney,
+  "countDisney"
+);
+
+bindCount(
+  PATHS.universal,
+  "countUniversal"
+);
+
+bindCount(
+  PATHS.sanrio,
+  "countSanrio"
+);
+
+bindCount(
+  PATHS.wildcard,
+  "countWildcard"
+);
+
+bindCount(
+  PATHS.stash,
+  "countStashTotal"
+);
+
+
+/* TOTAL PINS */
+
+if(db){
+
+  onValue(
+    ref(db,"products/pins"),
+    snapshot => {
+
+      const data =
+        snapshot.val();
+
+      let total = 0;
+
+
+      if(
+        data &&
+        typeof data === "object"
+      ){
+
+        Object.values(data)
+          .forEach(category => {
+
+            if(
+              category &&
+              typeof category === "object"
+            ){
+
+              total +=
+                Object.keys(category).length;
+
+            }
+
+          });
+
+      }
+
+
+      const element =
+        document.getElementById(
+          "countPinsTotal"
+        );
+
+      if(element){
+
+        element.textContent =
+          total;
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function syncNavigation(
+  view
+){
+
+  let target = "home";
+
+
+  if(
+    view === "pin-sub" ||
+    (
+      view === "products" &&
+      currentCategory !== "stash"
+    )
+  ){
+
+    target = "pins";
+
+  }
+
+
+  if(
+    view === "products" &&
+    currentCategory === "stash"
+  ){
+
+    target = "stash";
+
+  }
+
+
+  document
+    .querySelectorAll(".nav-btn")
+    .forEach(button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.nav === target
+      );
+
+    });
+
+}
+
+
+window.showView = function(
+  name
+){
+
+  const target =
+    document.querySelector(
+      `.view[data-view="${name}"]`
+    );
+
+  if(!target){
+    return;
+  }
+
+
+  document
+    .querySelectorAll(".view")
+    .forEach(view => {
+
+      view.classList.remove(
+        "active",
+        "pop-in"
+      );
+
+    });
+
+
+  target.classList.add("active");
+
+
+  void target.offsetWidth;
+
+
+  target.classList.add("pop-in");
+
+
+  currentView = name;
+
+
+  const back =
+    document.getElementById(
+      "backBtn"
+    );
+
+
+  if(back){
+
+    back.classList.toggle(
+      "show",
+      name !== "home"
+    );
+
+  }
+
+
+  syncNavigation(name);
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+};
+
+
+/* =========================================================
+   PINS HOME
+========================================================= */
+
+window.showPins = function(){
+
+  if(
+    historyStack[
+      historyStack.length-1
+    ] !== "pin-sub"
+  ){
+
+    historyStack.push(
+      "pin-sub"
+    );
+
+  }
+
+  showView("pin-sub");
+
+};
+
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
+
+window.showProducts = function(
+  key,
+  label
+){
+
+  if(!PATHS[key]){
+    return;
+  }
+
+
+  currentCategory = key;
+
+
+  const grid =
+    document.getElementById(
+      "prodGrid"
+    );
+
+  const title =
+    document.getElementById(
+      "prodTitle"
+    );
+
+  const crumb =
+    document.getElementById(
+      "prodCrumb"
+    );
+
+
+  if(title){
+    title.textContent = label;
+  }
+
+
+  if(crumb){
+
+    crumb.textContent =
+      key === "stash"
+        ? "Stash"
+        : "Pins";
+
+  }
+
+
+  if(grid){
+
+    grid.innerHTML =
+      `<div class="loading">
+        Finding the good stuff…
+      </div>`;
+
+  }
+
+
+  if(
+    historyStack[
+      historyStack.length-1
+    ] !== "products"
+  ){
+
+    historyStack.push(
+      "products"
+    );
+
+  }
+
+
+  showView("products");
+
+
+  if(!db){
+
+    grid.innerHTML = `
+      <div class="empty-note">
+        <strong>Oops.</strong>
+        Firebase isn't connected.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  /*
+    Remove old product listener.
+  */
+
+  if(
+    activeProductListener &&
+    activeProductPath
+  ){
+
+    off(
+      ref(db,activeProductPath),
+      "value",
+      activeProductListener
+    );
+
+  }
+
+
+  activeProductPath =
+    PATHS[key];
+
+
+  activeProductListener =
+    snapshot => {
+
+      renderProducts(
+        snapshot.val()
+      );
+
+    };
+
+
+  onValue(
+    ref(db,activeProductPath),
+    activeProductListener,
+    error => {
+
+      console.error(
+        "Product listener error:",
+        error
+      );
+
+      if(grid){
+
+        grid.innerHTML = `
+          <div class="empty-note">
+            <strong>Something went wrong.</strong>
+            I couldn't load this collection.
+          </div>
+        `;
+
+      }
+
+    }
+  );
+
+};
+
+
+/* =========================================================
+   PRODUCT RENDER
+========================================================= */
+
+function renderProducts(
+  data
+){
+
+  const grid =
+    document.getElementById(
+      "prodGrid"
+    );
+
+  if(!grid){
+    return;
+  }
+
+
+  if(
+    !data ||
+    typeof data !== "object" ||
+    Object.keys(data).length === 0
+  ){
+
+    grid.innerHTML = `
+      <div class="empty-note">
+        <strong>Nothing here yet.</strong>
+        Apparently someone already found everything.
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  const items =
+    Object.entries(data)
+      .map(
+        ([id,product]) => ({
+          id,
+          ...(product || {})
+        })
+      )
+      .sort(
+        (a,b) =>
+          Number(b.createdAt || 0) -
+          Number(a.createdAt || 0)
+      );
+
+
+  grid.innerHTML =
+    items
+      .map(product => {
+
+        const name =
+          escapeHTML(
+            product.name ||
+            "Untitled find"
+          );
+
+
+        const rarity =
+          String(
+            product.rarity ||
+            "common"
+          )
+          .toLowerCase()
+          .replace(
+            /[^a-z]/g,
+            ""
+          );
+
+
+        const validRarity =
+          [
+            "common",
+            "uncommon",
+            "rare",
+            "grail"
+          ].includes(rarity)
+            ? rarity
+            : "common";
+
+
+        const image =
+          safeImage(
+            product.image
+          );
+
+
+        const imageHTML =
+          image
+            ? `
+              <img
+                src="${escapeHTML(image)}"
+                alt="${name}"
+                loading="lazy">
+            `
+            : `
+              <span class="product-placeholder">
+                🎀
+              </span>
+            `;
+
+
+        return `
+
+          <article class="product-card">
+
+            <div class="product-photo">
+
+              <span
+                class="rarity ${validRarity}">
+                ${escapeHTML(
+                  product.rarity ||
+                  "Common"
+                )}
+              </span>
+
+              <span class="product-spark">
+                ✦
+              </span>
+
+              ${imageHTML}
+
+            </div>
+
+
+            <div class="product-info">
+
+              <div class="product-name">
+                ${name}
+              </div>
+
+
+              <div class="product-bottom">
+
+                <span class="price">
+                  ${formatPrice(
+                    product.price
+                  )}
+                </span>
+
+                <span class="little-tag">
+                  rare find
+                </span>
+
+              </div>
+
+            </div>
+
+          </article>
+
+        `;
+
+      })
+      .join("");
+
+}
+
+
+/* =========================================================
+   BACK
+========================================================= */
+
+window.goBack = function(){
+
+  if(
+    historyStack.length <= 1
+  ){
+
+    showView("home");
+
+    return;
+
+  }
+
+
+  historyStack.pop();
+
+
+  const previous =
+    historyStack[
+      historyStack.length-1
+    ];
+
+
+  if(previous === "products"){
+
+    historyStack.pop();
+
+    showView(
+      currentCategory === "stash"
+        ? "home"
+        : "pin-sub"
+    );
+
+    return;
+
+  }
+
+
+  showView(previous);
+
+};
+
+
+/* =========================================================
+   HUD
+========================================================= */
+
+window.hudGo = function(
+  target
+){
+
+  if(target === "home"){
+
+    historyStack = ["home"];
+
+    currentCategory = null;
+
+    showView("home");
+
+    return;
+
+  }
+
+
+  if(target === "pins"){
+
+    historyStack = [
+      "home",
+      "pin-sub"
+    ];
+
+    currentCategory = null;
+
+    showView("pin-sub");
+
+    return;
+
+  }
+
+
+  if(target === "stash"){
+
+    historyStack = [
+      "home"
+    ];
+
+    showProducts(
+      "stash",
+      "Stash"
+    );
+
+  }
+
+};
+
+
+/* =========================================================
+   DISABLE IMAGE DRAG
+========================================================= */
+
+document.addEventListener(
+  "dragstart",
+  event => {
+
+    if(
+      event.target.tagName === "IMG"
+    ){
+
+      event.preventDefault();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   START
+========================================================= */
+
+showView("home");
+
+</script>
+
+</body>
+</html>
