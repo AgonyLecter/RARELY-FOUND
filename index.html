@@ -1,390 +1,778 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <title>RARELY FOUND</title>
 
-<meta name="description"
-      content="Rare pins, collectibles and impossible-to-find things.">
+<meta
+  name="description"
+  content="Rare pins, collectibles and impossible-to-find things.">
 
-<meta name="theme-color" content="#f7c9d8">
+<meta
+  name="theme-color"
+  content="#fdebf2">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&display=swap"
-      rel="stylesheet">
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin>
+
+<link
+  href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&display=swap"
+  rel="stylesheet">
+
 
 <style>
 
-:root{
-  --pink:#f7c9d8;
-  --pink-soft:#fde9f0;
-  --pink-hot:#ef6f9c;
-  --pink-deep:#d94d7d;
+/* =========================================================
+   RARELY FOUND
+   SPOILED GIRL / COLLECTOR AESTHETIC
+========================================================= */
 
-  --cream:#fffaf4;
-  --cream-2:#fff3e9;
+:root{
+
+  --pink:#f8c9da;
+  --pink-soft:#fff0f5;
+  --pink-hot:#ef6595;
+  --pink-deep:#d94478;
+
+  --cream:#fffaf6;
+  --cream-2:#fff3e8;
 
   --red:#d93650;
-  --red-dark:#a91f39;
 
-  --ink:#432d34;
-  --muted:#876d75;
+  --ink:#432d35;
+  --muted:#8b717a;
 
-  --gold:#d8ad55;
+  --gold:#d5a947;
 
-  --white:#ffffff;
+  --white:#fff;
 
-  --border:rgba(67,45,52,.11);
+  --border:rgba(67,45,53,.10);
 
   --shadow:
-    0 12px 30px rgba(89,45,59,.12);
+    0 15px 38px rgba(99,48,68,.12);
 
   --nav-height:74px;
+
 }
+
 
 *{
+
   box-sizing:border-box;
+
   margin:0;
   padding:0;
+
   -webkit-tap-highlight-color:transparent;
+
 }
+
 
 html{
-  background:var(--pink-soft);
+
+  background:
+    var(--pink-soft);
+
   scroll-behavior:smooth;
+
 }
 
+
 body{
+
   min-height:100vh;
+
   overflow-x:hidden;
 
   color:var(--ink);
 
-  font-family:'DM Sans',sans-serif;
-  font-weight:500;
+  font-family:
+    'DM Sans',
+    sans-serif;
 
   background:
+
     radial-gradient(
-      circle at 8% 5%,
+      circle at 5% 3%,
       rgba(255,255,255,.95),
-      transparent 23%
-    ),
-    radial-gradient(
-      circle at 92% 12%,
-      rgba(239,111,156,.16),
       transparent 25%
     ),
+
+    radial-gradient(
+      circle at 95% 8%,
+      rgba(239,101,149,.15),
+      transparent 24%
+    ),
+
     linear-gradient(
       180deg,
-      #fdebf1 0%,
-      #fff8f3 43%,
+      #fdebf2 0%,
+      #fff8f4 45%,
       #fffaf7 100%
     );
 
   -webkit-font-smoothing:antialiased;
+
 }
 
+
 body::before{
+
   content:"";
+
   position:fixed;
+
   inset:0;
-  pointer-events:none;
+
   z-index:0;
 
-  opacity:.42;
+  pointer-events:none;
+
+  opacity:.34;
 
   background-image:
+
     radial-gradient(
       circle,
-      rgba(217,77,125,.12) 1px,
+      rgba(217,68,120,.12) 1px,
       transparent 1px
     );
 
-  background-size:18px 18px;
+  background-size:19px 19px;
 
   mask-image:
     linear-gradient(
       to bottom,
-      rgba(0,0,0,.8),
-      transparent 70%
+      black,
+      transparent 75%
     );
+
 }
+
 
 button{
-  font:inherit;
-  color:inherit;
+
   border:0;
+
+  font:inherit;
+
+  color:inherit;
+
   cursor:pointer;
+
 }
+
 
 a{
+
   color:inherit;
+
   text-decoration:none;
+
 }
+
 
 img{
+
   max-width:100%;
+
 }
 
-h1,h2,h3,h4{
-  font-family:'Fredoka',sans-serif;
+
+h1,
+h2,
+h3,
+h4{
+
+  font-family:
+    'Fredoka',
+    sans-serif;
+
   font-weight:600;
+
   line-height:1;
+
 }
+
 
 .wrap{
-  width:min(940px,calc(100% - 32px));
+
+  width:
+    min(
+      960px,
+      calc(100% - 30px)
+    );
+
   margin:auto;
+
 }
 
-/* HEADER */
+
+/* =========================================================
+   FLOATING DECORATIONS
+========================================================= */
+
+.decor-layer{
+
+  position:fixed;
+
+  inset:0;
+
+  z-index:1;
+
+  pointer-events:none;
+
+  overflow:hidden;
+
+}
+
+
+.floating{
+
+  position:absolute;
+
+  opacity:0;
+
+  animation:
+    floatAround
+    var(--duration)
+    ease-in-out
+    var(--delay)
+    infinite;
+
+  will-change:
+    transform,
+    opacity;
+
+}
+
+
+.floating.bow{
+
+  font-size:
+    var(--size);
+
+}
+
+
+.floating.star{
+
+  color:var(--pink-hot);
+
+  font-size:
+    var(--size);
+
+  filter:
+    drop-shadow(
+      0 3px 6px
+      rgba(217,68,120,.15)
+    );
+
+}
+
+
+@keyframes floatAround{
+
+  0%{
+
+    opacity:0;
+
+    transform:
+      translate3d(0,18px,0)
+      rotate(-12deg)
+      scale(.65);
+
+  }
+
+  20%{
+
+    opacity:.42;
+
+  }
+
+  50%{
+
+    opacity:.75;
+
+    transform:
+      translate3d(
+        var(--move-x),
+        -var(--move-y),
+        0
+      )
+      rotate(10deg)
+      scale(1);
+
+  }
+
+  78%{
+
+    opacity:.38;
+
+  }
+
+  100%{
+
+    opacity:0;
+
+    transform:
+      translate3d(
+        calc(var(--move-x) * -0.4),
+        -55px,
+        0
+      )
+      rotate(25deg)
+      scale(.72);
+
+  }
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 header{
+
   position:sticky;
+
   top:0;
+
   z-index:100;
 
-  background:rgba(255,250,247,.87);
+  background:
+    rgba(255,250,247,.88);
 
-  backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px);
+  backdrop-filter:
+    blur(18px);
 
-  border-bottom:1px solid rgba(67,45,52,.08);
+  -webkit-backdrop-filter:
+    blur(18px);
+
+  border-bottom:
+    1px solid
+    rgba(67,45,53,.07);
+
 }
+
 
 .header-inner{
-  min-height:62px;
+
+  min-height:64px;
 
   display:flex;
+
   align-items:center;
+
   justify-content:space-between;
+
 }
+
 
 .brand{
+
   display:flex;
+
   align-items:center;
+
   gap:9px;
+
 }
+
 
 .brand img{
-  width:38px;
-  height:38px;
+
+  width:40px;
+  height:40px;
+
   object-fit:contain;
+
 }
+
 
 .brand-name{
-  font-family:'Fredoka',sans-serif;
+
+  font-family:
+    'Fredoka',
+    sans-serif;
+
   font-size:17px;
+
   font-weight:700;
+
+  letter-spacing:-.02em;
+
 }
+
 
 .brand-name span{
-  color:var(--pink-deep);
+
+  color:
+    var(--pink-deep);
+
 }
 
+
 .back-btn{
+
   display:none;
 
   align-items:center;
-  gap:6px;
 
-  padding:8px 13px;
+  gap:5px;
+
+  padding:
+    8px 13px;
 
   background:#fff;
 
-  border:1px solid var(--border);
+  border:
+    1px solid
+    var(--border);
+
   border-radius:999px;
 
   box-shadow:
-    0 5px 14px rgba(89,45,59,.08);
+    0 5px 15px
+    rgba(67,45,53,.08);
 
-  font-size:13px;
-  font-weight:700;
+  font-size:12px;
+
+  font-weight:800;
+
 }
+
 
 .back-btn.show{
+
   display:flex;
+
 }
 
-/* MAIN */
+
+/* =========================================================
+   MAIN
+========================================================= */
 
 main{
+
   position:relative;
-  z-index:1;
+
+  z-index:2;
 
   padding-bottom:
-    calc(var(--nav-height) + 35px);
+    calc(
+      var(--nav-height) + 45px
+    );
+
 }
+
 
 .view{
+
   display:none;
+
 }
+
 
 .view.active{
+
   display:block;
+
 }
 
+
 .pop-in{
+
   animation:
-    popIn .38s cubic-bezier(.2,1.25,.35,1);
+    popIn .42s
+    cubic-bezier(.2,1.2,.35,1);
+
 }
+
 
 @keyframes popIn{
 
   from{
+
     opacity:0;
+
     transform:
-      translateY(12px)
+      translateY(14px)
       scale(.985);
+
   }
 
   to{
+
     opacity:1;
+
     transform:none;
+
   }
 
 }
 
-/* HERO */
+
+/* =========================================================
+   HERO
+========================================================= */
 
 .hero{
+
   position:relative;
 
   text-align:center;
 
-  padding:48px 0 34px;
+  padding:
+    48px 0 38px;
+
 }
 
+
 .hero-logo{
-  width:min(155px,42vw);
-  height:min(155px,42vw);
+
+  width:
+    min(
+      165px,
+      43vw
+    );
+
+  height:
+    min(
+      165px,
+      43vw
+    );
 
   object-fit:contain;
 
-  margin:0 auto 17px;
+  margin:
+    0 auto 16px;
 
   filter:
     drop-shadow(
-      0 10px 13px rgba(89,45,59,.14)
+      0 11px 15px
+      rgba(89,45,59,.14)
     );
+
+  animation:
+    logoFloat 4s ease-in-out infinite;
+
 }
 
+
+@keyframes logoFloat{
+
+  0%,100%{
+
+    transform:
+      translateY(0)
+      rotate(-1deg);
+
+  }
+
+  50%{
+
+    transform:
+      translateY(-5px)
+      rotate(1deg);
+
+  }
+
+}
+
+
 .hero-kicker{
+
   display:inline-flex;
+
   align-items:center;
+
   gap:7px;
 
-  padding:7px 13px;
+  padding:
+    7px 13px;
 
   background:
-    rgba(255,255,255,.75);
+    rgba(255,255,255,.78);
 
   border:
-    1px solid rgba(217,77,125,.18);
+    1px solid
+    rgba(217,68,120,.17);
 
   border-radius:999px;
 
-  color:var(--pink-deep);
+  color:
+    var(--pink-deep);
 
-  font-size:11px;
+  font-size:10px;
+
   font-weight:800;
 
   letter-spacing:.08em;
+
   text-transform:uppercase;
 
-  margin-bottom:13px;
+  box-shadow:
+    0 5px 18px
+    rgba(99,48,68,.05);
+
 }
+
 
 .hero-title{
-  max-width:720px;
-  margin:auto;
+
+  max-width:780px;
+
+  margin:14px auto 0;
 
   font-size:
-    clamp(2.65rem,11vw,5.5rem);
+    clamp(
+      2.9rem,
+      11vw,
+      6rem
+    );
 
-  letter-spacing:-.035em;
+  letter-spacing:-.045em;
+
 }
 
-.hero-title .pink{
-  color:var(--pink-deep);
-}
 
 .hero-title .line{
+
   display:block;
+
 }
+
+
+.hero-title .pink{
+
+  color:
+    var(--pink-deep);
+
+}
+
 
 .hero-sub{
-  max-width:470px;
 
-  margin:17px auto 0;
+  max-width:500px;
 
-  color:var(--muted);
+  margin:
+    18px auto 0;
 
-  font-size:15px;
-  line-height:1.55;
+  color:
+    var(--muted);
+
+  font-size:14px;
+
+  line-height:1.6;
+
 }
+
 
 .hero-note{
+
   display:inline-block;
 
-  margin-top:19px;
+  margin-top:17px;
 
-  font-family:'Fredoka',sans-serif;
+  color:
+    var(--red);
 
-  color:var(--red);
+  font-family:
+    'Fredoka',
+    sans-serif;
 
   font-size:15px;
 
-  transform:rotate(-2deg);
+  transform:
+    rotate(-2deg);
+
 }
 
-/* HOME */
 
-.home-section{
-  padding-top:14px;
-}
+/* =========================================================
+   SECTION
+========================================================= */
 
 .section-label{
+
   display:flex;
+
   align-items:center;
+
   justify-content:space-between;
 
+  gap:10px;
+
   margin-bottom:13px;
+
 }
+
 
 .section-label span{
-  font-family:'Fredoka',sans-serif;
-  font-size:19px;
+
+  font-family:
+    'Fredoka',
+    sans-serif;
+
+  font-size:20px;
+
 }
 
-.section-label small{
-  color:var(--muted);
 
-  font-size:10px;
+.section-label small{
+
+  color:
+    var(--muted);
+
+  font-size:9px;
+
   font-weight:800;
 
   text-transform:uppercase;
+
   letter-spacing:.06em;
+
 }
+
+
+/* =========================================================
+   HOME CARDS
+========================================================= */
 
 .home-grid{
+
   display:grid;
 
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:
+    repeat(2,minmax(0,1fr));
 
-  gap:15px;
+  gap:14px;
+
 }
 
+
 .main-card{
+
   position:relative;
 
-  min-height:225px;
+  min-height:235px;
 
   padding:20px;
+
+  overflow:hidden;
 
   text-align:left;
 
@@ -392,50 +780,61 @@ main{
     linear-gradient(
       145deg,
       #fffefa,
-      #fff4f5
+      #fff1f5
     );
 
   border:
-    1px solid var(--border);
+    1px solid
+    var(--border);
 
-  border-radius:27px;
+  border-radius:28px;
 
-  box-shadow:var(--shadow);
-
-  overflow:hidden;
+  box-shadow:
+    var(--shadow);
 
   transition:
-    transform .18s ease;
+    transform .18s ease,
+    box-shadow .18s ease;
+
 }
 
+
 .main-card:nth-child(2){
+
   background:
     linear-gradient(
       145deg,
       #fffefa,
-      #fdf0f7
+      #f7effb
     );
+
 }
 
+
 .main-card::before{
+
   content:"";
 
   position:absolute;
 
-  width:130px;
-  height:130px;
+  width:145px;
+  height:145px;
 
-  right:-45px;
-  top:-45px;
+  right:-55px;
+  top:-55px;
 
   border-radius:50%;
 
-  background:var(--pink);
+  background:
+    var(--pink);
 
-  opacity:.45;
+  opacity:.42;
+
 }
 
+
 .main-card::after{
+
   content:"✦";
 
   position:absolute;
@@ -443,295 +842,482 @@ main{
   right:20px;
   bottom:17px;
 
-  font-size:26px;
+  color:
+    var(--gold);
 
-  color:var(--gold);
+  font-size:27px;
+
+  animation:
+    twinkle 2.2s ease-in-out infinite;
+
 }
+
+
+@keyframes twinkle{
+
+  0%,100%{
+
+    opacity:.45;
+
+    transform:
+      scale(.8)
+      rotate(0deg);
+
+  }
+
+  50%{
+
+    opacity:1;
+
+    transform:
+      scale(1.15)
+      rotate(20deg);
+
+  }
+
+}
+
 
 .main-card:active{
+
   transform:
-    scale(.97)
+    scale(.965)
     rotate(-.4deg);
+
 }
 
+
 .card-icon{
+
   position:relative;
+
   z-index:2;
 
-  width:47px;
-  height:47px;
+  width:48px;
+  height:48px;
 
   display:flex;
+
   align-items:center;
+
   justify-content:center;
 
-  margin-bottom:35px;
+  margin-bottom:37px;
 
   border-radius:16px;
 
-  background:var(--pink-soft);
+  background:
+    var(--pink-soft);
 
-  color:var(--pink-deep);
+  color:
+    var(--pink-deep);
 
   border:
-    1px solid rgba(217,77,125,.13);
+    1px solid
+    rgba(217,68,120,.12);
+
 }
+
 
 .card-icon svg{
+
   width:25px;
   height:25px;
+
 }
+
 
 .main-card h2{
+
   position:relative;
+
   z-index:2;
 
-  font-size:31px;
+  font-size:32px;
+
 }
+
 
 .main-card p{
+
   position:relative;
+
   z-index:2;
 
-  max-width:190px;
+  max-width:205px;
 
-  margin-top:6px;
+  margin-top:7px;
 
-  color:var(--muted);
+  color:
+    var(--muted);
 
-  font-size:12px;
+  font-size:11px;
 
-  line-height:1.45;
+  line-height:1.5;
+
 }
 
+
 .count-badge{
+
   position:absolute;
+
   z-index:5;
 
-  top:15px;
-  right:15px;
+  top:14px;
+  right:14px;
 
   min-width:34px;
 
-  padding:5px 9px;
+  padding:
+    5px 9px;
 
-  background:var(--red);
+  background:
+    var(--red);
 
   color:#fff;
 
   border-radius:999px;
 
   font-size:10px;
+
   font-weight:800;
 
   text-align:center;
+
 }
 
+
 .quote-card{
+
   margin-top:15px;
 
-  padding:18px 20px;
+  padding:
+    17px 19px;
 
   display:flex;
+
   align-items:center;
+
   gap:13px;
 
   background:#fff;
 
   border:
-    1px dashed rgba(217,77,125,.27);
+    1px dashed
+    rgba(217,68,120,.25);
 
   border-radius:22px;
+
 }
+
 
 .quote-bow{
+
   flex-shrink:0;
-  font-size:27px;
+
+  font-size:28px;
+
+  animation:
+    bowWiggle 3s ease-in-out infinite;
+
 }
 
+
+@keyframes bowWiggle{
+
+  0%,100%{
+    transform:rotate(-5deg);
+  }
+
+  50%{
+    transform:rotate(5deg) scale(1.04);
+  }
+
+}
+
+
 .quote-card p{
-  font-family:'Fredoka',sans-serif;
 
   color:#5d4149;
 
-  font-size:15px;
-  line-height:1.35;
-}
-
-.quote-card strong{
-  color:var(--pink-deep);
-}
-
-/* SECTION */
-
-.section-pad{
-  padding:35px 0 18px;
-}
-
-.eyebrow{
-  margin-bottom:8px;
-
-  color:var(--pink-deep);
-
-  font-size:11px;
-  font-weight:800;
-
-  letter-spacing:.08em;
-  text-transform:uppercase;
-}
-
-.view-title{
-  font-size:
-    clamp(2.1rem,8vw,3.4rem);
-
-  letter-spacing:-.025em;
-}
-
-.view-title .pink{
-  color:var(--pink-deep);
-}
-
-.view-sub{
-  max-width:520px;
-
-  margin-top:9px;
-
-  color:var(--muted);
+  font-family:
+    'Fredoka',
+    sans-serif;
 
   font-size:14px;
 
-  line-height:1.5;
+  line-height:1.4;
+
 }
 
-/* CATEGORY */
 
-.category-grid{
-  display:grid;
+.quote-card strong{
 
-  grid-template-columns:
-    repeat(2,1fr);
+  color:
+    var(--pink-deep);
 
-  gap:13px;
 }
 
-.category-card{
-  position:relative;
 
-  min-height:165px;
+/* =========================================================
+   CATEGORY PAGE
+========================================================= */
 
-  padding:18px;
+.section-pad{
 
-  text-align:left;
+  padding:
+    38px 0 19px;
 
-  overflow:hidden;
-
-  border-radius:25px;
-
-  background:#fff;
-
-  border:
-    1px solid var(--border);
-
-  box-shadow:var(--shadow);
-
-  transition:
-    transform .18s ease;
 }
 
-.category-card:active{
-  transform:scale(.97);
-}
 
-.category-card:nth-child(1){
-  background:
-    linear-gradient(
-      145deg,
-      #fff,
-      #fff0f4
-    );
-}
+.eyebrow{
 
-.category-card:nth-child(2){
-  background:
-    linear-gradient(
-      145deg,
-      #fff,
-      #f8f0ff
-    );
-}
+  margin-bottom:9px;
 
-.category-card:nth-child(3){
-  background:
-    linear-gradient(
-      145deg,
-      #fff,
-      #fff8df
-    );
-}
-
-.category-card:nth-child(4){
-  background:
-    linear-gradient(
-      145deg,
-      #fff,
-      #edf8f3
-    );
-}
-
-.category-count{
-  position:absolute;
-
-  top:13px;
-  right:13px;
-
-  padding:5px 9px;
-
-  background:
-    rgba(255,255,255,.8);
-
-  border:
-    1px solid var(--border);
-
-  border-radius:999px;
+  color:
+    var(--pink-deep);
 
   font-size:10px;
+
   font-weight:800;
+
+  letter-spacing:.09em;
+
+  text-transform:uppercase;
+
 }
 
-.category-symbol{
-  display:block;
 
-  margin-bottom:34px;
+.view-title{
 
-  font-size:30px;
+  font-size:
+    clamp(
+      2.25rem,
+      9vw,
+      3.8rem
+    );
+
+  letter-spacing:-.035em;
+
 }
 
-.category-card h3{
-  font-size:24px;
+
+.view-title .pink{
+
+  color:
+    var(--pink-deep);
+
 }
 
-.category-card .desc{
-  display:block;
 
-  margin-top:5px;
+.view-sub{
 
-  color:var(--muted);
+  max-width:540px;
 
-  font-size:11px;
+  margin-top:10px;
+
+  color:
+    var(--muted);
+
+  font-size:13px;
+
+  line-height:1.55;
+
 }
 
-/* PRODUCTS */
 
-.product-grid{
+.category-grid{
+
   display:grid;
 
   grid-template-columns:
     repeat(2,minmax(0,1fr));
 
   gap:13px;
+
 }
 
+
+.category-card{
+
+  position:relative;
+
+  min-height:175px;
+
+  padding:18px;
+
+  overflow:hidden;
+
+  text-align:left;
+
+  background:#fff;
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:25px;
+
+  box-shadow:
+    var(--shadow);
+
+  transition:
+    transform .18s ease;
+
+}
+
+
+.category-card:nth-child(1){
+
+  background:
+    linear-gradient(
+      145deg,
+      #fff,
+      #fff0f4
+    );
+
+}
+
+
+.category-card:nth-child(2){
+
+  background:
+    linear-gradient(
+      145deg,
+      #fff,
+      #f6efff
+    );
+
+}
+
+
+.category-card:nth-child(3){
+
+  background:
+    linear-gradient(
+      145deg,
+      #fff,
+      #fff7df
+    );
+
+}
+
+
+.category-card:nth-child(4){
+
+  background:
+    linear-gradient(
+      145deg,
+      #fff,
+      #edf8f3
+    );
+
+}
+
+
+.category-card:active{
+
+  transform:
+    scale(.965)
+    rotate(-.4deg);
+
+}
+
+
+.category-count{
+
+  position:absolute;
+
+  top:12px;
+  right:12px;
+
+  padding:
+    5px 9px;
+
+  background:
+    rgba(255,255,255,.85);
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:999px;
+
+  font-size:9px;
+
+  font-weight:800;
+
+}
+
+
+.category-symbol{
+
+  display:block;
+
+  margin-bottom:35px;
+
+  font-size:30px;
+
+  animation:
+    categoryFloat 3s ease-in-out infinite;
+
+}
+
+
+@keyframes categoryFloat{
+
+  0%,100%{
+    transform:translateY(0);
+  }
+
+  50%{
+    transform:translateY(-4px) rotate(3deg);
+  }
+
+}
+
+
+.category-card h3{
+
+  font-size:24px;
+
+}
+
+
+.category-card .desc{
+
+  display:block;
+
+  margin-top:6px;
+
+  color:
+    var(--muted);
+
+  font-size:10px;
+
+}
+
+
+/* =========================================================
+   PRODUCTS
+========================================================= */
+
+.product-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,minmax(0,1fr));
+
+  gap:13px;
+
+}
+
+
 .product-card{
+
   position:relative;
 
   overflow:hidden;
@@ -739,154 +1325,287 @@ main{
   background:#fff;
 
   border:
-    1px solid var(--border);
+    1px solid
+    var(--border);
 
   border-radius:22px;
 
-  box-shadow:var(--shadow);
+  box-shadow:
+    var(--shadow);
 
   transition:
     transform .18s ease;
+
 }
+
 
 .product-card:active{
-  transform:scale(.975);
+
+  transform:
+    scale(.975);
+
 }
 
+
 .product-photo{
+
   position:relative;
 
-  aspect-ratio:1/1;
-
   display:flex;
+
   align-items:center;
+
   justify-content:center;
+
+  aspect-ratio:1/1;
 
   overflow:hidden;
 
   background:
     linear-gradient(
       145deg,
-      #fde8ee,
-      #fff7f3
+      #fde8ef,
+      #fff8f3
     );
+
 }
 
+
 .product-photo img{
+
   width:100%;
   height:100%;
 
   object-fit:cover;
+
 }
+
 
 .product-placeholder{
+
   font-size:45px;
-  color:var(--pink-hot);
+
 }
 
+
 .rarity{
+
   position:absolute;
+
   z-index:4;
 
   top:9px;
   left:9px;
 
-  padding:5px 9px;
+  padding:
+    5px 9px;
 
   background:#fff;
 
   border-radius:999px;
 
   box-shadow:
-    0 4px 10px rgba(67,45,52,.12);
+    0 4px 10px
+    rgba(67,45,53,.12);
 
-  font-size:9px;
+  font-size:8px;
+
   font-weight:800;
 
-  text-transform:uppercase;
   letter-spacing:.05em;
+
+  text-transform:uppercase;
+
 }
+
 
 .rarity.common{
-  color:#6b756d;
+
+  color:#68736b;
+
 }
+
 
 .rarity.uncommon{
-  color:#64884d;
+
+  color:#66894f;
+
 }
+
 
 .rarity.rare{
-  color:var(--pink-deep);
+
+  color:
+    var(--pink-deep);
+
 }
+
 
 .rarity.grail{
-  color:#9b711b;
-  background:#fff5d2;
+
+  color:#967018;
+
+  background:#fff5d4;
+
 }
+
 
 .product-spark{
+
   position:absolute;
 
-  z-index:3;
+  z-index:4;
 
-  top:8px;
   right:9px;
+  top:8px;
 
-  color:var(--gold);
+  color:
+    var(--gold);
+
+  animation:
+    twinkle 1.8s ease-in-out infinite;
+
 }
+
 
 .product-info{
-  padding:13px 13px 15px;
+
+  padding:
+    13px 13px 15px;
+
 }
 
+
 .product-name{
-  font-family:'Fredoka',sans-serif;
+
+  font-family:
+    'Fredoka',
+    sans-serif;
 
   font-size:14px;
-  font-weight:600;
 
   line-height:1.2;
 
-  display:-webkit-box;
+  display:
+    -webkit-box;
+
   -webkit-line-clamp:2;
+
   -webkit-box-orient:vertical;
 
   overflow:hidden;
+
 }
 
+
 .product-bottom{
+
   margin-top:8px;
 
   display:flex;
+
   align-items:center;
+
   justify-content:space-between;
 
   gap:8px;
+
 }
+
 
 .price{
-  font-family:'Fredoka',sans-serif;
 
-  color:var(--pink-deep);
+  color:
+    var(--pink-deep);
+
+  font-family:
+    'Fredoka',
+    sans-serif;
 
   font-size:17px;
+
 }
+
 
 .little-tag{
-  color:var(--muted);
 
-  font-size:9px;
-  font-weight:700;
+  color:
+    var(--muted);
+
+  font-size:8px;
+
+  font-weight:800;
 
   text-transform:uppercase;
+
 }
 
-/* EMPTY */
+
+/* =========================================================
+   LOADING / EMPTY
+========================================================= */
+
+.loading{
+
+  grid-column:
+    1 / -1;
+
+  padding:40px 20px;
+
+  text-align:center;
+
+  color:
+    var(--pink-deep);
+
+  font-family:
+    'Fredoka',
+    sans-serif;
+
+}
+
+
+.loading::after{
+
+  content:"";
+
+  display:block;
+
+  width:24px;
+  height:24px;
+
+  margin:12px auto 0;
+
+  border:
+    3px solid
+    rgba(217,68,120,.15);
+
+  border-top-color:
+    var(--pink-hot);
+
+  border-radius:50%;
+
+  animation:
+    spin .8s linear infinite;
+
+}
+
+
+@keyframes spin{
+
+  to{
+    transform:rotate(360deg);
+  }
+
+}
+
 
 .empty-note{
-  grid-column:1/-1;
 
-  padding:34px 22px;
+  grid-column:
+    1 / -1;
+
+  padding:
+    35px 22px;
 
   text-align:center;
 
@@ -894,84 +1613,119 @@ main{
     rgba(255,255,255,.75);
 
   border:
-    1px dashed rgba(217,77,125,.28);
+    1px dashed
+    rgba(217,68,120,.28);
 
   border-radius:24px;
 
-  color:var(--muted);
+  color:
+    var(--muted);
 
-  font-size:13px;
+  font-size:12px;
 
-  line-height:1.5;
+  line-height:1.55;
+
 }
 
+
 .empty-note strong{
+
   display:block;
 
   margin-bottom:5px;
 
-  font-family:'Fredoka',sans-serif;
+  color:
+    var(--pink-deep);
 
-  color:var(--pink-deep);
+  font-family:
+    'Fredoka',
+    sans-serif;
 
   font-size:20px;
+
 }
 
-/* LOADING */
 
-.loading{
-  grid-column:1/-1;
+/* =========================================================
+   TAP SPARKS
+========================================================= */
 
-  padding:35px;
+.tap-spark{
 
-  text-align:center;
+  position:fixed;
 
-  color:var(--pink-deep);
+  z-index:500;
 
-  font-family:'Fredoka',sans-serif;
+  pointer-events:none;
+
+  color:
+    var(--pink-hot);
 
   font-size:16px;
+
+  animation:
+    tapSpark .72s
+    ease-out
+    forwards;
+
 }
 
-/* DOTS */
+
+@keyframes tapSpark{
+
+  0%{
+
+    opacity:1;
+
+    transform:
+      translate3d(0,0,0)
+      scale(.35)
+      rotate(0);
+
+  }
+
+  100%{
+
+    opacity:0;
+
+    transform:
+      translate3d(
+        var(--dx),
+        var(--dy),
+        0
+      )
+      scale(1.25)
+      rotate(140deg);
+
+  }
+
+}
+
+
+/* =========================================================
+   DOTS
+========================================================= */
 
 .dots{
-  display:flex;
 
-  justify-content:center;
+  display:none;
 
-  gap:6px;
-
-  margin:17px 0 4px;
 }
 
-.dot{
-  width:6px;
-  height:6px;
 
-  border-radius:50%;
-
-  background:#e6cdd5;
-}
-
-.dot.active{
-  width:18px;
-
-  border-radius:999px;
-
-  background:var(--pink-hot);
-}
-
-/* NAV */
+/* =========================================================
+   BOTTOM NAV
+========================================================= */
 
 .bottom-nav{
+
   position:fixed;
 
   left:0;
   right:0;
   bottom:0;
 
-  z-index:90;
+  z-index:100;
 
   height:
     calc(
@@ -983,52 +1737,77 @@ main{
     env(safe-area-inset-bottom);
 
   display:flex;
+
   align-items:center;
+
   justify-content:space-around;
 
   background:
-    rgba(255,250,247,.91);
+    rgba(255,250,247,.92);
 
-  backdrop-filter:blur(18px);
-  -webkit-backdrop-filter:blur(18px);
+  backdrop-filter:
+    blur(18px);
+
+  -webkit-backdrop-filter:
+    blur(18px);
 
   border-top:
-    1px solid rgba(67,45,52,.08);
+    1px solid
+    rgba(67,45,53,.08);
 
   box-shadow:
-    0 -8px 25px rgba(89,45,59,.06);
+    0 -8px 28px
+    rgba(89,45,59,.07);
+
 }
 
+
 .nav-btn{
+
   position:relative;
 
   min-width:75px;
 
   display:flex;
+
   flex-direction:column;
+
   align-items:center;
+
   gap:4px;
 
-  padding:7px 13px;
+  padding:
+    7px 13px;
 
   background:transparent;
 
-  color:#a88d95;
+  color:#aa9098;
 
-  font-size:10px;
+  font-size:9px;
+
   font-weight:800;
+
 }
+
 
 .nav-btn svg{
+
   width:23px;
   height:23px;
+
 }
+
 
 .nav-btn.active{
-  color:var(--pink-deep);
+
+  color:
+    var(--pink-deep);
+
 }
 
+
 .nav-btn.active::before{
+
   content:"";
 
   position:absolute;
@@ -1040,167 +1819,216 @@ main{
 
   border-radius:999px;
 
-  background:var(--pink-hot);
+  background:
+    var(--pink-hot);
+
 }
 
-/* FOOTER */
+
+/* =========================================================
+   FOOTER
+========================================================= */
 
 footer{
+
   position:relative;
-  z-index:1;
+
+  z-index:2;
 
   padding:
     25px 16px
-    calc(110px + env(safe-area-inset-bottom));
+    calc(
+      110px +
+      env(safe-area-inset-bottom)
+    );
 
   text-align:center;
 
   color:#a88d95;
 
-  font-size:10px;
+  font-size:9px;
 
-  line-height:1.6;
+  line-height:1.7;
+
 }
+
 
 footer a{
-  color:var(--pink-deep);
+
+  color:
+    var(--pink-deep);
+
   font-weight:800;
-}
-
-/* SPARKS */
-
-.spark{
-  position:fixed;
-
-  z-index:200;
-
-  pointer-events:none;
-
-  color:var(--pink-hot);
-
-  font-size:15px;
-
-  animation:
-    sparkFly .65s ease-out forwards;
-}
-
-@keyframes sparkFly{
-
-  0%{
-    opacity:1;
-    transform:
-      translate(0,0)
-      scale(.4);
-  }
-
-  100%{
-    opacity:0;
-    transform:
-      translate(var(--dx),var(--dy))
-      scale(1.3)
-      rotate(120deg);
-  }
 
 }
 
-/* DESKTOP */
+
+/* =========================================================
+   DESKTOP
+========================================================= */
 
 @media(min-width:640px){
 
   .wrap{
-    width:min(940px,calc(100% - 48px));
+
+    width:
+      min(
+        960px,
+        calc(100% - 48px)
+      );
+
   }
+
 
   .hero{
+
     padding-top:62px;
+
   }
+
 
   .hero-logo{
-    width:170px;
-    height:170px;
+
+    width:175px;
+    height:175px;
+
   }
+
 
   .category-grid{
-    grid-template-columns:repeat(4,1fr);
+
+    grid-template-columns:
+      repeat(4,1fr);
+
   }
+
 
   .product-grid{
-    grid-template-columns:repeat(4,1fr);
+
+    grid-template-columns:
+      repeat(4,1fr);
+
   }
+
 
   .category-card{
-    min-height:185px;
+
+    min-height:190px;
+
   }
 
+
   .bottom-nav{
+
     left:50%;
     right:auto;
     bottom:18px;
 
     width:380px;
+
     height:66px;
 
     padding:0;
 
-    transform:translateX(-50%);
+    transform:
+      translateX(-50%);
 
     border:
-      1px solid rgba(67,45,52,.09);
+      1px solid
+      rgba(67,45,53,.09);
 
     border-radius:999px;
 
     box-shadow:
-      0 15px 40px rgba(89,45,59,.16);
+      0 15px 40px
+      rgba(89,45,59,.16);
+
   }
 
 }
+
 
 @media(max-width:380px){
 
   .wrap{
-    width:calc(100% - 24px);
+
+    width:
+      calc(100% - 24px);
+
   }
 
-  .home-grid{
-    gap:9px;
-  }
 
   .main-card{
-    min-height:205px;
+
+    min-height:215px;
+
     padding:16px;
-    border-radius:22px;
+
   }
+
 
   .main-card h2{
-    font-size:27px;
+
+    font-size:28px;
+
   }
+
 
   .product-grid{
+
     gap:9px;
+
   }
 
+
   .product-info{
+
     padding:11px;
+
   }
 
 }
+
 
 @media(prefers-reduced-motion:reduce){
 
   *,
   *::before,
   *::after{
+
     animation-duration:.01ms !important;
+
+    animation-iteration-count:1 !important;
+
     transition:none !important;
+
     scroll-behavior:auto !important;
+
   }
 
 }
 
 </style>
+
 </head>
 
+
 <body>
+
+
+<!-- =======================================================
+     DECORATIONS
+======================================================== -->
+
+<div
+  class="decor-layer"
+  id="decorLayer">
+</div>
+
+
+<!-- =======================================================
+     HEADER
+======================================================== -->
 
 <header>
 
@@ -1213,30 +2041,21 @@ footer a{
         alt="Rarely Found">
 
       <div class="brand-name">
-        RARELY <span>FOUND</span>
+
+        RARELY
+        <span>FOUND</span>
+
       </div>
 
     </div>
 
+
     <button
       id="backBtn"
       class="back-btn"
-      type="button"
-      onclick="goBack()">
+      type="button">
 
-      <svg
-        width="14"
-        height="14"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2.5">
-
-        <path d="M15 18l-6-6 6-6"/>
-
-      </svg>
-
-      Back
+      ← Back
 
     </button>
 
@@ -1247,11 +2066,15 @@ footer a{
 
 <main>
 
-<!-- HOME -->
+
+<!-- =======================================================
+     HOME
+======================================================== -->
 
 <section
   class="view active"
   data-view="home">
+
 
   <div class="hero wrap">
 
@@ -1260,9 +2083,13 @@ footer a{
       src="logo.png"
       alt="Rarely Found">
 
+
     <div class="hero-kicker">
-      ✦ Rare things only ✦
+
+      ✦ RARE FINDS ONLY ✦
+
     </div>
+
 
     <h1 class="hero-title">
 
@@ -1271,27 +2098,37 @@ footer a{
       </span>
 
       <span class="line">
+
         <span class="pink">
           You didn't.
         </span>
+
       </span>
 
     </h1>
 
+
     <p class="hero-sub">
-      Rare pins, collectibles and ridiculously good finds.
-      I hunt them down. I keep the best ones.
-      Sometimes I sell them.
+
+      Rare pins, collectibles and
+      ridiculously good finds.
+      Cute things, weird things,
+      impossible things to find twice.
+
     </p>
 
+
     <div class="hero-note">
+
       Sorry. I have excellent taste.
+
     </div>
 
   </div>
 
 
-  <div class="wrap home-section">
+  <div class="wrap">
+
 
     <div class="section-label">
 
@@ -1308,19 +2145,19 @@ footer a{
 
     <div class="home-grid">
 
+
       <button
         class="main-card"
         type="button"
-        onclick="
-          tapFeedback(event);
-          showPins();
-        ">
+        data-action="pins">
+
 
         <span
           class="count-badge"
           id="countPinsTotal">
           …
         </span>
+
 
         <div class="card-icon">
 
@@ -1347,16 +2184,19 @@ footer a{
 
         </div>
 
-        <div>
 
-          <h2>Pins</h2>
+        <h2>
+          Pins
+        </h2>
 
-          <p>
-            Disney, Universal, Sanrio
-            and the ones I wasn't supposed to find.
-          </p>
 
-        </div>
+        <p>
+
+          Disney, Universal, Sanrio
+          and the ones I wasn't
+          supposed to find.
+
+        </p>
 
       </button>
 
@@ -1364,16 +2204,15 @@ footer a{
       <button
         class="main-card"
         type="button"
-        onclick="
-          tapFeedback(event);
-          showProducts('stash','Stash');
-        ">
+        data-action="stash">
+
 
         <span
           class="count-badge"
           id="countStashTotal">
           …
         </span>
+
 
         <div class="card-icon">
 
@@ -1384,22 +2223,26 @@ footer a{
             stroke-width="1.8">
 
             <path d="M4 7h16l-1.5 13h-13z"/>
-            <path d="M8 7V5a4 4 0 0 1 8 0v2"/>
+
+            <path
+              d="M8 7V5a4 4 0 0 1 8 0v2"/>
 
           </svg>
 
         </div>
 
-        <div>
 
-          <h2>Stash</h2>
+        <h2>
+          Stash
+        </h2>
 
-          <p>
-            Everything else that made me say
-            “oh no... I need that.”
-          </p>
 
-        </div>
+        <p>
+
+          Everything else that made me say
+          “oh no... I need that.”
+
+        </p>
 
       </button>
 
@@ -1413,23 +2256,29 @@ footer a{
       </div>
 
       <p>
+
         <strong>Rule #1:</strong>
-        if it's rare, cute and impossible to find...
-        obviously I want it.
+        if it's rare, cute and impossible
+        to find... obviously I want it.
+
       </p>
 
     </div>
 
   </div>
 
+
 </section>
 
 
-<!-- PIN CATEGORIES -->
+<!-- =======================================================
+     PIN CATEGORIES
+======================================================== -->
 
 <section
   class="view"
   data-view="pin-sub">
+
 
   <div class="wrap section-pad">
 
@@ -1437,17 +2286,24 @@ footer a{
       🎀 Pins
     </div>
 
+
     <h1 class="view-title">
+
       Pick your
       <span class="pink">
         poison.
       </span>
+
     </h1>
 
+
     <p class="view-sub">
+
       Four little hunting grounds.
       Some are cute. Some are rare.
-      Some are absolutely not leaving my collection.
+      Some are absolutely not leaving
+      my collection.
+
     </p>
 
   </div>
@@ -1455,15 +2311,15 @@ footer a{
 
   <div class="wrap">
 
+
     <div class="category-grid">
+
 
       <button
         class="category-card"
         type="button"
-        onclick="
-          tapFeedback(event);
-          showProducts('disney','Disney');
-        ">
+        data-category="disney"
+        data-label="Disney">
 
         <span
           class="category-count"
@@ -1475,7 +2331,9 @@ footer a{
           🏰
         </span>
 
-        <h3>Disney</h3>
+        <h3>
+          Disney
+        </h3>
 
         <span class="desc">
           The classics. Obviously.
@@ -1487,10 +2345,8 @@ footer a{
       <button
         class="category-card"
         type="button"
-        onclick="
-          tapFeedback(event);
-          showProducts('universal','Universal');
-        ">
+        data-category="universal"
+        data-label="Universal">
 
         <span
           class="category-count"
@@ -1502,7 +2358,9 @@ footer a{
           ⭐
         </span>
 
-        <h3>Universal</h3>
+        <h3>
+          Universal
+        </h3>
 
         <span class="desc">
           Bigger. Louder. Rarer.
@@ -1514,10 +2372,8 @@ footer a{
       <button
         class="category-card"
         type="button"
-        onclick="
-          tapFeedback(event);
-          showProducts('sanrio','Sanrio');
-        ">
+        data-category="sanrio"
+        data-label="Sanrio">
 
         <span
           class="category-count"
@@ -1529,7 +2385,9 @@ footer a{
           🎀
         </span>
 
-        <h3>Sanrio</h3>
+        <h3>
+          Sanrio
+        </h3>
 
         <span class="desc">
           Too cute. Still mine.
@@ -1541,10 +2399,8 @@ footer a{
       <button
         class="category-card"
         type="button"
-        onclick="
-          tapFeedback(event);
-          showProducts('wildcard','Wildcard');
-        ">
+        data-category="wildcard"
+        data-label="Wildcard">
 
         <span
           class="category-count"
@@ -1556,13 +2412,16 @@ footer a{
           💋
         </span>
 
-        <h3>Wildcard</h3>
+        <h3>
+          Wildcard
+        </h3>
 
         <span class="desc">
           Rules? Never heard of them.
         </span>
 
       </button>
+
 
     </div>
 
@@ -1571,11 +2430,14 @@ footer a{
 </section>
 
 
-<!-- PRODUCTS -->
+<!-- =======================================================
+     PRODUCTS
+======================================================== -->
 
 <section
   class="view"
   data-view="products">
+
 
   <div class="wrap section-pad">
 
@@ -1585,15 +2447,20 @@ footer a{
       Pins
     </div>
 
+
     <h1
       class="view-title"
       id="prodTitle">
       Collection
     </h1>
 
+
     <p class="view-sub">
+
       Look closely.
-      You never know which one is the troublemaker.
+      You never know which one
+      is the troublemaker.
+
     </p>
 
   </div>
@@ -1611,28 +2478,25 @@ footer a{
 
     </div>
 
-    <div
-      class="dots"
-      id="prodDots">
-    </div>
-
   </div>
 
 </section>
 
+
 </main>
 
 
+<!-- =======================================================
+     NAV
+======================================================== -->
+
 <nav class="bottom-nav">
+
 
   <button
     class="nav-btn active"
-    data-nav="home"
     type="button"
-    onclick="
-      tapFeedback(event);
-      hudGo('home');
-    ">
+    data-nav="home">
 
     <svg
       viewBox="0 0 24 24"
@@ -1641,7 +2505,9 @@ footer a{
       stroke-width="2">
 
       <path d="M3 11l9-8 9 8"/>
-      <path d="M5 10v10h14V10"/>
+
+      <path
+        d="M5 10v10h14V10"/>
 
     </svg>
 
@@ -1652,12 +2518,8 @@ footer a{
 
   <button
     class="nav-btn"
-    data-nav="pins"
     type="button"
-    onclick="
-      tapFeedback(event);
-      hudGo('pins');
-    ">
+    data-nav="pins">
 
     <svg
       viewBox="0 0 24 24"
@@ -1665,8 +2527,15 @@ footer a{
       stroke="currentColor"
       stroke-width="2">
 
-      <circle cx="12" cy="12" r="8"/>
-      <circle cx="12" cy="12" r="3"/>
+      <circle
+        cx="12"
+        cy="12"
+        r="8"/>
+
+      <circle
+        cx="12"
+        cy="12"
+        r="3"/>
 
     </svg>
 
@@ -1677,12 +2546,8 @@ footer a{
 
   <button
     class="nav-btn"
-    data-nav="stash"
     type="button"
-    onclick="
-      tapFeedback(event);
-      hudGo('stash');
-    ">
+    data-nav="stash">
 
     <svg
       viewBox="0 0 24 24"
@@ -1690,14 +2555,18 @@ footer a{
       stroke="currentColor"
       stroke-width="2">
 
-      <path d="M4 7h16l-1.5 13h-13z"/>
-      <path d="M8 7V5a4 4 0 0 1 8 0v2"/>
+      <path
+        d="M4 7h16l-1.5 13h-13z"/>
+
+      <path
+        d="M8 7V5a4 4 0 0 1 8 0v2"/>
 
     </svg>
 
     Stash
 
   </button>
+
 
 </nav>
 
@@ -1723,10 +2592,15 @@ footer a{
 
 <script type="module">
 
+/* =========================================================
+   FIREBASE
+========================================================= */
+
 import {
   initializeApp
 } from
 "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+
 
 import {
   getDatabase,
@@ -1737,14 +2611,10 @@ import {
 "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
 
 
-/* =========================================================
-   FIREBASE
-========================================================= */
-
 const firebaseConfig = {
 
   apiKey:
-    "AIzaSyCPaFBGPyRS0LSdQvNYDucdLbIU2GSfqdE",
+    "AIzaSyCPaFBGPyRS0LSDqvNYDucdLbIU2GSfqdE",
 
   authDomain:
     "greenrobot-ede43.firebaseapp.com",
@@ -1772,6 +2642,7 @@ const firebaseConfig = {
 
 let db = null;
 
+
 try{
 
   const app =
@@ -1780,10 +2651,14 @@ try{
   db =
     getDatabase(app);
 
+  console.log(
+    "🎀 RARELY FOUND Firebase connected"
+  );
+
 }catch(error){
 
   console.error(
-    "Firebase initialization failed:",
+    "Firebase initialization error:",
     error
   );
 
@@ -1791,7 +2666,7 @@ try{
 
 
 /* =========================================================
-   DATABASE PATHS
+   PATHS
 ========================================================= */
 
 const PATHS = {
@@ -1818,61 +2693,327 @@ const PATHS = {
    STATE
 ========================================================= */
 
-let currentView = "home";
+let currentView =
+  "home";
 
-let currentCategory = null;
+let currentCategory =
+  null;
 
-let activeProductPath = null;
+let activeProductPath =
+  null;
 
-let activeProductListener = null;
+let activeProductListener =
+  null;
 
-let historyStack = ["home"];
+let historyStack =
+  ["home"];
 
 
 /* =========================================================
-   HELPERS
+   DECORATIONS
 ========================================================= */
 
-function escapeHTML(value){
+function createDecorations(){
 
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+  const layer =
+    document.getElementById(
+      "decorLayer"
+    );
+
+
+  if(!layer){
+    return;
+  }
+
+
+  const symbols = [
+    "✦",
+    "✧",
+    "⋆",
+    "♡",
+    "🎀"
+  ];
+
+
+  for(
+    let i = 0;
+    i < 18;
+    i++
+  ){
+
+    const item =
+      document.createElement("span");
+
+
+    const isBow =
+      i % 6 === 0;
+
+
+    item.className =
+      "floating " +
+      (
+        isBow
+          ? "bow"
+          : "star"
+      );
+
+
+    item.textContent =
+      isBow
+        ? "🎀"
+        : symbols[
+            Math.floor(
+              Math.random() *
+              4
+            )
+          ];
+
+
+    item.style.left =
+      (
+        Math.random() *
+        100
+      ) + "%";
+
+
+    item.style.top =
+      (
+        8 +
+        Math.random() *
+        82
+      ) + "%";
+
+
+    item.style.setProperty(
+      "--size",
+      (
+        isBow
+          ? 17 + Math.random()*12
+          : 10 + Math.random()*13
+      ) + "px"
+    );
+
+
+    item.style.setProperty(
+      "--move-x",
+      (
+        (Math.random()-.5) *
+        55
+      ) + "px"
+    );
+
+
+    item.style.setProperty(
+      "--move-y",
+      (
+        20 +
+        Math.random()*45
+      ) + "px"
+    );
+
+
+    item.style.setProperty(
+      "--duration",
+      (
+        4 +
+        Math.random()*4
+      ) + "s"
+    );
+
+
+    item.style.setProperty(
+      "--delay",
+      (
+        Math.random()*5
+      ) + "s"
+    );
+
+
+    layer.appendChild(item);
+
+  }
 
 }
 
 
-function safeImage(value){
+createDecorations();
+
+
+/* =========================================================
+   TAP SPARKS
+========================================================= */
+
+function tapSparks(
+  event
+){
+
+  const x =
+    event?.clientX ??
+    window.innerWidth / 2;
+
+  const y =
+    event?.clientY ??
+    window.innerHeight / 2;
+
+
+  const symbols = [
+    "✦",
+    "♡",
+    "✧",
+    "⋆"
+  ];
+
+
+  for(
+    let i=0;
+    i<6;
+    i++
+  ){
+
+    const spark =
+      document.createElement("span");
+
+
+    spark.className =
+      "tap-spark";
+
+
+    spark.textContent =
+      symbols[
+        Math.floor(
+          Math.random() *
+          symbols.length
+        )
+      ];
+
+
+    spark.style.left =
+      x + "px";
+
+
+    spark.style.top =
+      y + "px";
+
+
+    spark.style.setProperty(
+      "--dx",
+      (
+        (Math.random()-.5) *
+        95
+      ) + "px"
+    );
+
+
+    spark.style.setProperty(
+      "--dy",
+      (
+        (Math.random()-.7) *
+        90
+      ) + "px"
+    );
+
+
+    document.body.appendChild(
+      spark
+    );
+
+
+    setTimeout(
+      () => spark.remove(),
+      750
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   SAFE IMAGE
+========================================================= */
+
+function safeImage(
+  value
+){
 
   if(!value){
     return null;
   }
 
-  const str = String(value);
 
-  /*
-    Only allow image data URLs and normal HTTPS images.
-  */
+  const image =
+    String(value);
+
 
   if(
-    str.startsWith("data:image/") ||
-    str.startsWith("https://") ||
-    str.startsWith("http://")
+    image.startsWith(
+      "data:image/"
+    )
   ){
 
-    return str;
+    return image;
 
   }
+
+
+  if(
+    image.startsWith(
+      "https://"
+    )
+  ){
+
+    return image;
+
+  }
+
 
   return null;
 
 }
 
 
-function formatPrice(value){
+/* =========================================================
+   ESCAPE
+========================================================= */
+
+function escapeHTML(
+  value
+){
+
+  return String(
+    value ?? ""
+  )
+  .replace(
+    /&/g,
+    "&amp;"
+  )
+  .replace(
+    /</g,
+    "&lt;"
+  )
+  .replace(
+    />/g,
+    "&gt;"
+  )
+  .replace(
+    /"/g,
+    "&quot;"
+  )
+  .replace(
+    /'/g,
+    "&#039;"
+  );
+
+}
+
+
+/* =========================================================
+   PRICE
+========================================================= */
+
+function formatPrice(
+  value
+){
 
   if(
     value === null ||
@@ -1884,10 +3025,14 @@ function formatPrice(value){
 
   }
 
+
   const number =
     Number(value);
 
-  if(Number.isFinite(number)){
+
+  if(
+    Number.isFinite(number)
+  ){
 
     return "$" +
       number.toLocaleString(
@@ -1897,85 +3042,23 @@ function formatPrice(value){
             Number.isInteger(number)
               ? 0
               : 2,
+
           maximumFractionDigits:2
         }
       );
 
   }
 
-  return escapeHTML(value);
+
+  return escapeHTML(
+    value
+  );
 
 }
 
 
 /* =========================================================
-   SPARKS
-========================================================= */
-
-window.tapFeedback = function(event){
-
-  const x =
-    event?.clientX ??
-    window.innerWidth / 2;
-
-  const y =
-    event?.clientY ??
-    window.innerHeight / 2;
-
-
-  for(let i=0;i<5;i++){
-
-    const spark =
-      document.createElement("span");
-
-    spark.className = "spark";
-
-    spark.textContent =
-      ["✦","♡","⋆","✧"][
-        Math.floor(
-          Math.random()*4
-        )
-      ];
-
-
-    spark.style.left =
-      x + "px";
-
-    spark.style.top =
-      y + "px";
-
-
-    spark.style.setProperty(
-      "--dx",
-      ((Math.random()-.5)*80) +
-      "px"
-    );
-
-
-    spark.style.setProperty(
-      "--dy",
-      ((Math.random()-.7)*80) +
-      "px"
-    );
-
-
-    document.body.appendChild(
-      spark
-    );
-
-
-    setTimeout(
-      () => spark.remove(),
-      700
-    );
-
-  }
-
-};
-
-
-/* =========================================================
-   COUNTERS
+   COUNT
 ========================================================= */
 
 function bindCount(
@@ -1988,19 +3071,28 @@ function bindCount(
       elementId
     );
 
-  if(!element || !db){
+
+  if(
+    !element ||
+    !db
+  ){
+
     return;
+
   }
 
 
   onValue(
     ref(db,path),
+
     snapshot => {
 
       const data =
         snapshot.val();
 
+
       let count = 0;
+
 
       if(
         data &&
@@ -2008,24 +3100,30 @@ function bindCount(
       ){
 
         count =
-          Object.keys(data).length;
+          Object.keys(
+            data
+          ).length;
 
       }
+
 
       element.textContent =
         count;
 
     },
+
     error => {
 
       console.error(
-        "Counter error:",
+        "Count error:",
         error
       );
 
-      element.textContent = "–";
+      element.textContent =
+        "–";
 
     }
+
   );
 
 }
@@ -2057,16 +3155,23 @@ bindCount(
 );
 
 
-/* TOTAL PINS */
+/* =========================================================
+   TOTAL PINS
+========================================================= */
 
 if(db){
 
   onValue(
-    ref(db,"products/pins"),
+    ref(
+      db,
+      "products/pins"
+    ),
+
     snapshot => {
 
       const data =
         snapshot.val();
+
 
       let total = 0;
 
@@ -2085,7 +3190,9 @@ if(db){
             ){
 
               total +=
-                Object.keys(category).length;
+                Object.keys(
+                  category
+                ).length;
 
             }
 
@@ -2099,6 +3206,7 @@ if(db){
           "countPinsTotal"
         );
 
+
       if(element){
 
         element.textContent =
@@ -2106,61 +3214,27 @@ if(db){
 
       }
 
+    },
+
+    error => {
+
+      console.error(
+        "Pins total error:",
+        error
+      );
+
     }
+
   );
 
 }
 
 
 /* =========================================================
-   NAVIGATION
+   SHOW VIEW
 ========================================================= */
 
-function syncNavigation(
-  view
-){
-
-  let target = "home";
-
-
-  if(
-    view === "pin-sub" ||
-    (
-      view === "products" &&
-      currentCategory !== "stash"
-    )
-  ){
-
-    target = "pins";
-
-  }
-
-
-  if(
-    view === "products" &&
-    currentCategory === "stash"
-  ){
-
-    target = "stash";
-
-  }
-
-
-  document
-    .querySelectorAll(".nav-btn")
-    .forEach(button => {
-
-      button.classList.toggle(
-        "active",
-        button.dataset.nav === target
-      );
-
-    });
-
-}
-
-
-window.showView = function(
+function showView(
   name
 ){
 
@@ -2168,6 +3242,7 @@ window.showView = function(
     document.querySelector(
       `.view[data-view="${name}"]`
     );
+
 
   if(!target){
     return;
@@ -2186,16 +3261,24 @@ window.showView = function(
     });
 
 
-  target.classList.add("active");
+  target.classList.add(
+    "active"
+  );
 
 
   void target.offsetWidth;
 
 
-  target.classList.add("pop-in");
+  target.classList.add(
+    "pop-in"
+  );
 
 
-  currentView = name;
+  currentView =
+    name;
+
+
+  updateNav();
 
 
   const back =
@@ -2214,55 +3297,109 @@ window.showView = function(
   }
 
 
-  syncNavigation(name);
-
-
   window.scrollTo({
     top:0,
     behavior:"smooth"
   });
 
-};
+}
 
 
 /* =========================================================
-   PINS HOME
+   NAV
 ========================================================= */
 
-window.showPins = function(){
+function updateNav(){
+
+  let active =
+    "home";
+
 
   if(
-    historyStack[
-      historyStack.length-1
-    ] !== "pin-sub"
+    currentView === "pin-sub" ||
+    (
+      currentView === "products" &&
+      currentCategory !== "stash"
+    )
   ){
 
-    historyStack.push(
-      "pin-sub"
-    );
+    active =
+      "pins";
 
   }
 
-  showView("pin-sub");
 
-};
+  if(
+    currentView === "products" &&
+    currentCategory === "stash"
+  ){
+
+    active =
+      "stash";
+
+  }
+
+
+  document
+    .querySelectorAll(".nav-btn")
+    .forEach(button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.nav === active
+      );
+
+    });
+
+}
 
 
 /* =========================================================
-   PRODUCTS
+   SHOW PINS
 ========================================================= */
 
-window.showProducts = function(
+function showPins(){
+
+  historyStack = [
+    "home",
+    "pin-sub"
+  ];
+
+  currentCategory =
+    null;
+
+  showView(
+    "pin-sub"
+  );
+
+}
+
+
+/* =========================================================
+   SHOW PRODUCTS
+========================================================= */
+
+function showProducts(
   key,
   label
 ){
 
-  if(!PATHS[key]){
+  if(
+    !PATHS[key]
+  ){
+
+    console.error(
+      "Unknown product path:",
+      key
+    );
+
     return;
+
   }
 
 
-  currentCategory = key;
+  currentCategory =
+    key;
 
 
   const grid =
@@ -2270,10 +3407,12 @@ window.showProducts = function(
       "prodGrid"
     );
 
+
   const title =
     document.getElementById(
       "prodTitle"
     );
+
 
   const crumb =
     document.getElementById(
@@ -2282,7 +3421,10 @@ window.showProducts = function(
 
 
   if(title){
-    title.textContent = label;
+
+    title.textContent =
+      label;
+
   }
 
 
@@ -2308,7 +3450,7 @@ window.showProducts = function(
 
   if(
     historyStack[
-      historyStack.length-1
+      historyStack.length - 1
     ] !== "products"
   ){
 
@@ -2319,26 +3461,25 @@ window.showProducts = function(
   }
 
 
-  showView("products");
+  showView(
+    "products"
+  );
 
 
   if(!db){
 
-    grid.innerHTML = `
-      <div class="empty-note">
+    grid.innerHTML =
+      `<div class="empty-note">
         <strong>Oops.</strong>
         Firebase isn't connected.
-      </div>
-    `;
+      </div>`;
 
     return;
 
   }
 
 
-  /*
-    Remove old product listener.
-  */
+  /* Remove previous listener */
 
   if(
     activeProductListener &&
@@ -2346,7 +3487,10 @@ window.showProducts = function(
   ){
 
     off(
-      ref(db,activeProductPath),
+      ref(
+        db,
+        activeProductPath
+      ),
       "value",
       activeProductListener
     );
@@ -2369,8 +3513,13 @@ window.showProducts = function(
 
 
   onValue(
-    ref(db,activeProductPath),
+    ref(
+      db,
+      activeProductPath
+    ),
+
     activeProductListener,
+
     error => {
 
       console.error(
@@ -2378,25 +3527,26 @@ window.showProducts = function(
         error
       );
 
+
       if(grid){
 
-        grid.innerHTML = `
-          <div class="empty-note">
+        grid.innerHTML =
+          `<div class="empty-note">
             <strong>Something went wrong.</strong>
             I couldn't load this collection.
-          </div>
-        `;
+          </div>`;
 
       }
 
     }
+
   );
 
-};
+}
 
 
 /* =========================================================
-   PRODUCT RENDER
+   RENDER PRODUCTS
 ========================================================= */
 
 function renderProducts(
@@ -2408,6 +3558,7 @@ function renderProducts(
       "prodGrid"
     );
 
+
   if(!grid){
     return;
   }
@@ -2415,16 +3566,38 @@ function renderProducts(
 
   if(
     !data ||
-    typeof data !== "object" ||
-    Object.keys(data).length === 0
+    typeof data !== "object"
   ){
 
-    grid.innerHTML = `
-      <div class="empty-note">
+    grid.innerHTML =
+      `<div class="empty-note">
         <strong>Nothing here yet.</strong>
         Apparently someone already found everything.
-      </div>
-    `;
+      </div>`;
+
+    return;
+
+  }
+
+
+  const entries =
+    Object.entries(data)
+      .filter(
+        ([,product]) =>
+          product &&
+          typeof product === "object"
+      );
+
+
+  if(
+    entries.length === 0
+  ){
+
+    grid.innerHTML =
+      `<div class="empty-note">
+        <strong>Nothing here yet.</strong>
+        Apparently someone already found everything.
+      </div>`;
 
     return;
 
@@ -2432,23 +3605,27 @@ function renderProducts(
 
 
   const items =
-    Object.entries(data)
+    entries
       .map(
         ([id,product]) => ({
           id,
-          ...(product || {})
+          ...product
         })
       )
       .sort(
         (a,b) =>
-          Number(b.createdAt || 0) -
-          Number(a.createdAt || 0)
+          Number(
+            b.createdAt || 0
+          ) -
+          Number(
+            a.createdAt || 0
+          )
       );
 
 
   grid.innerHTML =
-    items
-      .map(product => {
+    items.map(
+      product => {
 
         const name =
           escapeHTML(
@@ -2457,26 +3634,24 @@ function renderProducts(
           );
 
 
-        const rarity =
+        const rarityRaw =
           String(
             product.rarity ||
             "common"
           )
-          .toLowerCase()
-          .replace(
-            /[^a-z]/g,
-            ""
-          );
+          .toLowerCase();
 
 
-        const validRarity =
+        const rarity =
           [
             "common",
             "uncommon",
             "rare",
             "grail"
-          ].includes(rarity)
-            ? rarity
+          ].includes(
+            rarityRaw
+          )
+            ? rarityRaw
             : "common";
 
 
@@ -2495,7 +3670,8 @@ function renderProducts(
                 loading="lazy">
             `
             : `
-              <span class="product-placeholder">
+              <span
+                class="product-placeholder">
                 🎀
               </span>
             `;
@@ -2503,44 +3679,65 @@ function renderProducts(
 
         return `
 
-          <article class="product-card">
+          <article
+            class="product-card">
 
-            <div class="product-photo">
+            <div
+              class="product-photo">
 
               <span
-                class="rarity ${validRarity}">
+                class="rarity ${rarity}">
+
                 ${escapeHTML(
                   product.rarity ||
                   "Common"
                 )}
+
               </span>
 
-              <span class="product-spark">
+
+              <span
+                class="product-spark">
+
                 ✦
+
               </span>
+
 
               ${imageHTML}
 
             </div>
 
 
-            <div class="product-info">
+            <div
+              class="product-info">
 
-              <div class="product-name">
+              <div
+                class="product-name">
+
                 ${name}
+
               </div>
 
 
-              <div class="product-bottom">
+              <div
+                class="product-bottom">
 
-                <span class="price">
+                <span
+                  class="price">
+
                   ${formatPrice(
                     product.price
                   )}
+
                 </span>
 
-                <span class="little-tag">
+
+                <span
+                  class="little-tag">
+
                   rare find
+
                 </span>
 
               </div>
@@ -2551,8 +3748,8 @@ function renderProducts(
 
         `;
 
-      })
-      .join("");
+      }
+    ).join("");
 
 }
 
@@ -2561,13 +3758,22 @@ function renderProducts(
    BACK
 ========================================================= */
 
-window.goBack = function(){
+function goBack(){
 
   if(
     historyStack.length <= 1
   ){
 
-    showView("home");
+    historyStack = [
+      "home"
+    ];
+
+    currentCategory =
+      null;
+
+    showView(
+      "home"
+    );
 
     return;
 
@@ -2579,96 +3785,181 @@ window.goBack = function(){
 
   const previous =
     historyStack[
-      historyStack.length-1
+      historyStack.length - 1
     ];
 
 
-  if(previous === "products"){
+  if(
+    previous === "products"
+  ){
 
     historyStack.pop();
 
-    showView(
+
+    if(
       currentCategory === "stash"
-        ? "home"
-        : "pin-sub"
-    );
+    ){
+
+      historyStack = [
+        "home"
+      ];
+
+      showView(
+        "home"
+      );
+
+    }else{
+
+      historyStack = [
+        "home",
+        "pin-sub"
+      ];
+
+      showView(
+        "pin-sub"
+      );
+
+    }
 
     return;
 
   }
 
 
-  showView(previous);
+  showView(
+    previous
+  );
 
-};
+}
 
 
 /* =========================================================
-   HUD
-========================================================= */
-
-window.hudGo = function(
-  target
-){
-
-  if(target === "home"){
-
-    historyStack = ["home"];
-
-    currentCategory = null;
-
-    showView("home");
-
-    return;
-
-  }
-
-
-  if(target === "pins"){
-
-    historyStack = [
-      "home",
-      "pin-sub"
-    ];
-
-    currentCategory = null;
-
-    showView("pin-sub");
-
-    return;
-
-  }
-
-
-  if(target === "stash"){
-
-    historyStack = [
-      "home"
-    ];
-
-    showProducts(
-      "stash",
-      "Stash"
-    );
-
-  }
-
-};
-
-
-/* =========================================================
-   DISABLE IMAGE DRAG
+   EVENTS
 ========================================================= */
 
 document.addEventListener(
-  "dragstart",
+  "click",
   event => {
 
+    const target =
+      event.target.closest(
+        "button"
+      );
+
+
+    if(!target){
+      return;
+    }
+
+
+    tapSparks(
+      event
+    );
+
+
     if(
-      event.target.tagName === "IMG"
+      target.id === "backBtn"
     ){
 
-      event.preventDefault();
+      goBack();
+
+      return;
+
+    }
+
+
+    if(
+      target.dataset.action === "pins"
+    ){
+
+      showPins();
+
+      return;
+
+    }
+
+
+    if(
+      target.dataset.action === "stash"
+    ){
+
+      historyStack = [
+        "home"
+      ];
+
+      showProducts(
+        "stash",
+        "Stash"
+      );
+
+      return;
+
+    }
+
+
+    if(
+      target.dataset.category
+    ){
+
+      const key =
+        target.dataset.category;
+
+      const label =
+        target.dataset.label;
+
+      showProducts(
+        key,
+        label
+      );
+
+      return;
+
+    }
+
+
+    if(
+      target.dataset.nav === "home"
+    ){
+
+      historyStack = [
+        "home"
+      ];
+
+      currentCategory =
+        null;
+
+      showView(
+        "home"
+      );
+
+      return;
+
+    }
+
+
+    if(
+      target.dataset.nav === "pins"
+    ){
+
+      showPins();
+
+      return;
+
+    }
+
+
+    if(
+      target.dataset.nav === "stash"
+    ){
+
+      historyStack = [
+        "home"
+      ];
+
+      showProducts(
+        "stash",
+        "Stash"
+      );
 
     }
 
@@ -2680,7 +3971,9 @@ document.addEventListener(
    START
 ========================================================= */
 
-showView("home");
+showView(
+  "home"
+);
 
 </script>
 
