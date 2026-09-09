@@ -18,6 +18,8 @@
   name="theme-color"
   content="#fdebf2">
 
+<meta name="apple-mobile-web-app-capable" content="yes">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
 <link
@@ -156,6 +158,13 @@ body::before{
       black,
       transparent 75%
     );
+
+}
+
+
+body.gallery-open{
+
+  overflow:hidden;
 
 }
 
@@ -1741,6 +1750,8 @@ main{
   transition:
     transform .18s ease;
 
+  cursor:pointer;
+
 }
 
 
@@ -1782,6 +1793,17 @@ main{
   height:100%;
 
   object-fit:cover;
+
+  transition:
+    transform .28s ease;
+
+}
+
+
+.product-card:hover .product-photo img{
+
+  transform:
+    scale(1.025);
 
 }
 
@@ -1873,6 +1895,51 @@ main{
 }
 
 
+.photo-count{
+
+  position:absolute;
+
+  z-index:5;
+
+  right:9px;
+
+  bottom:9px;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:4px;
+
+  padding:
+    5px 8px;
+
+  background:
+    rgba(255,255,255,.92);
+
+  border:
+    1px solid
+    rgba(67,45,53,.08);
+
+  border-radius:999px;
+
+  box-shadow:
+    0 4px 12px
+    rgba(67,45,53,.12);
+
+  color:
+    var(--ink);
+
+  font-size:9px;
+
+  font-weight:800;
+
+  backdrop-filter:
+    blur(7px);
+
+}
+
+
 .product-info{
 
   padding:
@@ -1942,6 +2009,457 @@ main{
   font-weight:800;
 
   text-transform:uppercase;
+
+}
+
+
+/* =========================================================
+   PRODUCT GALLERY
+========================================================= */
+
+.gallery-modal{
+
+  position:fixed;
+
+  inset:0;
+
+  z-index:1000;
+
+  display:flex;
+
+  flex-direction:column;
+
+  justify-content:center;
+
+  align-items:center;
+
+  padding:
+    20px;
+
+  background:
+    rgba(45,26,34,.91);
+
+  backdrop-filter:
+    blur(12px);
+
+  -webkit-backdrop-filter:
+    blur(12px);
+
+  opacity:1;
+
+  visibility:visible;
+
+  transition:
+    opacity .2s ease,
+    visibility .2s ease;
+
+}
+
+
+.gallery-modal[hidden]{
+
+  display:none;
+
+}
+
+
+.gallery-close{
+
+  position:absolute;
+
+  z-index:20;
+
+  top:
+    max(
+      18px,
+      env(safe-area-inset-top)
+    );
+
+  right:18px;
+
+  width:44px;
+  height:44px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  background:
+    rgba(255,255,255,.94);
+
+  border:
+    1px solid
+    rgba(255,255,255,.35);
+
+  border-radius:50%;
+
+  color:
+    var(--ink);
+
+  font-size:25px;
+
+  line-height:1;
+
+  box-shadow:
+    0 8px 25px
+    rgba(0,0,0,.22);
+
+}
+
+
+.gallery-counter{
+
+  position:absolute;
+
+  z-index:20;
+
+  top:
+    max(
+      24px,
+      env(safe-area-inset-top)
+    );
+
+  left:50%;
+
+  transform:
+    translateX(-50%);
+
+  padding:
+    7px 12px;
+
+  background:
+    rgba(255,255,255,.9);
+
+  border-radius:999px;
+
+  color:
+    var(--ink);
+
+  font-size:11px;
+
+  font-weight:800;
+
+  box-shadow:
+    0 7px 20px
+    rgba(0,0,0,.16);
+
+}
+
+
+.gallery-stage{
+
+  position:relative;
+
+  width:
+    min(
+      100%,
+      900px
+    );
+
+  height:
+    min(
+      70vh,
+      760px
+    );
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  touch-action:pan-y;
+
+}
+
+
+.gallery-image{
+
+  max-width:100%;
+
+  max-height:100%;
+
+  width:auto;
+  height:auto;
+
+  object-fit:contain;
+
+  border-radius:15px;
+
+  box-shadow:
+    0 20px 70px
+    rgba(0,0,0,.35);
+
+  user-select:none;
+
+  -webkit-user-drag:none;
+
+  animation:
+    galleryImageIn .22s ease;
+
+}
+
+
+@keyframes galleryImageIn{
+
+  from{
+
+    opacity:.4;
+
+    transform:
+      scale(.975);
+
+  }
+
+  to{
+
+    opacity:1;
+
+    transform:none;
+
+  }
+
+}
+
+
+.gallery-arrow{
+
+  position:absolute;
+
+  z-index:10;
+
+  top:50%;
+
+  width:46px;
+  height:46px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  transform:
+    translateY(-50%);
+
+  background:
+    rgba(255,255,255,.94);
+
+  border-radius:50%;
+
+  color:
+    var(--ink);
+
+  font-size:25px;
+
+  box-shadow:
+    0 8px 24px
+    rgba(0,0,0,.2);
+
+}
+
+
+.gallery-prev{
+
+  left:10px;
+
+}
+
+
+.gallery-next{
+
+  right:10px;
+
+}
+
+
+.gallery-arrow:disabled{
+
+  opacity:.25;
+
+  cursor:default;
+
+}
+
+
+.gallery-bottom{
+
+  position:absolute;
+
+  left:20px;
+  right:20px;
+
+  bottom:
+    max(
+      18px,
+      env(safe-area-inset-bottom)
+    );
+
+  z-index:15;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  gap:10px;
+
+}
+
+
+.gallery-dots{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:6px;
+
+  max-width:90vw;
+
+  overflow:hidden;
+
+}
+
+
+.gallery-dot{
+
+  width:7px;
+  height:7px;
+
+  flex:0 0 auto;
+
+  padding:0;
+
+  border-radius:50%;
+
+  background:
+    rgba(255,255,255,.38);
+
+  transition:
+    transform .18s ease,
+    background .18s ease;
+
+}
+
+
+.gallery-dot.active{
+
+  background:#fff;
+
+  transform:
+    scale(1.35);
+
+}
+
+
+.gallery-info{
+
+  width:
+    min(
+      100%,
+      500px
+    );
+
+  padding:
+    13px 16px;
+
+  background:
+    rgba(255,255,255,.95);
+
+  border-radius:19px;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0,0,0,.18);
+
+  text-align:center;
+
+}
+
+
+.gallery-name{
+
+  color:
+    var(--ink);
+
+  font-family:
+    'Fredoka',
+    sans-serif;
+
+  font-size:17px;
+
+  line-height:1.2;
+
+}
+
+
+.gallery-meta{
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:9px;
+
+  margin-top:7px;
+
+}
+
+
+.gallery-rarity{
+
+  padding:
+    4px 8px;
+
+  background:
+    var(--pink-soft);
+
+  border-radius:999px;
+
+  color:
+    var(--pink-deep);
+
+  font-size:8px;
+
+  font-weight:800;
+
+  letter-spacing:.05em;
+
+  text-transform:uppercase;
+
+}
+
+
+.gallery-price{
+
+  color:
+    var(--pink-deep);
+
+  font-family:
+    'Fredoka',
+    sans-serif;
+
+  font-size:15px;
+
+}
+
+
+.gallery-hint{
+
+  color:
+    rgba(255,255,255,.7);
+
+  font-size:9px;
+
+  font-weight:700;
+
+  letter-spacing:.04em;
 
 }
 
@@ -2059,7 +2577,7 @@ main{
 
   position:fixed;
 
-  z-index:500;
+  z-index:1500;
 
   pointer-events:none;
 
@@ -2388,6 +2906,37 @@ footer a{
 
   }
 
+
+  .gallery-stage{
+
+    height:62vh;
+
+  }
+
+
+  .gallery-arrow{
+
+    width:40px;
+    height:40px;
+
+    font-size:21px;
+
+  }
+
+
+  .gallery-prev{
+
+    left:4px;
+
+  }
+
+
+  .gallery-next{
+
+    right:4px;
+
+  }
+
 }
 
 
@@ -2454,9 +3003,10 @@ footer a{
     <button
       id="backBtn"
       class="back-btn"
-      type="button">
+      type="button"
+      aria-label="Go back">
 
-      ← Back
+      ‹ Home
 
     </button>
 
@@ -3015,6 +3565,127 @@ footer a{
 
 
 <!-- =======================================================
+     PRODUCT GALLERY
+======================================================== -->
+
+<div
+  class="gallery-modal"
+  id="galleryModal"
+  hidden
+  role="dialog"
+  aria-modal="true"
+  aria-label="Product photo gallery">
+
+
+  <button
+    class="gallery-close"
+    id="galleryClose"
+    type="button"
+    aria-label="Close gallery">
+
+    ×
+
+  </button>
+
+
+  <div
+    class="gallery-counter"
+    id="galleryCounter">
+
+    1 / 1
+
+  </div>
+
+
+  <div
+    class="gallery-stage"
+    id="galleryStage">
+
+
+    <button
+      class="gallery-arrow gallery-prev"
+      id="galleryPrev"
+      type="button"
+      aria-label="Previous photo">
+
+      ‹
+
+    </button>
+
+
+    <img
+      class="gallery-image"
+      id="galleryImage"
+      src=""
+      alt="">
+
+
+    <button
+      class="gallery-arrow gallery-next"
+      id="galleryNext"
+      type="button"
+      aria-label="Next photo">
+
+      ›
+
+    </button>
+
+
+  </div>
+
+
+  <div class="gallery-bottom">
+
+
+    <div
+      class="gallery-dots"
+      id="galleryDots">
+    </div>
+
+
+    <div class="gallery-info">
+
+
+      <div
+        class="gallery-name"
+        id="galleryName">
+      </div>
+
+
+      <div class="gallery-meta">
+
+
+        <span
+          class="gallery-rarity"
+          id="galleryRarity">
+        </span>
+
+
+        <span
+          class="gallery-price"
+          id="galleryPrice">
+        </span>
+
+
+      </div>
+
+
+    </div>
+
+
+    <div class="gallery-hint">
+
+      Swipe to browse · Tap × to close
+
+    </div>
+
+
+  </div>
+
+</div>
+
+
+<!-- =======================================================
      NAV
 ======================================================== -->
 
@@ -3248,6 +3919,23 @@ let activeProductListener =
 
 let historyStack =
   ["home"];
+
+
+/* =========================================================
+   GALLERY STATE
+========================================================= */
+
+let renderedProducts = [];
+
+let galleryItems = [];
+
+let galleryIndex = 0;
+
+let galleryProduct = null;
+
+let touchStartX = 0;
+
+let touchStartY = 0;
 
 
 /* =========================================================
@@ -3509,6 +4197,119 @@ function safeImage(
 
 
   return null;
+
+}
+
+
+/* =========================================================
+   PRODUCT IMAGES
+   BACKWARDS COMPATIBLE WITH OLD "image"
+========================================================= */
+
+function getProductImages(
+  product
+){
+
+  const result = [];
+
+
+  /*
+   * New format:
+   * images: [
+   *   "data:image/...",
+   *   "data:image/...",
+   *   ...
+   * ]
+   *
+   * Firebase can also return arrays
+   * as objects with numeric keys.
+   */
+
+  if(
+    Array.isArray(
+      product?.images
+    )
+  ){
+
+    product.images.forEach(
+      value => {
+
+        const image =
+          safeImage(value);
+
+
+        if(
+          image &&
+          !result.includes(image)
+        ){
+
+          result.push(
+            image
+          );
+
+        }
+
+      }
+    );
+
+  }else if(
+    product?.images &&
+    typeof product.images === "object"
+  ){
+
+    Object.values(
+      product.images
+    ).forEach(
+      value => {
+
+        const image =
+          safeImage(value);
+
+
+        if(
+          image &&
+          !result.includes(image)
+        ){
+
+          result.push(
+            image
+          );
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /*
+   * Old format:
+   * image: "data:image/..."
+   *
+   * We deliberately put the old cover
+   * first so old products remain correct.
+   */
+
+  const cover =
+    safeImage(
+      product?.image
+    );
+
+
+  if(
+    cover &&
+    !result.includes(cover)
+  ){
+
+    result.unshift(
+      cover
+    );
+
+  }
+
+
+  return result;
 
 }
 
@@ -3954,6 +4755,93 @@ if(contactForm){
 
 
 /* =========================================================
+   BACK BUTTON LABEL
+========================================================= */
+
+function updateBackButton(){
+
+  const back =
+    document.getElementById(
+      "backBtn"
+    );
+
+
+  if(!back){
+    return;
+  }
+
+
+  if(
+    currentView === "home"
+  ){
+
+    back.classList.remove(
+      "show"
+    );
+
+    return;
+
+  }
+
+
+  back.classList.add(
+    "show"
+  );
+
+
+  if(
+    currentView === "products"
+  ){
+
+    back.innerHTML =
+      "‹ " +
+      (
+        currentCategory === "stash"
+          ? "Home"
+          : "Pins"
+      );
+
+    back.setAttribute(
+      "aria-label",
+      currentCategory === "stash"
+        ? "Back to Home"
+        : "Back to Pins"
+    );
+
+    return;
+
+  }
+
+
+  if(
+    currentView === "pin-sub"
+  ){
+
+    back.innerHTML =
+      "‹ Home";
+
+    back.setAttribute(
+      "aria-label",
+      "Back to Home"
+    );
+
+    return;
+
+  }
+
+
+  back.innerHTML =
+    "‹ Back";
+
+  back.setAttribute(
+    "aria-label",
+    "Go back"
+  );
+
+}
+
+
+/* =========================================================
    SHOW VIEW
 ========================================================= */
 
@@ -4003,21 +4891,7 @@ function showView(
 
   updateNav();
 
-
-  const back =
-    document.getElementById(
-      "backBtn"
-    );
-
-
-  if(back){
-
-    back.classList.toggle(
-      "show",
-      name !== "home"
-    );
-
-  }
+  updateBackButton();
 
 
   window.scrollTo({
@@ -4191,11 +5065,15 @@ function showProducts(
 
   if(!db){
 
-    grid.innerHTML =
-      `<div class="empty-note">
-        <strong>Oops.</strong>
-        Firebase isn't connected.
-      </div>`;
+    if(grid){
+
+      grid.innerHTML =
+        `<div class="empty-note">
+          <strong>Oops.</strong>
+          Firebase isn't connected.
+        </div>`;
+
+    }
 
     return;
 
@@ -4285,6 +5163,9 @@ function renderProducts(
   }
 
 
+  renderedProducts = [];
+
+
   if(
     !data ||
     typeof data !== "object"
@@ -4344,9 +5225,13 @@ function renderProducts(
       );
 
 
+  renderedProducts =
+    items;
+
+
   grid.innerHTML =
     items.map(
-      product => {
+      (product,index) => {
 
         const name =
           escapeHTML(
@@ -4376,10 +5261,15 @@ function renderProducts(
             : "common";
 
 
-        const image =
-          safeImage(
-            product.image
+        const images =
+          getProductImages(
+            product
           );
+
+
+        const image =
+          images[0] ||
+          null;
 
 
         const imageHTML =
@@ -4398,10 +5288,29 @@ function renderProducts(
             `;
 
 
+        const photoCountHTML =
+          images.length > 1
+            ? `
+              <span
+                class="photo-count"
+                aria-label="${images.length} photos">
+
+                ▧
+                ${images.length}
+
+              </span>
+            `
+            : "";
+
+
         return `
 
           <article
-            class="product-card">
+            class="product-card"
+            data-product-index="${index}"
+            role="button"
+            tabindex="0"
+            aria-label="View ${name}">
 
             <div
               class="product-photo">
@@ -4423,6 +5332,9 @@ function renderProducts(
                 ✦
 
               </span>
+
+
+              ${photoCountHTML}
 
 
               ${imageHTML}
@@ -4476,6 +5388,657 @@ function renderProducts(
 
 
 /* =========================================================
+   GALLERY
+========================================================= */
+
+function openGallery(
+  index
+){
+
+  const product =
+    renderedProducts[index];
+
+
+  if(!product){
+    return;
+  }
+
+
+  const images =
+    getProductImages(
+      product
+    );
+
+
+  /*
+   * No image = nothing to open.
+   */
+
+  if(
+    images.length === 0
+  ){
+
+    return;
+
+  }
+
+
+  galleryProduct =
+    product;
+
+  galleryItems =
+    images;
+
+  galleryIndex =
+    0;
+
+
+  const modal =
+    document.getElementById(
+      "galleryModal"
+    );
+
+
+  if(!modal){
+    return;
+  }
+
+
+  modal.hidden =
+    false;
+
+
+  document.body.classList.add(
+    "gallery-open"
+  );
+
+
+  showGalleryImage();
+
+
+  tapSparks();
+
+}
+
+
+/* =========================================================
+   CLOSE GALLERY
+========================================================= */
+
+function closeGallery(){
+
+  const modal =
+    document.getElementById(
+      "galleryModal"
+    );
+
+
+  if(!modal){
+    return;
+  }
+
+
+  modal.hidden =
+    true;
+
+
+  document.body.classList.remove(
+    "gallery-open"
+  );
+
+
+  galleryItems =
+    [];
+
+  galleryIndex =
+    0;
+
+  galleryProduct =
+    null;
+
+}
+
+
+/* =========================================================
+   SHOW GALLERY IMAGE
+========================================================= */
+
+function showGalleryImage(){
+
+  const imageElement =
+    document.getElementById(
+      "galleryImage"
+    );
+
+
+  const counter =
+    document.getElementById(
+      "galleryCounter"
+    );
+
+
+  const dots =
+    document.getElementById(
+      "galleryDots"
+    );
+
+
+  const name =
+    document.getElementById(
+      "galleryName"
+    );
+
+
+  const rarity =
+    document.getElementById(
+      "galleryRarity"
+    );
+
+
+  const price =
+    document.getElementById(
+      "galleryPrice"
+    );
+
+
+  const previous =
+    document.getElementById(
+      "galleryPrev"
+    );
+
+
+  const next =
+    document.getElementById(
+      "galleryNext"
+    );
+
+
+  if(
+    !imageElement ||
+    !galleryItems.length
+  ){
+
+    return;
+
+  }
+
+
+  const image =
+    galleryItems[
+      galleryIndex
+    ];
+
+
+  imageElement.src =
+    image;
+
+
+  imageElement.alt =
+    galleryProduct?.name ||
+    "Product photo";
+
+
+  /*
+   * Restart image animation.
+   */
+
+  imageElement.style.animation =
+    "none";
+
+  void imageElement.offsetWidth;
+
+  imageElement.style.animation =
+    "";
+
+
+  if(counter){
+
+    counter.textContent =
+      `${galleryIndex + 1} / ${galleryItems.length}`;
+
+  }
+
+
+  if(name){
+
+    name.textContent =
+      galleryProduct?.name ||
+      "Untitled find";
+
+  }
+
+
+  if(rarity){
+
+    rarity.textContent =
+      galleryProduct?.rarity ||
+      "Common";
+
+  }
+
+
+  if(price){
+
+    price.textContent =
+      formatPrice(
+        galleryProduct?.price
+      );
+
+  }
+
+
+  if(previous){
+
+    previous.disabled =
+      galleryItems.length <= 1;
+
+  }
+
+
+  if(next){
+
+    next.disabled =
+      galleryItems.length <= 1;
+
+  }
+
+
+  if(dots){
+
+    dots.innerHTML =
+      galleryItems
+        .map(
+          (_,index) => `
+
+            <button
+              class="gallery-dot ${
+                index === galleryIndex
+                  ? "active"
+                  : ""
+              }"
+              type="button"
+              data-gallery-index="${index}"
+              aria-label="Photo ${index + 1}"
+              aria-current="${
+                index === galleryIndex
+                  ? "true"
+                  : "false"
+              }">
+            </button>
+
+          `
+        )
+        .join("");
+
+  }
+
+}
+
+
+/* =========================================================
+   GALLERY NEXT
+========================================================= */
+
+function galleryNext(){
+
+  if(
+    galleryItems.length <= 1
+  ){
+
+    return;
+
+  }
+
+
+  galleryIndex =
+    (
+      galleryIndex + 1
+    ) %
+    galleryItems.length;
+
+
+  showGalleryImage();
+
+}
+
+
+/* =========================================================
+   GALLERY PREVIOUS
+========================================================= */
+
+function galleryPrev(){
+
+  if(
+    galleryItems.length <= 1
+  ){
+
+    return;
+
+  }
+
+
+  galleryIndex =
+    (
+      galleryIndex - 1 +
+      galleryItems.length
+    ) %
+    galleryItems.length;
+
+
+  showGalleryImage();
+
+}
+
+
+/* =========================================================
+   GALLERY TOUCH
+========================================================= */
+
+const galleryStage =
+  document.getElementById(
+    "galleryStage"
+  );
+
+
+if(galleryStage){
+
+  galleryStage.addEventListener(
+    "touchstart",
+    event => {
+
+      const touch =
+        event.changedTouches[0];
+
+
+      touchStartX =
+        touch.clientX;
+
+
+      touchStartY =
+        touch.clientY;
+
+    },
+    {
+      passive:true
+    }
+  );
+
+
+  galleryStage.addEventListener(
+    "touchend",
+    event => {
+
+      const touch =
+        event.changedTouches[0];
+
+
+      const deltaX =
+        touch.clientX -
+        touchStartX;
+
+
+      const deltaY =
+        touch.clientY -
+        touchStartY;
+
+
+      /*
+       * Only treat it as a swipe if horizontal
+       * movement is clearly greater than vertical.
+       */
+
+      if(
+        Math.abs(deltaX) < 45 ||
+        Math.abs(deltaX) < Math.abs(deltaY)
+      ){
+
+        return;
+
+      }
+
+
+      if(deltaX < 0){
+
+        galleryNext();
+
+      }else{
+
+        galleryPrev();
+
+      }
+
+    },
+    {
+      passive:true
+    }
+  );
+
+}
+
+
+/* =========================================================
+   GALLERY EVENTS
+========================================================= */
+
+const galleryModal =
+  document.getElementById(
+    "galleryModal"
+  );
+
+
+const galleryClose =
+  document.getElementById(
+    "galleryClose"
+  );
+
+
+const galleryPrevButton =
+  document.getElementById(
+    "galleryPrev"
+  );
+
+
+const galleryNextButton =
+  document.getElementById(
+    "galleryNext"
+  );
+
+
+const galleryDots =
+  document.getElementById(
+    "galleryDots"
+  );
+
+
+if(galleryClose){
+
+  galleryClose.addEventListener(
+    "click",
+    event => {
+
+      event.stopPropagation();
+
+      tapSparks(
+        event
+      );
+
+      closeGallery();
+
+    }
+  );
+
+}
+
+
+if(galleryPrevButton){
+
+  galleryPrevButton.addEventListener(
+    "click",
+    event => {
+
+      event.stopPropagation();
+
+      tapSparks(
+        event
+      );
+
+      galleryPrev();
+
+    }
+  );
+
+}
+
+
+if(galleryNextButton){
+
+  galleryNextButton.addEventListener(
+    "click",
+    event => {
+
+      event.stopPropagation();
+
+      tapSparks(
+        event
+      );
+
+      galleryNext();
+
+    }
+  );
+
+}
+
+
+if(galleryDots){
+
+  galleryDots.addEventListener(
+    "click",
+    event => {
+
+      const dot =
+        event.target.closest(
+          "[data-gallery-index]"
+        );
+
+
+      if(!dot){
+        return;
+      }
+
+
+      const index =
+        Number(
+          dot.dataset.galleryIndex
+        );
+
+
+      if(
+        Number.isInteger(index) &&
+        index >= 0 &&
+        index < galleryItems.length
+      ){
+
+        galleryIndex =
+          index;
+
+        showGalleryImage();
+
+      }
+
+    }
+  );
+
+}
+
+
+/*
+ * Clicking the dark area closes the gallery.
+ * Clicking the image itself does not.
+ */
+
+if(galleryModal){
+
+  galleryModal.addEventListener(
+    "click",
+    event => {
+
+      if(
+        event.target ===
+        galleryModal
+      ){
+
+        closeGallery();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    const modal =
+      document.getElementById(
+        "galleryModal"
+      );
+
+
+    if(
+      !modal ||
+      modal.hidden
+    ){
+
+      return;
+
+    }
+
+
+    if(
+      event.key === "Escape"
+    ){
+
+      closeGallery();
+
+      return;
+
+    }
+
+
+    if(
+      event.key === "ArrowRight"
+    ){
+
+      galleryNext();
+
+      return;
+
+    }
+
+
+    if(
+      event.key === "ArrowLeft"
+    ){
+
+      galleryPrev();
+
+      return;
+
+    }
+
+  }
+);
+
+
+/* =========================================================
    BACK
 ========================================================= */
 
@@ -4525,6 +6088,9 @@ function goBack(){
         "home"
       ];
 
+      currentCategory =
+        null;
+
       showView(
         "home"
       );
@@ -4536,6 +6102,9 @@ function goBack(){
         "pin-sub"
       ];
 
+      currentCategory =
+        null;
+
       showView(
         "pin-sub"
       );
@@ -4543,6 +6112,16 @@ function goBack(){
     }
 
     return;
+
+  }
+
+
+  if(
+    previous === "pin-sub"
+  ){
+
+    currentCategory =
+      null;
 
   }
 
@@ -4561,6 +6140,57 @@ function goBack(){
 document.addEventListener(
   "click",
   event => {
+
+    /*
+     * Product cards are not buttons,
+     * so handle them separately.
+     */
+
+    const productCard =
+      event.target.closest(
+        ".product-card"
+      );
+
+
+    if(productCard){
+
+      /*
+       * Don't let a click somehow interfere
+       * with gallery controls or links.
+       */
+
+      if(
+        !event.target.closest(
+          "button, a"
+        )
+      ){
+
+        const index =
+          Number(
+            productCard.dataset.productIndex
+          );
+
+
+        if(
+          Number.isInteger(index)
+        ){
+
+          tapSparks(
+            event
+          );
+
+          openGallery(
+            index
+          );
+
+        }
+
+      }
+
+      return;
+
+    }
+
 
     const target =
       event.target.closest(
@@ -4680,6 +6310,58 @@ document.addEventListener(
       showProducts(
         "stash",
         "Stash"
+      );
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   PRODUCT CARD KEYBOARD ACCESS
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if(
+      event.key !== "Enter" &&
+      event.key !== " "
+    ){
+
+      return;
+
+    }
+
+
+    const card =
+      event.target.closest(
+        ".product-card"
+      );
+
+
+    if(!card){
+      return;
+    }
+
+
+    event.preventDefault();
+
+
+    const index =
+      Number(
+        card.dataset.productIndex
+      );
+
+
+    if(
+      Number.isInteger(index)
+    ){
+
+      openGallery(
+        index
       );
 
     }
