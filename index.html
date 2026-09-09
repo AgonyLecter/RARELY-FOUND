@@ -1061,6 +1061,411 @@ main{
 
 
 /* =========================================================
+   CONTACT / BUY REQUEST
+========================================================= */
+
+.contact-section{
+
+  margin-top:28px;
+
+}
+
+
+.contact-card{
+
+  position:relative;
+
+  overflow:hidden;
+
+  padding:25px 20px 22px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fff,
+      #fff0f5
+    );
+
+  border:
+    1px solid
+    rgba(217,68,120,.13);
+
+  border-radius:28px;
+
+  box-shadow:
+    var(--shadow);
+
+}
+
+
+.contact-card::before{
+
+  content:"🎀";
+
+  position:absolute;
+
+  right:18px;
+  top:12px;
+
+  font-size:42px;
+
+  opacity:.16;
+
+  transform:rotate(10deg);
+
+}
+
+
+.contact-card::after{
+
+  content:"✦";
+
+  position:absolute;
+
+  right:27px;
+  bottom:15px;
+
+  color:var(--gold);
+
+  font-size:25px;
+
+  animation:
+    twinkle 2s ease-in-out infinite;
+
+}
+
+
+.contact-eyebrow{
+
+  color:
+    var(--pink-deep);
+
+  font-size:9px;
+
+  font-weight:800;
+
+  letter-spacing:.1em;
+
+  text-transform:uppercase;
+
+}
+
+
+.contact-title{
+
+  margin-top:7px;
+
+  font-size:30px;
+
+}
+
+
+.contact-sub{
+
+  max-width:500px;
+
+  margin-top:8px;
+
+  color:var(--muted);
+
+  font-size:11px;
+
+  line-height:1.55;
+
+}
+
+
+.contact-form{
+
+  position:relative;
+
+  z-index:3;
+
+  margin-top:18px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:10px;
+
+}
+
+
+.contact-input,
+.contact-textarea{
+
+  width:100%;
+
+  border:
+    1px solid
+    rgba(67,45,53,.10);
+
+  background:
+    rgba(255,255,255,.9);
+
+  border-radius:17px;
+
+  padding:
+    13px 14px;
+
+  outline:none;
+
+  color:var(--ink);
+
+  font-family:
+    'DM Sans',
+    sans-serif;
+
+  font-size:12px;
+
+  transition:
+    border-color .18s ease,
+    box-shadow .18s ease,
+    transform .18s ease;
+
+}
+
+
+.contact-input::placeholder,
+.contact-textarea::placeholder{
+
+  color:#b49ca3;
+
+}
+
+
+.contact-input:focus,
+.contact-textarea:focus{
+
+  border-color:
+    rgba(217,68,120,.42);
+
+  box-shadow:
+    0 0 0 4px
+    rgba(217,68,120,.08);
+
+}
+
+
+.contact-textarea{
+
+  min-height:125px;
+
+  resize:vertical;
+
+}
+
+
+.contact-submit{
+
+  width:100%;
+
+  min-height:48px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:8px;
+
+  margin-top:2px;
+
+  background:
+    var(--pink-deep);
+
+  color:#fff;
+
+  border-radius:17px;
+
+  font-family:
+    'Fredoka',
+    sans-serif;
+
+  font-size:15px;
+
+  box-shadow:
+    0 10px 22px
+    rgba(217,68,120,.22);
+
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease,
+    opacity .18s ease;
+
+}
+
+
+.contact-submit:active{
+
+  transform:
+    scale(.975);
+
+}
+
+
+.contact-submit:disabled{
+
+  opacity:.6;
+
+  cursor:wait;
+
+}
+
+
+.form-status{
+
+  min-height:18px;
+
+  margin-top:4px;
+
+  text-align:center;
+
+  font-size:10px;
+
+  font-weight:700;
+
+}
+
+
+.form-status.success{
+
+  color:#4c8a62;
+
+}
+
+
+.form-status.error{
+
+  color:var(--red);
+
+}
+
+
+/* =========================================================
+   SOCIALS
+========================================================= */
+
+.social-section{
+
+  margin-top:18px;
+
+}
+
+
+.social-title{
+
+  margin-bottom:10px;
+
+  text-align:center;
+
+  color:var(--muted);
+
+  font-family:
+    'Fredoka',
+    sans-serif;
+
+  font-size:12px;
+
+}
+
+
+.social-buttons{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,minmax(0,1fr));
+
+  gap:10px;
+
+}
+
+
+.social-btn{
+
+  min-height:48px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:8px;
+
+  background:#fff;
+
+  border:
+    1px solid
+    var(--border);
+
+  border-radius:17px;
+
+  box-shadow:
+    0 8px 20px
+    rgba(99,48,68,.07);
+
+  color:var(--ink);
+
+  font-size:11px;
+
+  font-weight:800;
+
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease;
+
+}
+
+
+.social-btn:active{
+
+  transform:
+    scale(.96);
+
+}
+
+
+.social-icon{
+
+  width:22px;
+  height:22px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  border-radius:7px;
+
+  color:#fff;
+
+  font-size:12px;
+
+  font-weight:800;
+
+}
+
+
+.social-facebook .social-icon{
+
+  background:#1877f2;
+
+}
+
+
+.social-youtube .social-icon{
+
+  background:#ff0033;
+
+}
+
+
+/* =========================================================
    CATEGORY PAGE
 ========================================================= */
 
@@ -1703,17 +2108,6 @@ main{
 
 
 /* =========================================================
-   DOTS
-========================================================= */
-
-.dots{
-
-  display:none;
-
-}
-
-
-/* =========================================================
    BOTTOM NAV
 ========================================================= */
 
@@ -1987,6 +2381,13 @@ footer a{
 
   }
 
+
+  .social-buttons{
+
+    grid-template-columns:1fr;
+
+  }
+
 }
 
 
@@ -2037,7 +2438,7 @@ footer a{
     <div class="brand">
 
       <img
-        src="logo.png"
+        src="file_00000000b6848230b5d12ede7ff242b6.png"
         alt="Rarely Found">
 
       <div class="brand-name">
@@ -2080,7 +2481,7 @@ footer a{
 
     <img
       class="hero-logo"
-      src="logo.png"
+      src="file_00000000b6848230b5d12ede7ff242b6.png"
       alt="Rarely Found">
 
 
@@ -2264,6 +2665,133 @@ footer a{
       </p>
 
     </div>
+
+
+    <!-- =====================================================
+         CONTACT / BUY
+    ====================================================== -->
+
+    <div class="contact-section">
+
+      <div class="contact-card">
+
+        <div class="contact-eyebrow">
+          💌 Want something?
+        </div>
+
+
+        <h2 class="contact-title">
+          Make me an offer.
+        </h2>
+
+
+        <p class="contact-sub">
+
+          I don't sell directly through the website.
+          Tell me what you're interested in and how
+          I can reach you. I'll get back to you personally.
+
+        </p>
+
+
+        <form
+          class="contact-form"
+          id="contactForm">
+
+
+          <input
+            class="contact-input"
+            id="contactEmail"
+            type="email"
+            name="email"
+            placeholder="Your email address"
+            autocomplete="email"
+            maxlength="160"
+            required>
+
+
+          <textarea
+            class="contact-textarea"
+            id="contactMessage"
+            name="message"
+            placeholder="What are you interested in? Ask me anything..."
+            maxlength="2000"
+            required></textarea>
+
+
+          <button
+            class="contact-submit"
+            id="contactSubmit"
+            type="submit">
+
+            💌 Send request
+
+          </button>
+
+
+          <div
+            class="form-status"
+            id="formStatus"
+            aria-live="polite">
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         SOCIALS
+    ====================================================== -->
+
+    <div class="social-section">
+
+      <div class="social-title">
+
+        Come find me elsewhere ✦
+
+      </div>
+
+
+      <div class="social-buttons">
+
+
+        <a
+          class="social-btn social-facebook"
+          href="https://www.facebook.com/share/1QmQjGGx2x/"
+          target="_blank"
+          rel="noopener noreferrer">
+
+          <span class="social-icon">
+            f
+          </span>
+
+          Facebook
+
+        </a>
+
+
+        <a
+          class="social-btn social-youtube"
+          href="https://youtube.com/@rarelyfoundcollector?si=jG680HTlPaHVlrv1"
+          target="_blank"
+          rel="noopener noreferrer">
+
+          <span class="social-icon">
+            ▶
+          </span>
+
+          YouTube
+
+        </a>
+
+
+      </div>
+
+    </div>
+
 
   </div>
 
@@ -2574,7 +3102,18 @@ footer a{
 <footer>
 
   <a
-    href="https://www.youtube.com/@rarelyfoundcollector"
+    href="https://www.facebook.com/share/1QmQjGGx2x/"
+    target="_blank"
+    rel="noopener noreferrer">
+
+    Facebook
+
+  </a>
+
+  &nbsp;·&nbsp;
+
+  <a
+    href="https://youtube.com/@rarelyfoundcollector?si=jG680HTlPaHVlrv1"
     target="_blank"
     rel="noopener noreferrer">
 
@@ -2606,7 +3145,9 @@ import {
   getDatabase,
   ref,
   onValue,
-  off
+  off,
+  push,
+  set
 } from
 "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
 
@@ -3231,6 +3772,188 @@ if(db){
 
 
 /* =========================================================
+   CONTACT REQUEST
+========================================================= */
+
+const contactForm =
+  document.getElementById(
+    "contactForm"
+  );
+
+
+const contactEmail =
+  document.getElementById(
+    "contactEmail"
+  );
+
+
+const contactMessage =
+  document.getElementById(
+    "contactMessage"
+  );
+
+
+const contactSubmit =
+  document.getElementById(
+    "contactSubmit"
+  );
+
+
+const formStatus =
+  document.getElementById(
+    "formStatus"
+  );
+
+
+if(contactForm){
+
+  contactForm.addEventListener(
+    "submit",
+    async event => {
+
+      event.preventDefault();
+
+
+      if(!db){
+
+        formStatus.textContent =
+          "Something went wrong. Please try again later.";
+
+        formStatus.className =
+          "form-status error";
+
+        return;
+
+      }
+
+
+      const email =
+        contactEmail.value
+          .trim();
+
+
+      const message =
+        contactMessage.value
+          .trim();
+
+
+      if(!email || !message){
+
+        formStatus.textContent =
+          "Please fill in both fields.";
+
+        formStatus.className =
+          "form-status error";
+
+        return;
+
+      }
+
+
+      if(
+        !contactEmail.checkValidity()
+      ){
+
+        formStatus.textContent =
+          "Please enter a valid email address.";
+
+        formStatus.className =
+          "form-status error";
+
+        return;
+
+      }
+
+
+      contactSubmit.disabled =
+        true;
+
+      contactSubmit.textContent =
+        "Sending…";
+
+
+      formStatus.textContent =
+        "";
+
+
+      try{
+
+        const requestsRef =
+          ref(
+            db,
+            "purchaseRequests"
+          );
+
+
+        const newRequest =
+          push(
+            requestsRef
+          );
+
+
+        await set(
+          newRequest,
+          {
+
+            email:
+              email,
+
+            message:
+              message,
+
+            createdAt:
+              Date.now(),
+
+            status:
+              "new"
+
+          }
+        );
+
+
+        contactForm.reset();
+
+
+        formStatus.textContent =
+          "Request sent ✦ I'll get back to you.";
+
+        formStatus.className =
+          "form-status success";
+
+
+        tapSparks();
+
+
+      }catch(error){
+
+        console.error(
+          "Purchase request error:",
+          error
+        );
+
+
+        formStatus.textContent =
+          "I couldn't send that. Please try again.";
+
+        formStatus.className =
+          "form-status error";
+
+      }
+
+
+      contactSubmit.disabled =
+        false;
+
+      contactSubmit.textContent =
+        "💌 Send request";
+
+    }
+  );
+
+}
+
+
+/* =========================================================
    SHOW VIEW
 ========================================================= */
 
@@ -3478,8 +4201,6 @@ function showProducts(
 
   }
 
-
-  /* Remove previous listener */
 
   if(
     activeProductListener &&
